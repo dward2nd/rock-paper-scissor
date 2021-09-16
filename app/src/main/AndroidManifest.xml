@@ -11,13 +11,13 @@
       android:theme="@style/Theme.RockPaperScissor">
       <activity
          android:name=".SelectPlayer"
-         android:parentActivityName=".MainActivity">
+         android:parentActivityName=".LoginActivity">
          <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value=".MainActivity" />
+            android:value=".LoginActivity" />
       </activity>
       <activity
-         android:name=".MainActivity"
+         android:name=".LoginActivity"
          android:exported="true">
          <intent-filter>
             <action android:name="android.intent.action.MAIN" />

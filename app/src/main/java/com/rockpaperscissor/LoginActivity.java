@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
    public static final String EXTRA_MESSAGE = "com.rockpaperscissor.MAIN";
 
    @Override
