@@ -4,64 +4,22 @@
    xmlns:tools="http://schemas.android.com/tools"
    android:layout_width="match_parent"
    android:layout_height="match_parent"
-   tools:context=".LoginActivity">
+   tools:context=".MainActivity">
 
-   <TextView
-      android:id="@+id/gameTitle"
+   <ImageView
+      android:id="@+id/avatarImageView2"
       android:layout_width="0dp"
-      android:layout_height="86dp"
-      android:layout_marginStart="20dp"
-      android:layout_marginTop="20dp"
-      android:layout_marginEnd="20dp"
-      android:text="@string/app_name"
-      android:textAlignment="center"
-      android:textSize="48sp"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.0"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
-
-   <TextView
-      android:id="@+id/userLabel"
-      android:layout_width="0dp"
-      android:layout_height="27dp"
-      android:layout_marginStart="20dp"
-      android:layout_marginEnd="20dp"
-      android:layout_marginBottom="20dp"
-      android:text="@string/login_user_label"
-      android:textSize="20sp"
-      app:layout_constraintBottom_toTopOf="@+id/userInputBox"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent" />
-
-   <EditText
-      android:id="@+id/userInputBox"
-      android:layout_width="0dp"
-      android:layout_height="45dp"
-      android:layout_marginStart="20dp"
-      android:layout_marginEnd="20dp"
-      android:autoText="false"
-      android:ems="10"
-      android:hint="@string/login_user_hint"
-      android:inputType="textPersonName"
-      android:textSize="20sp"
+      android:layout_height="0dp"
+      android:layout_marginStart="130dp"
+      android:layout_marginTop="15dp"
+      android:layout_marginEnd="130dp"
+      android:layout_marginBottom="15dp"
+      android:contentDescription="@string/selectplayer_imagedescription"
+      android:src="@drawable/testimg"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.0"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
-
-   <Button
-      android:id="@+id/nextBtn"
-      android:layout_width="140dp"
-      android:layout_height="wrap_content"
-      android:layout_marginBottom="32dp"
-      android:onClick="onNextBtnClicked"
-      android:text="@string/login_nextbtn"
-      android:textAlignment="center"
-      android:textSize="34sp"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent" />
-
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.499"
+      app:srcCompat="@drawable/testimg" />
 </androidx.constraintlayout.widget.ConstraintLayout>
