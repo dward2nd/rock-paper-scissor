@@ -1,16 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-   <style name="AppTheme" parent="Theme.RockPaperScissor">
-      <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
-      <item name="android:buttonStyle">@style/RobotoButtonStyle</item>
-   </style>
+    <style name="rps_online">
+        <item name="android:textSize">
+            64sp
+        </item>
 
-   <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
-      <item name="android:fontFamily">sans-serif-light</item>
-   </style>
+        <item name="android:textColor">
+            #FF1616
+        </item>
 
-   <style name="RobotoButtonStyle" parent="android:Widget.Holo.Button">
-      <item name="android:fontFamily">sans-serif-light</item>
-   </style>
+        <item name="android:shadowColor">
+            #40000000
+        </item>
+
+        <item name="android:shadowDx">
+            0
+        </item>
+
+        <item name="android:shadowDy">
+            4
+        </item>
+
+        <item name="android:shadowRadius">
+            4
+        </item>
+    </style>
+
+    <style name="lets_play">
+        <item name="android:textSize">
+            36sp
+        </item>
+        <item name="android:textColor">
+            #FFFFFF
+        </item>
+    </style>
+
+    <style name="select_play">
+
+        <item name="android:textSize">
+            24sp
+        </item>
+
+        <item name="android:textColor">
+            #FFFFFF
+        </item>
+
+    </style>
+
+    <style name="n_a_n_a">
+
+        <item name="android:textSize">
+            48sp
+        </item>
+
+        <item name="android:textColor">
+            #FFFFFF
+        </item>
+
+        <item name="android:shadowColor">
+            #40000000
+        </item>
+
+        <item name="android:shadowDx">
+            0
+        </item>
+
+        <item name="android:shadowDy">
+            4
+        </item>
+
+        <item name="android:shadowRadius">
+            4
+        </item>
+
+    </style>
+
+    <style name="win">
+
+        <item name="android:textSize">
+            98.48sp
+        </item>
+
+        <item name="android:textColor">
+            #FF1616
+        </item>
+
+        <item name="android:shadowColor">
+            #4D000000
+        </item>
+
+        <item name="android:shadowDx">
+            6.84
+        </item>
+
+        <item name="android:shadowDy">
+            3.42
+        </item>
+
+        <item name="android:shadowRadius">
+            2.74
+        </item>
+
+    </style>
 </resources>
