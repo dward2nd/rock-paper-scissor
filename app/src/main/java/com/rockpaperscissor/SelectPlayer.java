@@ -22,10 +22,10 @@ public class SelectPlayer extends AppCompatActivity {
       setContentView(R.layout.activity_select_player);
 
       // receive a message from LoginActivity and display here.
-      Intent intent = getIntent();
-      String message = intent.getStringExtra(LoginActivity.EXTRA_MESSAGE);
+      //Intent intent = getIntent();
+      //String message = intent.getStringExtra(LoginActivity.EXTRA_LOGIN);
       TextView textView = findViewById(R.id.displayNameLabel);
-      textView.setText(message);
+      textView.setText(RPSServer.getClientPlayer().getDisplayName());
 
       // connect to the recycler view for playerList
       this.initPlayerName();
