@@ -28,13 +28,12 @@ public class SelectPlayer extends AppCompatActivity {
       setContentView(R.layout.player_menu);
       getSupportActionBar().hide();
 
-      displayNameLabel = findViewById(R.id.displayNameLabel);
       playerList = findViewById(R.id.playerList);
 
       // receive a message from LoginActivity and display here.
       Intent intent = getIntent();
       RPSPlayer clientPlayer = intent.getParcelableExtra(LoginActivity.INTENT_LOGIN);
-      //displayNameLabel.setText(clientPlayer.getDisplayName());
+
       Toast.makeText(getApplicationContext(),
             "Current User: " + clientPlayer.getDisplayName(),
             Toast.LENGTH_LONG)
