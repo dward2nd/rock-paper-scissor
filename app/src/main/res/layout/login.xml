@@ -115,13 +115,12 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/gomarice_rockin_record"
         android:text="@string/let_s_nplay"
+        android:textAlignment="center"
         android:textAppearance="@style/lets_play"
         app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
         app:layout_constraintEnd_toEndOf="@+id/imageButton2"
-        app:layout_constraintHorizontal_bias="0.771"
         app:layout_constraintStart_toStartOf="@+id/imageButton2"
-        app:layout_constraintTop_toTopOf="@+id/imageButton2"
-        app:layout_constraintVertical_bias="0.52" />
+        app:layout_constraintTop_toTopOf="@+id/imageButton2" />
 
     <ImageView
         android:id="@+id/imageView24"
