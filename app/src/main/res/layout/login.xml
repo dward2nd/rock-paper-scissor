@@ -121,13 +121,12 @@
        android:linksClickable="false"
        android:longClickable="false"
        android:text="@string/let_s_nplay"
+       android:textAlignment="center"
        android:textAppearance="@style/lets_play"
        app:layout_constraintBottom_toBottomOf="@+id/nextBtn"
        app:layout_constraintEnd_toEndOf="@+id/nextBtn"
-       app:layout_constraintHorizontal_bias="0.771"
        app:layout_constraintStart_toStartOf="@+id/nextBtn"
-       app:layout_constraintTop_toTopOf="@+id/nextBtn"
-       app:layout_constraintVertical_bias="0.52" />
+       app:layout_constraintTop_toTopOf="@+id/nextBtn" />
 
     <ImageView
         android:id="@+id/imageView24"
