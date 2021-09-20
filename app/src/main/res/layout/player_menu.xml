@@ -44,42 +44,6 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/textView31"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="4dp"
-        android:fontFamily="@font/gomarice_rockin_record"
-        android:text="n/a PLAYED\nn/a WIN"
-        android:textColor="#000000"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/imageView42"
-        app:layout_constraintTop_toBottomOf="@+id/textView32" />
-
-    <TextView
-        android:id="@+id/textView32"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="31dp"
-        android:fontFamily="@font/gomarice_rockin_record"
-        android:text="PLAYER"
-        android:textColor="#3CB1FF"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/imageView42"
-        app:layout_constraintTop_toBottomOf="@+id/imageView41" />
-
-    <ImageView
-        android:id="@+id/imageView42"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="@+id/imageView7"
-        app:layout_constraintTop_toBottomOf="@+id/imageView41"
-        app:srcCompat="@drawable/scissor_playericon" />
-
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
@@ -141,71 +105,35 @@
         app:srcCompat="@drawable/exit_to_app55" />
 
     <ImageButton
-        android:id="@+id/imageButton5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="21dp"
-        android:layout_marginBottom="21dp"
-        android:background="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageView6"
-        app:srcCompat="@drawable/setting_55" />
+       android:id="@+id/imageButton5"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginEnd="21dp"
+       android:layout_marginBottom="21dp"
+       android:background="@null"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="@+id/imageView6"
+       app:srcCompat="@drawable/setting_55" />
 
-    <ImageView
-        android:id="@+id/imageView34"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="66dp"
-        app:layout_constraintStart_toStartOf="@+id/imageView7"
-        app:layout_constraintTop_toTopOf="@+id/imageView7"
-        app:srcCompat="@drawable/scissor_playericon" />
-
-    <TextView
-        android:id="@+id/textView28"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="77dp"
-        android:fontFamily="@font/gomarice_rockin_record"
-        android:text="PLAYER"
-        android:textColor="#3CB1FF"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/imageView34"
-        app:layout_constraintTop_toTopOf="@+id/textView27" />
-
-    <TextView
-        android:id="@+id/textView29"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="4dp"
-        android:fontFamily="@font/gomarice_rockin_record"
-        android:text="n/a PLAYED\nn/a WIN"
-        android:textColor="#000000"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/imageView34"
-        app:layout_constraintTop_toBottomOf="@+id/textView28" />
-
-    <ImageView
-        android:id="@+id/imageView41"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView7"
-        app:layout_constraintStart_toStartOf="@+id/imageView7"
-        app:layout_constraintTop_toBottomOf="@+id/imageView34"
-        app:srcCompat="@drawable/line" />
-
-    <ImageView
-        android:id="@+id/imageView43"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView7"
-        app:layout_constraintStart_toStartOf="@+id/imageView7"
-        app:layout_constraintTop_toBottomOf="@+id/imageView42"
-        app:srcCompat="@drawable/line" />
+    <androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/playerList"
+       android:layout_width="0dp"
+       android:layout_height="0dp"
+       android:layout_marginStart="16dp"
+       android:layout_marginTop="24dp"
+       android:layout_marginEnd="16dp"
+       android:layout_marginBottom="24dp"
+       android:fadeScrollbars="false"
+       android:isScrollContainer="true"
+       android:overScrollMode="always"
+       android:scrollbarAlwaysDrawVerticalTrack="true"
+       android:scrollbarStyle="insideInset"
+       android:scrollbars="vertical"
+       android:verticalScrollbarPosition="defaultPosition"
+       app:layout_constraintBottom_toTopOf="@+id/imageButton"
+       app:layout_constraintEnd_toEndOf="@+id/imageView7"
+       app:layout_constraintStart_toStartOf="@+id/imageView7"
+       app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

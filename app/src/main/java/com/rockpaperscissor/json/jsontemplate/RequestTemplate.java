@@ -1,10 +1,10 @@
-package com.rockpaperscissor.jsonobjectmodel;
+package com.rockpaperscissor.json.jsontemplate;
 
-public class RequestObjectModel {
+public class RequestTemplate {
    private String action;
    private Object data;
 
-   public RequestObjectModel(String action, Object data) {
+   public RequestTemplate(String action, Object data) {
       this.action = action;
       this.data = data;
    }

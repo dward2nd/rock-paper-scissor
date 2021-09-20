@@ -30,12 +30,12 @@
       android:layout_marginBottom="20dp"
       android:text="@string/login_user_label"
       android:textSize="20sp"
-      app:layout_constraintBottom_toTopOf="@+id/userInputBox"
+      app:layout_constraintBottom_toTopOf="@+id/oldUserInputBox"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent" />
 
    <EditText
-      android:id="@+id/userInputBox"
+      android:id="@+id/oldUserInputBox"
       android:layout_width="0dp"
       android:layout_height="45dp"
       android:layout_marginStart="20dp"
@@ -52,7 +52,7 @@
       app:layout_constraintTop_toTopOf="parent" />
 
    <Button
-      android:id="@+id/nextBtn"
+      android:id="@+id/oldNextBtn"
       android:layout_width="140dp"
       android:layout_height="wrap_content"
       android:layout_marginBottom="32dp"

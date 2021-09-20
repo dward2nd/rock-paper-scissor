@@ -9,10 +9,14 @@
         <entry key="app/src/main/res/layout/activity_display_message.xml" value="6.237276088982608" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.130859375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.125" />
-        <entry key="app/src/main/res/layout/activity_select_player.xml" value="0.11" />
+        <entry key="app/src/main/res/layout/activity_select_player.xml" value="0.3476510067114094" />
         <entry key="app/src/main/res/layout/activity_select_player2.xml" value="0.1" />
         <entry key="app/src/main/res/layout/component_playerlist.xml" value="0.25040285759760944" />
+        <entry key="app/src/main/res/layout/gameplay1.xml" value="0.11171875" />
+        <entry key="app/src/main/res/layout/login.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/player_menu.xml" value="0.335" />
         <entry key="app/src/main/res/layout/playercard.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/result.xml" value="0.130859375" />
       </map>
     </option>
   </component>

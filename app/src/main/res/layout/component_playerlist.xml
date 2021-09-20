@@ -3,12 +3,14 @@
    xmlns:app="http://schemas.android.com/apk/res-auto"
    xmlns:tools="http://schemas.android.com/tools"
    android:layout_width="match_parent"
-   android:layout_height="wrap_content">
+   android:layout_height="wrap_content"
+   android:background="#FFFFFF">
 
    <androidx.cardview.widget.CardView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginTop="16dp"
+      android:hapticFeedbackEnabled="true"
+      app:cardBackgroundColor="@color/cardview_light_background"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent">
@@ -17,33 +19,56 @@
          android:layout_width="match_parent"
          android:layout_height="match_parent">
 
+         <TextView
+            android:id="@+id/playerStatLabel"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="40dp"
+            android:fontFamily="@font/gomarice_rockin_record"
+            android:text="n/a PLAYED\nn/a WIN"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView40"
+            app:layout_constraintTop_toBottomOf="@+id/playerNameLabel" />
+
          <ImageView
-            android:id="@+id/avatarImageView"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:contentDescription="@string/selectplayer_imagedescription"
-            android:src="@drawable/testimg"
+            android:id="@+id/imageView40"
+            android:layout_width="82dp"
+            android:layout_height="82dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/testimg" />
+            app:srcCompat="@drawable/scissor_playericon" />
 
          <TextView
             android:id="@+id/playerNameLabel"
             android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="40dp"
+            android:fontFamily="@font/gomarice_rockin_record"
+            android:text="PLAYER"
+            android:textColor="#3CB1FF"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView40"
+            app:layout_constraintTop_toTopOf="parent" />
+
+         <ImageView
+            android:id="@+id/imageView34"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:text="playerName"
-            android:textSize="24sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/avatarImageView"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/line" />
       </androidx.constraintlayout.widget.ConstraintLayout>
    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
