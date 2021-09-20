@@ -11,15 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rockpaperscissor.R;
+import com.rockpaperscissor.RPSPlayer;
 
 public class SelectPlayerAdapter extends RecyclerView.Adapter<SelectPlayerAdapter.ViewHolder> {
 
-   String[] playerNames;
+   RPSPlayer[] players;
    Context context;
 
-   public SelectPlayerAdapter(Context context, String[] playerNames) {
+   public SelectPlayerAdapter(Context context, RPSPlayer[] players) {
       this.context = context;
-      this.playerNames = playerNames;
+      this.players = players;
    }
 
    @NonNull
@@ -32,20 +33,25 @@ public class SelectPlayerAdapter extends RecyclerView.Adapter<SelectPlayerAdapte
 
    @Override
    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-      holder.playerNameLabel.setText(playerNames[position]);
+      holder.playerNameLabel.setText(players[position].getDisplayName());
+      holder.playerStatLabel.setText(String.format("%d played\n%d won",
+            players[position].getTotalGamePlayed(),
+            players[position].getTotalGameWon()));
    }
 
    @Override
    public int getItemCount() {
-      return this.playerNames.length;
+      return this.players.length;
    }
 
    public static class ViewHolder extends RecyclerView.ViewHolder {
       TextView playerNameLabel;
+      TextView playerStatLabel;
 
       public ViewHolder(View itemView) {
          super(itemView);
          playerNameLabel = itemView.findViewById(R.id.playerNameLabel);
+         playerStatLabel = itemView.findViewById(R.id.playerStatLabel);
       }
    }
 }

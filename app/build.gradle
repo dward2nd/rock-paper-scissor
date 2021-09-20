@@ -38,4 +38,7 @@ dependencies {
     // define a BOM and its version
     implementation "com.squareup.okhttp3:okhttp:4.9.0"
     //testImplementation("com.squareup.okhttp3:mockwebserver:4.9.0")
+
+    // json generator
+    implementation 'com.google.code.gson:gson:2.8.8'
 }

@@ -1,11 +1,18 @@
 <resources>
-    <string name="app_name">My Application</string>
-    <string name="rps_online">RPS_ONLINE</string>
-    <string name="username">Username :</string>
-    <string name="let_s_nplay">LET\'S\nPLAY</string>
-    <string name="select_players">SELECT PLAYERS</string>
-    <string name="score_n_a">SCORE: na</string>
-    <string name="n_a_n_a">n/a / n/a</string>
-    <string name="p1">P1</string>
-    <string name="p2">P2</string>
+   <string name="app_name">RPS Online</string>
+   <string name="rps_online" translatable="false">RPS_ONLINE</string>
+   <string name="username">"Username: "</string>
+   <string name="let_s_nplay" translatable="false">LET\'S\nPLAY</string>
+   <string name="select_players">SELECT PLAYERS</string>
+   <string name="score_n_a">SCORE: na</string>
+   <string name="n_a_n_a" translatable="false">n/a / n/a</string>
+   <string name="p1" translatable="false">P1</string>
+   <string name="p2" translatable="false">P2</string>
+   <string name="login_user_label">Pick a display name</string>
+   <string name="login_user_hint">This will appear to everyone</string>
+   <string name="login_nextbtn">Let\'s start</string>
+   <string name="select_exit">Exit</string>
+   <string name="select_setting">Settings</string>
+   <string name="select_selectLabel">Choose a player</string>
+   <string name="selectplayer_imagedescription">Avatar</string>
 </resources>

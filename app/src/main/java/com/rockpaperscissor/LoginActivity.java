@@ -3,38 +3,39 @@ package com.rockpaperscissor;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
-import java.io.IOException;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.rockpaperscissor.Server.RPSResponseRunnable;
+import com.rockpaperscissor.Server.RPSServer;
+import com.rockpaperscissor.json.RPSJson;
+import com.rockpaperscissor.json.jsontemplate.RequestTemplate;
+import com.rockpaperscissor.json.jsontemplate.data.LoginTemplate;
+import com.rockpaperscissor.json.jsontemplate.data.PlayerTemplate;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+import java.lang.reflect.Type;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
-   public static final String EXTRA_MESSAGE = "com.rockpaperscissor.LOGIN";
-   public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-   public final String postUrl = "http://192.168.1.8:3000";
-   public final String postBody = "{\n" +
-         "    \"name\": \"morpheus\",\n" +
-         "    \"job\": \"leader\"\n" +
-         "}";
-   private long pressedTime;
+   public static String INTENT_LOGIN = "com.rockpaperscissor.LOGIN";
+   private long pressedTime;    // checking the time user press back button
+   private EditText userInputBox;
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
-      setContentView(R.layout.activity_login);
-      getSupportActionBar().setDisplayShowTitleEnabled(false);
+      setContentView(R.layout.login);
+      getSupportActionBar().hide();
       //Intent intent = getIntent();
+
+      this.userInputBox = findViewById(R.id.userInputBox);
    }
 
    @Override
@@ -54,39 +55,26 @@ public class LoginActivity extends AppCompatActivity {
     * Event handler when user tap the send button
     **/
    public void onNextBtnClicked(View view) {
-      // connect to the server
-      try {
-         postRequest(postUrl, postBody);
-      } catch (IOException e) {
-         e.printStackTrace();
-      }
+      String displayName = userInputBox.getText().toString();
 
-      // launch new activity.
-      Intent intent = new Intent(this, SelectPlayer.class);
-      EditText editText = (EditText) findViewById(R.id.userInputBox);
-      String message = editText.getText().toString();
-      intent.putExtra(EXTRA_MESSAGE, message);
-      startActivity(intent);
+      // connect to the server
+      login(displayName);
    }
 
-   void postRequest(String postUrl, String postBody) throws IOException {
-      OkHttpClient client = new OkHttpClient();
-      RequestBody body = RequestBody.create(JSON, postBody);
-      Request request = new Request.Builder()
-            .url(postUrl)
-            .post(body)
-            .build();
-
-      client.newCall(request).enqueue(new Callback() {
+   private void login(String displayName) {
+      String body = RPSJson.toJson(LoginTemplate.createRequestObjectModel(displayName));
+      RPSResponseRunnable runnable = new RPSResponseRunnable() {
          @Override
-         public void onFailure(Call call, IOException e) {
-            call.cancel();
-         }
+         public void run() {
+            RPSPlayer player = RPSJson.fromJson(getResponse(), PlayerTemplate.class);
+            Log.d("TAG", "Display name: " + player.getDisplayName());
 
-         @Override
-         public void onResponse(Call call, Response response) throws IOException {
-            Log.e("TAG", response.body().string());
+            Intent intent = new Intent(LoginActivity.this, SelectPlayer.class);
+            intent.putExtra(INTENT_LOGIN, player);
+            startActivity(intent);
          }
-      });
+      };
+
+      RPSServer.post(body, runnable);
    }
 }

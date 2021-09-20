@@ -11,14 +11,9 @@
       android:label="@string/app_name"
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
-      android:theme="@style/Theme.RockPaperScissor">
-      <activity
-         android:name=".SelectPlayer"
-         android:parentActivityName=".LoginActivity">
-         <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".LoginActivity" />
-      </activity>
+      android:theme="@style/Theme.RockPaperScissor"
+      android:usesCleartextTraffic="true">
+      <activity android:name=".SelectPlayer"></activity>
       <activity
          android:name=".LoginActivity"
          android:exported="true">
