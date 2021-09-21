@@ -14,11 +14,16 @@ import com.rockpaperscissor.Server.RPSServer;
 import com.rockpaperscissor.components.SelectPlayerAdapter;
 
 public class SelectPlayer extends AppCompatActivity {
+   // activity global constant
+   public static final String INTENT_CLIENT = "com.rockpaperscissor.CLIENT_PLAYER";
+   public static final String INTENT_OPPONENT = "com.rockpaperscissor.OPPONENT_PLAYER";
+
    // game variable
    private final int playerLength = 25;
    // activity variable
    private long pressedTime;
    private RPSPlayer[] samplePlayer;
+   private RPSPlayer clientPlayer;
 
    // ui components
    private RecyclerView playerList;
@@ -32,8 +37,8 @@ public class SelectPlayer extends AppCompatActivity {
       playerList = findViewById(R.id.playerList);
 
       // receive a message from LoginActivity and display here.
-      Intent intent = getIntent();
-      RPSPlayer clientPlayer = intent.getParcelableExtra(LoginActivity.INTENT_LOGIN);
+      Intent activityIntent = getIntent();
+      clientPlayer = activityIntent.getParcelableExtra(LoginActivity.INTENT_LOGIN);
 
       Toast.makeText(getApplicationContext(),
             "Current User: " + clientPlayer.getDisplayName(),
@@ -42,7 +47,8 @@ public class SelectPlayer extends AppCompatActivity {
 
       // connect to the recycler view for playerList
       this.initPlayers();
-      SelectPlayerAdapter selectPlayerAdapter = new SelectPlayerAdapter(this, samplePlayer);
+      SelectPlayerAdapter selectPlayerAdapter
+            = new SelectPlayerAdapter(this, samplePlayer, clientPlayer);
       playerList.setAdapter(selectPlayerAdapter);
       playerList.setLayoutManager(new LinearLayoutManager(this));
    }
@@ -68,7 +74,7 @@ public class SelectPlayer extends AppCompatActivity {
    }
 
    public void onSettingClicked(View view) {
-      Intent intent = new Intent(this, SettingActivity.class);
-      startActivity(intent);
+      Intent settingIntent = new Intent(this, SettingActivity.class);
+      startActivity(settingIntent);
    }
 }

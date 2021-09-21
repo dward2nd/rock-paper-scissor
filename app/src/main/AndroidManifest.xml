@@ -14,6 +14,14 @@
       android:theme="@style/Theme.RockPaperScissor"
       android:usesCleartextTraffic="true">
       <activity
+         android:name=".GameplayActivity"
+         android:exported="true"
+         android:parentActivityName=".SelectPlayer">
+         <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".SelectPlayer" />
+      </activity>
+      <activity
          android:name=".SelectPlayer"
          android:exported="true" />
       <activity

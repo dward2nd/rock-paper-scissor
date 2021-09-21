@@ -51,18 +51,18 @@
        app:srcCompat="@drawable/bluebg_extend" />
 
     <ImageButton
-       android:id="@+id/gamePlayPaper"
+       android:id="@+id/oldGamePlayPaper"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_marginStart="16dp"
        android:layout_marginBottom="15dp"
        android:background="@null"
-       app:layout_constraintBottom_toTopOf="@+id/gamePlayRock"
+       app:layout_constraintBottom_toTopOf="@+id/oldGamePlayRock"
        app:layout_constraintStart_toStartOf="@+id/imageView12"
        app:srcCompat="@drawable/paper_gameplay1" />
 
     <ImageButton
-       android:id="@+id/gamePlayRock"
+       android:id="@+id/oldGamePlayRock"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_marginBottom="44dp"
@@ -74,18 +74,18 @@
        app:srcCompat="@drawable/rock_gameplay1" />
 
     <ImageButton
-       android:id="@+id/gamePlayScissor"
+       android:id="@+id/oldGamePlayScissor"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_marginEnd="16dp"
        android:layout_marginBottom="15dp"
        android:background="@null"
-       app:layout_constraintBottom_toTopOf="@+id/gamePlayRock"
+       app:layout_constraintBottom_toTopOf="@+id/oldGamePlayRock"
        app:layout_constraintEnd_toEndOf="@+id/imageView12"
        app:srcCompat="@drawable/scissor_gameplay1" />
 
     <TextView
-       android:id="@+id/gamePlayClientScore"
+       android:id="@+id/oldGamePlayClientScore"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:fontFamily="@font/gomarice_rockin_record"
@@ -98,7 +98,7 @@
        app:layout_constraintTop_toTopOf="@+id/imageView13" />
 
     <TextView
-       android:id="@+id/gamePlay2Scores"
+       android:id="@+id/oldGamePlay2Scores"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_marginBottom="24dp"

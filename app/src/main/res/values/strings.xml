@@ -1,6 +1,6 @@
 <resources>
    <string name="app_name">RPS Online</string>
-   <string name="rps_online" translatable="false">RPS_ONLINE</string>
+   <string name="rps_online" translatable="false">RPS ONLINE</string>
    <string name="username">"Username: "</string>
    <string name="let_s_nplay" translatable="false">LET\'S\nPLAY</string>
    <string name="select_players">SELECT PLAYERS</string>
@@ -15,4 +15,5 @@
    <string name="select_setting">Settings</string>
    <string name="select_selectLabel">Choose a player</string>
    <string name="selectplayer_imagedescription">Avatar</string>
+   <string name="gameplay_chooseshape">Choose a shape</string>
 </resources>

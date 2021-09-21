@@ -35,6 +35,7 @@
        android:gravity="top"
        android:text="@string/rps_online"
        android:textAppearance="@style/rps_online"
+       android:textSize="60sp"
        app:layout_constraintEnd_toEndOf="parent"
        app:layout_constraintHorizontal_bias="0.5"
        app:layout_constraintStart_toStartOf="parent"
