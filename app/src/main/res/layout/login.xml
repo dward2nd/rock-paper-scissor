@@ -2,11 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
    xmlns:app="http://schemas.android.com/apk/res-auto"
    xmlns:tools="http://schemas.android.com/tools"
+   android:id="@+id/loginLayout"
    android:layout_width="match_parent"
    android:layout_height="match_parent"
-   android:background="@drawable/yelbg"
    android:layout_alignParentTop="true"
    android:layout_alignParentBottom="true"
+   android:background="@drawable/yelbg"
+   android:paddingTop="24dp"
+   android:paddingBottom="48dp"
    tools:context=".LoginActivity">
 
     <ImageView
@@ -18,59 +21,59 @@
        android:src="@drawable/bluebg"
        app:layout_constraintBottom_toBottomOf="parent"
        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+       app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/rps_online"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/gomarice_rockin_record"
-        android:gravity="top"
-        android:text="@string/rps_online"
-        android:textAppearance="@style/rps_online"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+       android:id="@+id/rps_online"
+       android:layout_width="wrap_content"
+       android:layout_height="0dp"
+       android:layout_alignParentTop="true"
+       android:layout_alignParentBottom="true"
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="24dp"
+       android:fontFamily="@font/gomarice_rockin_record"
+       android:gravity="top"
+       android:text="@string/rps_online"
+       android:textAppearance="@style/rps_online"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.5"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="6dp"
-        android:src="@drawable/scissor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rps_online" />
+       android:id="@+id/imageView5"
+       android:layout_width="110dp"
+       android:layout_height="110dp"
+       android:layout_centerHorizontal="true"
+       android:layout_centerVertical="true"
+       android:layout_marginTop="6dp"
+       android:src="@drawable/scissor"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.498"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/rps_online" />
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="11dp"
-        android:src="@drawable/rock"
-        app:layout_constraintEnd_toStartOf="@+id/imageView5"
-        app:layout_constraintTop_toBottomOf="@+id/rps_online"
-        tools:ignore="MissingConstraints" />
+       android:id="@+id/imageView"
+       android:layout_width="110dp"
+       android:layout_height="110dp"
+       android:layout_marginTop="72dp"
+       android:layout_marginEnd="11dp"
+       android:src="@drawable/rock"
+       app:layout_constraintEnd_toStartOf="@+id/imageView5"
+       app:layout_constraintTop_toBottomOf="@+id/rps_online"
+       tools:ignore="MissingConstraints" />
 
     <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="228dp"
-        android:src="@drawable/rectangle4"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
+       android:id="@+id/imageView8"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginBottom="228dp"
+       android:src="@drawable/rectangle4"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       tools:ignore="MissingConstraints" />
 
     <EditText
        android:id="@+id/userInputBox"
@@ -78,6 +81,9 @@
        android:layout_height="70dp"
        android:layout_marginBottom="284dp"
        android:background="@drawable/round_text"
+       android:focusable="true"
+       android:focusableInTouchMode="true"
+       android:focusedByDefault="true"
        android:padding="10dp"
        android:singleLine="true"
        app:layout_constraintBottom_toBottomOf="parent"
@@ -86,18 +92,18 @@
        tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/gomarice_rockin_record"
-        android:text="@string/username"
-        android:textColor="#70C041"
+       android:id="@+id/textView3"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:fontFamily="@font/gomarice_rockin_record"
+       android:text="@string/username"
+       android:textColor="#70C041"
        android:textSize="28sp"
        app:layout_constraintBottom_toTopOf="@+id/userInputBox"
        app:layout_constraintEnd_toEndOf="@+id/imageView8"
-        app:layout_constraintHorizontal_bias="0.201"
-        app:layout_constraintStart_toStartOf="@+id/imageView8"
-        tools:ignore="MissingConstraints" />
+       app:layout_constraintHorizontal_bias="0.201"
+       app:layout_constraintStart_toStartOf="@+id/imageView8"
+       tools:ignore="MissingConstraints" />
 
     <ImageButton
        android:id="@+id/nextBtn"
@@ -129,14 +135,14 @@
        app:layout_constraintTop_toTopOf="@+id/nextBtn" />
 
     <ImageView
-        android:id="@+id/imageView24"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="72dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView5"
-        app:layout_constraintTop_toBottomOf="@+id/rps_online"
-        app:srcCompat="@drawable/paper" />
+       android:id="@+id/imageView24"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="11dp"
+       android:layout_marginTop="72dp"
+       app:layout_constraintStart_toEndOf="@+id/imageView5"
+       app:layout_constraintTop_toBottomOf="@+id/rps_online"
+       app:srcCompat="@drawable/paper" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

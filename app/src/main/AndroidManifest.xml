@@ -13,10 +13,16 @@
       android:supportsRtl="true"
       android:theme="@style/Theme.RockPaperScissor"
       android:usesCleartextTraffic="true">
-      <activity android:name=".SelectPlayer"></activity>
+      <activity
+         android:name=".SelectPlayer"
+         android:exported="true" />
+      <activity
+         android:name=".SettingActivity"
+         android:exported="true" />
       <activity
          android:name=".LoginActivity"
-         android:exported="true">
+         android:exported="true"
+         android:windowSoftInputMode="stateVisible">
          <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />

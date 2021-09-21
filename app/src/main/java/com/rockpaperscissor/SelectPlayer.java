@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,5 +65,10 @@ public class SelectPlayer extends AppCompatActivity {
          Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
       }
       pressedTime = System.currentTimeMillis();
+   }
+
+   public void onSettingClicked(View view) {
+      Intent intent = new Intent(this, SettingActivity.class);
+      startActivity(intent);
    }
 }
