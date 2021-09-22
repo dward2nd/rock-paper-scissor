@@ -3,28 +3,18 @@ package com.rockpaperscissor;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.rockpaperscissor.Server.RPSResponseRunnable;
 import com.rockpaperscissor.Server.RPSServer;
 import com.rockpaperscissor.json.RPSJson;
-import com.rockpaperscissor.json.jsontemplate.RequestTemplate;
 import com.rockpaperscissor.json.jsontemplate.data.LoginTemplate;
 import com.rockpaperscissor.json.jsontemplate.data.PlayerTemplate;
-
-import java.lang.reflect.Type;
-import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
    public static String INTENT_LOGIN = "com.rockpaperscissor.LOGIN";
@@ -41,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
       getSupportActionBar().hide();
       //Intent intent = getIntent();
 
-      this.loginLayout = findViewById(R.id.loginLayout);
+      this.loginLayout = findViewById(R.id.innerContainer);
 
       this.userInputBox = findViewById(R.id.userInputBox);
       this.userInputBox.requestFocus();
