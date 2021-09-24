@@ -76,7 +76,8 @@ public class LoginActivity extends AppCompatActivity {
    }
 
    private void login(String displayName) {
-      String body = RPSJson.toJson(LoginTemplate.createRequestObjectModel(displayName));
+      String path = "/register";
+      String body = String.format("username={%s}", displayName);
       RPSResponseRunnable runnable = new RPSResponseRunnable() {
          @Override
          public void run() {
@@ -90,6 +91,6 @@ public class LoginActivity extends AppCompatActivity {
          }
       };
 
-      RPSServer.post(body, runnable);
+      RPSServer.post(body, runnable, path);
    }
 }
