@@ -3,7 +3,8 @@
    xmlns:app="http://schemas.android.com/apk/res-auto"
    xmlns:tools="http://schemas.android.com/tools"
    android:layout_width="match_parent"
-   android:layout_height="match_parent">
+   android:layout_height="match_parent"
+   android:clickable="true">
 
    <ImageView
       android:id="@+id/imageView47"
@@ -16,7 +17,7 @@
       app:srcCompat="@drawable/whitemid" />
 
    <TextView
-      android:id="@+id/textView35"
+      android:id="@+id/opponentPlayerNameLabel"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginTop="32dp"
@@ -25,13 +26,13 @@
       android:textAlignment="center"
       android:textAppearance="@style/n_a_n_a"
       android:textColor="#FF0101"
-      android:textSize="48sp"
-      app:layout_constraintEnd_toEndOf="@+id/imageView48"
-      app:layout_constraintStart_toStartOf="@+id/imageView48"
-      app:layout_constraintTop_toBottomOf="@+id/imageView48" />
+      android:textSize="24sp"
+      app:layout_constraintEnd_toEndOf="@+id/opponentPlayerChoiceImageView"
+      app:layout_constraintStart_toStartOf="@+id/opponentPlayerChoiceImageView"
+      app:layout_constraintTop_toBottomOf="@+id/opponentPlayerChoiceImageView" />
 
    <ImageView
-      android:id="@+id/imageView45"
+      android:id="@+id/clientPlayerChoiceImageView"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="10dp"
@@ -41,7 +42,7 @@
       app:srcCompat="@drawable/scissor_left" />
 
    <TextView
-      android:id="@+id/textView33"
+      android:id="@+id/clientPlayerNameLabel"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginTop="32dp"
@@ -50,14 +51,14 @@
       android:textAlignment="center"
       android:textAppearance="@style/n_a_n_a"
       android:textColor="#004AAD"
-      android:textSize="48sp"
-      app:layout_constraintEnd_toEndOf="@+id/imageView45"
+      android:textSize="24sp"
+      app:layout_constraintEnd_toEndOf="@+id/clientPlayerChoiceImageView"
       app:layout_constraintHorizontal_bias="0.0"
-      app:layout_constraintStart_toStartOf="@+id/imageView45"
-      app:layout_constraintTop_toBottomOf="@+id/imageView45" />
+      app:layout_constraintStart_toStartOf="@+id/clientPlayerChoiceImageView"
+      app:layout_constraintTop_toBottomOf="@+id/clientPlayerChoiceImageView" />
 
    <ImageView
-      android:id="@+id/imageView48"
+      android:id="@+id/opponentPlayerChoiceImageView"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="52dp"

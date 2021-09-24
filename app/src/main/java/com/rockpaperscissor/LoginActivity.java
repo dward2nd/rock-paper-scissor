@@ -1,27 +1,26 @@
 package com.rockpaperscissor;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.rockpaperscissor.Server.RPSResponseRunnable;
 import com.rockpaperscissor.Server.RPSServer;
+import com.rockpaperscissor.components.ConfirmDialog;
 import com.rockpaperscissor.json.RPSJson;
 import com.rockpaperscissor.json.jsontemplate.data.LoginTemplate;
 import com.rockpaperscissor.json.jsontemplate.data.PlayerTemplate;
 
 public class LoginActivity extends AppCompatActivity {
-   public static String INTENT_LOGIN = "com.rockpaperscissor.LOGIN";
-   private long pressedTime;    // checking the time user press back button
+   public static final String INTENT_LOGIN = "com.rockpaperscissor.LOGIN";
 
    // components
-   private ConstraintLayout loginLayout;
    private EditText userInputBox;
 
    @Override
@@ -29,27 +28,41 @@ public class LoginActivity extends AppCompatActivity {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.login);
       getSupportActionBar().hide();
-      //Intent intent = getIntent();
-
-      this.loginLayout = findViewById(R.id.innerContainer);
 
       this.userInputBox = findViewById(R.id.userInputBox);
-      this.userInputBox.requestFocus();
-      //InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-      //imm.toggleSoftInputFromWindow(loginLayout.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
    }
 
    @Override
    public void onBackPressed() {
-      if (pressedTime + 2000 > System.currentTimeMillis()) {
-         Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-         homeIntent.addCategory(Intent.CATEGORY_HOME);
-         homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-         startActivity(homeIntent);
+      FragmentManager fragmentManager = getSupportFragmentManager();
+      Fragment currentFragment = fragmentManager.findFragmentById(R.id.loginConfirmDialog);
+
+      ConfirmDialog exitDialog = ConfirmDialog.getInstance();
+
+      if (currentFragment == null) {
+         exitDialog.setDialogTitle("Exit Game");
+         exitDialog.setDialogDescription("Are you sure you want to quit the game?");
+         exitDialog.setOnCancel((View view) -> {
+            fragmentManager.beginTransaction()
+                  .remove(exitDialog)
+                  .commit();
+         });
+         exitDialog.setOnConfirm((View view) -> {
+            finishAffinity();
+            System.exit(0);
+         });
+
+         // show the dialog
+         fragmentManager.beginTransaction()
+               .add(R.id.loginConfirmDialog, exitDialog)
+               .commit();
       } else {
-         Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+
+         // close the dialog
+         fragmentManager.beginTransaction()
+               .remove(exitDialog)
+               .commit();
       }
-      pressedTime = System.currentTimeMillis();
    }
 
    /**
@@ -73,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, SelectPlayer.class);
             intent.putExtra(INTENT_LOGIN, player);
             startActivity(intent);
+            finish();
          }
       };
 

@@ -49,6 +49,14 @@ public class RPSPlayer implements Parcelable {
       return totalGameWon;
    }
 
+   public void countPlayed() {
+      ++this.totalGamePlayed;
+   }
+
+   public void countWon() {
+      ++this.totalGameWon;
+   }
+
    @Override
    public int describeContents() {
       return 0;

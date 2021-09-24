@@ -4,10 +4,12 @@
    xmlns:tools="http://schemas.android.com/tools"
    android:layout_width="match_parent"
    android:layout_height="match_parent"
-   android:background="#7F000000">
+   android:background="#7F000000"
+   android:clickable="true">
 
    <ImageView
       android:id="@+id/imageView41"
+      style="@style/add_shadow"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       app:layout_constraintBottom_toBottomOf="parent"
@@ -18,6 +20,7 @@
 
    <TextView
       android:id="@+id/confirmDialogTitle"
+      style="@style/add_shadow"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginStart="16dp"
@@ -50,6 +53,7 @@
 
    <ImageButton
       android:id="@+id/confirmBtn"
+      style="@style/add_shadow"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginEnd="64dp"
@@ -61,6 +65,7 @@
 
    <ImageButton
       android:id="@+id/cancelBtn"
+      style="@style/add_shadow"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="64dp"

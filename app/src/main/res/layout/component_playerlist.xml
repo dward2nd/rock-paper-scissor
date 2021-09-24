@@ -32,16 +32,16 @@
             android:textColor="#000000"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView40"
+            app:layout_constraintStart_toEndOf="@+id/selectPlayerAvatar"
             app:layout_constraintTop_toBottomOf="@+id/playerNameLabel" />
 
          <ImageView
-            android:id="@+id/imageView40"
+            android:id="@+id/selectPlayerAvatar"
             android:layout_width="82dp"
             android:layout_height="82dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -59,7 +59,7 @@
             android:textColor="#3CB1FF"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView40"
+            app:layout_constraintStart_toEndOf="@+id/selectPlayerAvatar"
             app:layout_constraintTop_toTopOf="parent" />
 
          <ImageView

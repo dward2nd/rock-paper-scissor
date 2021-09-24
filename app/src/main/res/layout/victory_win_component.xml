@@ -3,12 +3,24 @@
    xmlns:app="http://schemas.android.com/apk/res-auto"
    xmlns:tools="http://schemas.android.com/tools"
    android:layout_width="match_parent"
-   android:layout_height="match_parent">
+   android:layout_height="match_parent"
+   android:clickable="true">
 
    <ImageView
-      android:id="@+id/imageView40"
+      android:id="@+id/imageView26"
       android:layout_width="wrap_content"
-      android:layout_height="343dp"
+      android:layout_height="wrap_content"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:srcCompat="@drawable/whitemid" />
+
+   <ImageView
+      android:id="@+id/selectPlayerAvatar"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintBottom_toBottomOf="@+id/imageView26"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
@@ -18,16 +30,16 @@
       android:id="@+id/imageView44"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      app:layout_constraintBottom_toBottomOf="@+id/imageView40"
-      app:layout_constraintEnd_toEndOf="@+id/imageView40"
+      app:layout_constraintBottom_toBottomOf="@+id/selectPlayerAvatar"
+      app:layout_constraintEnd_toEndOf="@+id/selectPlayerAvatar"
       app:layout_constraintHorizontal_bias="1.0"
-      app:layout_constraintStart_toStartOf="@+id/imageView40"
-      app:layout_constraintTop_toTopOf="@+id/imageView40"
+      app:layout_constraintStart_toStartOf="@+id/selectPlayerAvatar"
+      app:layout_constraintTop_toTopOf="@+id/selectPlayerAvatar"
       app:layout_constraintVertical_bias="0.51"
       app:srcCompat="@drawable/exclamation" />
 
    <TextView
-      android:id="@+id/textView30"
+      android:id="@+id/finalGameplayVictoryResultLabel"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginBottom="70dp"
@@ -37,10 +49,10 @@
       android:textAppearance="@style/win"
       android:textColor="#FF1616"
       android:textSize="98.48sp"
-      app:layout_constraintBottom_toBottomOf="@+id/imageView40"
-      app:layout_constraintEnd_toEndOf="@+id/imageView40"
+      app:layout_constraintBottom_toBottomOf="@+id/selectPlayerAvatar"
+      app:layout_constraintEnd_toEndOf="@+id/selectPlayerAvatar"
       app:layout_constraintHorizontal_bias="0.49"
-      app:layout_constraintStart_toStartOf="@+id/imageView40" />
+      app:layout_constraintStart_toStartOf="@+id/selectPlayerAvatar" />
 
    <TextView
       android:id="@+id/textView34"
@@ -53,7 +65,7 @@
       android:textAppearance="@style/win"
       android:textColor="#FF1616"
       android:textSize="98.48sp"
-      app:layout_constraintBottom_toTopOf="@+id/textView30"
-      app:layout_constraintEnd_toEndOf="@+id/imageView40"
-      app:layout_constraintStart_toStartOf="@+id/imageView40" />
+      app:layout_constraintBottom_toTopOf="@+id/finalGameplayVictoryResultLabel"
+      app:layout_constraintEnd_toEndOf="@+id/selectPlayerAvatar"
+      app:layout_constraintStart_toStartOf="@+id/selectPlayerAvatar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

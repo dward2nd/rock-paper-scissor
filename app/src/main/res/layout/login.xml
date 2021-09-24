@@ -93,8 +93,6 @@
            android:layout_marginBottom="284dp"
            android:background="@drawable/round_text"
            android:focusable="true"
-           android:focusableInTouchMode="true"
-           android:focusedByDefault="true"
            android:fontFamily="@font/gomarice_rockin_record"
            android:padding="10dp"
            android:singleLine="true"
@@ -159,8 +157,12 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.fragment.app.FragmentContainerView xmlns:android="http://schemas.android.com/apk/res/android"
-       android:id="@+id/confirmDialog"
+    <androidx.fragment.app.FragmentContainerView
+       android:id="@+id/loginConfirmDialog"
        android:layout_width="match_parent"
-       android:layout_height="match_parent" />
+       android:layout_height="match_parent"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

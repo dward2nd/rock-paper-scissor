@@ -10,9 +10,7 @@
    android:background="@drawable/yelbg"
    tools:context=".SelectPlayer">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-       xmlns:app="http://schemas.android.com/apk/res-auto"
-       xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:layout_alignParentTop="true"
@@ -150,5 +148,30 @@
            app:layout_constraintEnd_toEndOf="@+id/imageView7"
            app:layout_constraintStart_toStartOf="@+id/imageView7"
            app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+        <TextView
+           android:id="@+id/selectPlayerClientInfo"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_marginStart="48dp"
+           android:layout_marginTop="24dp"
+           android:layout_marginEnd="48dp"
+           android:fontFamily="@font/gomarice_rockin_record"
+           android:text="@string/n_a_n_a"
+           android:textAlignment="center"
+           android:textAppearance="@style/n_a_n_a"
+           android:textColor="@color/white"
+           android:textSize="24sp"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/textView"
+           app:lineHeight="40sp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+       android:id="@+id/playerMenuConfirmDialog"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       tools:layout_editor_absoluteY="24dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

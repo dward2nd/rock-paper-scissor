@@ -1,16 +1,18 @@
 package com.rockpaperscissor;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.rockpaperscissor.Server.RPSServer;
+import com.rockpaperscissor.components.ConfirmDialog;
 import com.rockpaperscissor.components.SelectPlayerAdapter;
 
 public class SelectPlayer extends AppCompatActivity {
@@ -26,7 +28,9 @@ public class SelectPlayer extends AppCompatActivity {
    private RPSPlayer clientPlayer;
 
    // ui components
+   private ImageButton exitBtn;
    private RecyclerView playerList;
+   private TextView clientInfoLabel;
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +41,18 @@ public class SelectPlayer extends AppCompatActivity {
       playerList = findViewById(R.id.playerList);
 
       // receive a message from LoginActivity and display here.
-      Intent activityIntent = getIntent();
-      clientPlayer = activityIntent.getParcelableExtra(LoginActivity.INTENT_LOGIN);
+      Bundle intentExtras = getIntent().getExtras();
+      if (intentExtras != null) {
+         if (intentExtras.containsKey(LoginActivity.INTENT_LOGIN))
+            this.clientPlayer = intentExtras.getParcelable(LoginActivity.INTENT_LOGIN);
+         else if (intentExtras.containsKey(SummarizeActivity.INTENT_CLIENT))
+            this.clientPlayer = intentExtras.getParcelable(SummarizeActivity.INTENT_CLIENT);
+      }
 
-      Toast.makeText(getApplicationContext(),
-            "Current User: " + clientPlayer.getDisplayName(),
-            Toast.LENGTH_LONG)
-            .show();
+      clientInfoLabel = findViewById(R.id.selectPlayerClientInfo);
+      clientInfoLabel.setText(String.format("Hello %s!\nPlayed %d   |   Won %d",
+            clientPlayer.getDisplayName(), clientPlayer.getTotalGamePlayed(),
+            clientPlayer.getTotalGameWon()));
 
       // connect to the recycler view for playerList
       this.initPlayers();
@@ -51,6 +60,11 @@ public class SelectPlayer extends AppCompatActivity {
             = new SelectPlayerAdapter(this, samplePlayer, clientPlayer);
       playerList.setAdapter(selectPlayerAdapter);
       playerList.setLayoutManager(new LinearLayoutManager(this));
+
+      this.exitBtn = findViewById(R.id.selectPlayerExitBtn);
+      this.exitBtn.setOnClickListener((View view) -> {
+         onBackPressed();
+      });
    }
 
    private void initPlayers() {
@@ -62,15 +76,34 @@ public class SelectPlayer extends AppCompatActivity {
 
    @Override
    public void onBackPressed() {
-      if (pressedTime + 2000 > System.currentTimeMillis()) {
-         Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-         homeIntent.addCategory(Intent.CATEGORY_HOME);
-         homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-         startActivity(homeIntent);
+      FragmentManager fragmentManager = getSupportFragmentManager();
+      Fragment currentFragment = fragmentManager.findFragmentById(R.id.playerMenuConfirmDialog);
+
+      ConfirmDialog logoutDialog = ConfirmDialog.getInstance();
+
+      if (currentFragment == null) {
+         logoutDialog.setDialogTitle("Log Out");
+         logoutDialog.setDialogDescription("You are about to logout and lose all the stat. Proceed?");
+         logoutDialog.setOnCancel((View view) -> {
+            fragmentManager.beginTransaction()
+                  .remove(logoutDialog)
+                  .commit();
+         });
+         logoutDialog.setOnConfirm((View view) -> {
+            Intent intent = new Intent(SelectPlayer.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finishAndRemoveTask();
+         });
+
+         fragmentManager.beginTransaction()
+               .add(R.id.playerMenuConfirmDialog, logoutDialog)
+               .commit();
       } else {
-         Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+         fragmentManager.beginTransaction()
+               .remove(logoutDialog)
+               .commit();
       }
-      pressedTime = System.currentTimeMillis();
    }
 
    public void onSettingClicked(View view) {

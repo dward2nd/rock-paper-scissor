@@ -10,9 +10,7 @@
    android:background="@drawable/yelbg"
    tools:context=".SettingActivity">
 
-   <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:tools="http://schemas.android.com/tools"
+   <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:layout_alignParentTop="true"
@@ -52,17 +50,6 @@
          app:layout_constraintEnd_toEndOf="parent"
          app:layout_constraintStart_toStartOf="parent"
          tools:ignore="MissingConstraints" />
-
-      <ImageButton
-         android:id="@+id/imageButton4"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_marginStart="21dp"
-         android:layout_marginBottom="21dp"
-         android:background="@null"
-         app:layout_constraintBottom_toBottomOf="parent"
-         app:layout_constraintStart_toStartOf="@+id/imageView10"
-         app:srcCompat="@drawable/exit_to_app55" />
 
       <TextView
          android:id="@+id/textView5"
@@ -107,12 +94,12 @@
          app:layout_constraintStart_toStartOf="@+id/imageView9" />
 
       <ImageButton
-         android:id="@+id/imageButton6"
+         android:id="@+id/settingBgmCheckBox"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:layout_marginEnd="79dp"
          android:layout_marginBottom="352dp"
-         android:background="@null"
+         android:background="@drawable/checkbox"
          app:layout_constraintBottom_toBottomOf="@+id/imageView9"
          app:layout_constraintEnd_toEndOf="@+id/imageView9"
          app:srcCompat="@drawable/checkbox" />

@@ -2,10 +2,10 @@ package com.rockpaperscissor.components;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -60,14 +60,26 @@ public class SelectPlayerAdapter extends RecyclerView.Adapter<SelectPlayerAdapte
    public static class ViewHolder extends RecyclerView.ViewHolder {
       // components
       private CardView selectPlayerCard;
+      private static final int[] SHAPE_ICON = {
+            R.drawable.rock_small,
+            R.drawable.paper_small,
+            R.drawable.scissor_small
+      };
       private TextView playerNameLabel;
       private TextView playerStatLabel;
+      private ImageView playerAvatar;
 
       public ViewHolder(View itemView) {
          super(itemView);
          selectPlayerCard = itemView.findViewById(R.id.selectPlayerCard);
+         playerAvatar = itemView.findViewById(R.id.selectPlayerAvatar);
          playerNameLabel = itemView.findViewById(R.id.playerNameLabel);
          playerStatLabel = itemView.findViewById(R.id.playerStatLabel);
+
+         int randomShape = 3;
+         while (randomShape == 3)
+            randomShape = (int) Math.floor(Math.random() * 3);
+         playerAvatar.setImageResource(SHAPE_ICON[randomShape]);
       }
 
       public CardView getSelectPlayerCard() {

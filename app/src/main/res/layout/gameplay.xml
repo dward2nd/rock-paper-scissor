@@ -10,9 +10,7 @@
    android:background="@drawable/yelbg"
    tools:context=".GameplayActivity">
 
-   <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:tools="http://schemas.android.com/tools"
+   <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:layout_alignParentTop="true"
@@ -31,7 +29,7 @@
          app:srcCompat="@drawable/bluebg" />
 
       <ImageButton
-         android:id="@+id/imageButton8"
+         android:id="@+id/gamePlayBackBtn"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:layout_marginStart="22dp"
@@ -40,17 +38,6 @@
          app:layout_constraintStart_toStartOf="parent"
          app:layout_constraintTop_toTopOf="parent"
          app:srcCompat="@drawable/exit_to_app" />
-
-      <ImageButton
-         android:id="@+id/gamePlaySettingBtn"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_marginTop="27dp"
-         android:layout_marginEnd="22dp"
-         android:background="@null"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintTop_toTopOf="parent"
-         app:srcCompat="@drawable/setting_fill" />
 
       <ImageView
          android:id="@+id/imageView13"
@@ -63,21 +50,21 @@
          app:srcCompat="@drawable/bluebg_extend" />
 
       <ImageButton
-         android:id="@+id/gamePlayPaper"
+         android:id="@+id/gamePlayScissor"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:layout_marginStart="16dp"
-         android:layout_marginBottom="15dp"
+         android:layout_marginEnd="16dp"
+         android:layout_marginBottom="16dp"
          android:background="@null"
          app:layout_constraintBottom_toTopOf="@+id/gamePlayRock"
-         app:layout_constraintStart_toStartOf="@+id/imageView12"
-         app:srcCompat="@drawable/paper_gameplay1" />
+         app:layout_constraintEnd_toEndOf="@+id/imageView12"
+         app:srcCompat="@drawable/scissor_gameplay1" />
 
       <ImageButton
          android:id="@+id/gamePlayRock"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:layout_marginBottom="44dp"
+         android:layout_marginBottom="56dp"
          android:background="@null"
          app:layout_constraintBottom_toBottomOf="parent"
          app:layout_constraintEnd_toEndOf="parent"
@@ -86,15 +73,15 @@
          app:srcCompat="@drawable/rock_gameplay1" />
 
       <ImageButton
-         android:id="@+id/gamePlayScissor"
+         android:id="@+id/gamePlayPaper"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:layout_marginEnd="16dp"
-         android:layout_marginBottom="15dp"
+         android:layout_marginStart="16dp"
+         android:layout_marginBottom="16dp"
          android:background="@null"
          app:layout_constraintBottom_toTopOf="@+id/gamePlayRock"
-         app:layout_constraintEnd_toEndOf="@+id/imageView12"
-         app:srcCompat="@drawable/scissor_gameplay1" />
+         app:layout_constraintStart_toStartOf="@+id/imageView12"
+         app:srcCompat="@drawable/paper_gameplay1" />
 
       <TextView
          android:id="@+id/gamePlayChoose"
@@ -107,7 +94,8 @@
          app:layout_constraintBottom_toBottomOf="@+id/imageView13"
          app:layout_constraintEnd_toEndOf="@+id/imageView13"
          app:layout_constraintStart_toStartOf="@+id/imageView13"
-         app:layout_constraintTop_toTopOf="@+id/imageView13" />
+         app:layout_constraintTop_toTopOf="@+id/imageView13"
+         app:layout_constraintVertical_bias="0.6" />
 
       <TextView
          android:id="@+id/scoreSeparator"
@@ -135,7 +123,7 @@
          android:text="@string/n_a_n_a"
          android:textAlignment="center"
          android:textAppearance="@style/n_a_n_a"
-         android:textColor="@color/design_default_color_secondary_variant"
+         android:textColor="@color/design_default_color_on_primary"
          android:textSize="24sp"
          app:layout_constraintBottom_toTopOf="@+id/imageView13"
          app:layout_constraintEnd_toEndOf="parent"
@@ -225,7 +213,7 @@
          app:layout_constraintEnd_toStartOf="@+id/scoreSeparator" />
 
       <TextView
-         android:id="@+id/gamePlayClientPlayerScore2"
+         android:id="@+id/gamePlayOpponentPlayerScore"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:layout_marginStart="10dp"
@@ -237,5 +225,24 @@
          app:layout_constraintBottom_toTopOf="@+id/gamePlayStatus"
          app:layout_constraintStart_toEndOf="@+id/scoreSeparator" />
 
+      <androidx.fragment.app.FragmentContainerView
+         android:id="@+id/gamePlayShowResult"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         app:layout_constraintBottom_toBottomOf="@+id/imageView12"
+         app:layout_constraintEnd_toEndOf="@+id/imageView12"
+         app:layout_constraintStart_toStartOf="@+id/imageView12"
+         app:layout_constraintTop_toTopOf="@+id/imageView13" />
+
    </androidx.constraintlayout.widget.ConstraintLayout>
+
+   <androidx.fragment.app.FragmentContainerView
+      android:id="@+id/gamePlaySurrenderConfirmDialog"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
