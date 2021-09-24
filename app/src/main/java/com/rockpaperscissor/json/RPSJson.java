@@ -11,8 +11,6 @@ public class RPSJson {
    // gson-related instances.
    private static final GsonBuilder GSON_BUILDER = new GsonBuilder();
    private static final Gson GSON = GSON_BUILDER
-         .registerTypeAdapter(PlayerTemplate.class, new RPSDataDeserializer<PlayerTemplate>())
-         .registerTypeAdapter(LoginTemplate.class, new RPSDataDeserializer<LoginTemplate>())
          .create();
 
    public static <T> T fromJson(String json, Type typeOfT) {

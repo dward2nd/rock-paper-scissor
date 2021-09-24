@@ -5,29 +5,90 @@ import com.rockpaperscissor.json.jsontemplate.RequestTemplate;
 
 import java.util.HashMap;
 
-public class PlayerTemplate extends RPSPlayer {
-   public PlayerTemplate(String uid, String displayName) {
-      super(uid, displayName);
-   }
+import java.util.ArrayList;
 
-   public static RequestTemplate createRequestObjectModel(String uid, String displayName) {
-      return new RequestTemplate("login_welcome", new PlayerTemplate(uid, displayName));
-   }
-
+public class PlayerTemplate {
+   private String id;
+   private String username;
    private String session;
    private int score;
+   private int played;
    private HashMap<String, HashMap<String, String>> request;
+
+   public int getPlayed() {
+      return played;
+   }
+
+   public void setPlayed(int played) {
+      this.played = played;
+   }
+   public HashMap<String, HashMap<String, String>> getRequest() {
+      return request;
+   }
+
+   public void setRequest(HashMap<String, HashMap<String, String>> request) {
+      this.request = request;
+   }
+
+   public PlayerTemplate(String id, String username) {
+      this.id = id;
+      this.username = username;
+   }
+
+   public PlayerTemplate(String id, String username, String session) {
+      this.id = id;
+      this.username = username;
+      this.session = session;
+   }
+
+   public PlayerTemplate(String username) { this.username = username;}
+
+   public PlayerTemplate(String id, String username, String session, int score) {
+      this.id = id;
+      this.username = username;
+      this.session = session;
+      this.score = score;
+   }
+
+   public String getId() {
+      return id;
+   }
+
+   public void setId(String id) {
+      this.id = id;
+   }
+
+   public String getUsername() {
+      return username;
+   }
+
+   public void setUsername(String username) {
+      this.username = username;
+   }
 
    public String getSession() {
       return session;
+   }
+
+   public void setSession(String session) {
+      this.session = session;
    }
 
    public int getScore() {
       return score;
    }
 
-   public HashMap<String, HashMap<String, String>> getRequest() {
-      return request;
+   public void setScore(int score) {
+      this.score = score;
    }
 
+   @java.lang.Override
+   public java.lang.String toString() {
+      return "userData{" +
+              "id='" + id + '\'' +
+              ", username='" + username + '\'' +
+              ", session='" + session + '\'' +
+              ", score=" + score +
+              '}';
+   }
 }

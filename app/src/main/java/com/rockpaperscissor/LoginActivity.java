@@ -17,6 +17,8 @@ import com.rockpaperscissor.json.RPSJson;
 import com.rockpaperscissor.json.jsontemplate.data.LoginTemplate;
 import com.rockpaperscissor.json.jsontemplate.data.PlayerTemplate;
 
+import okhttp3.FormBody;
+
 public class LoginActivity extends AppCompatActivity {
    public static final String INTENT_LOGIN = "com.rockpaperscissor.LOGIN";
 
@@ -78,10 +80,11 @@ public class LoginActivity extends AppCompatActivity {
    private void login(String displayName) {
       String path = "/register";
       String body = String.format("username={%s}", displayName);
+      FormBody formBody;
       RPSResponseRunnable runnable = new RPSResponseRunnable() {
          @Override
          public void run() {
-            RPSPlayer player = RPSJson.fromJson(getResponse(), PlayerTemplate.class);
+            RPSPlayer player = RPSPlayer.getInstance(RPSJson.fromJson(getResponse(), PlayerTemplate.class));
             Log.d("TAG", "Display name: " + player.getDisplayName());
 
             Intent intent = new Intent(LoginActivity.this, SelectPlayer.class);
@@ -90,7 +93,9 @@ public class LoginActivity extends AppCompatActivity {
             finish();
          }
       };
-
-      RPSServer.post(body, runnable, path);
+      formBody =  new FormBody.Builder()
+              .add("username", displayName)
+              .build();
+      RPSServer.post(formBody, runnable, path);
    }
 }

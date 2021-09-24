@@ -3,6 +3,8 @@ package com.rockpaperscissor.Server;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -36,6 +38,7 @@ public class RPSServerCallback implements Callback {
          }
 
          String responseBodyString = responseBody.string();
+         responseBodyString = responseBodyString.substring(1,responseBodyString.length()-1);
          runnable.setResponse(responseBodyString);
          runnable.run();
 
