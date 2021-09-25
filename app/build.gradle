@@ -5,6 +5,7 @@ buildscript {
 }
 
 plugins {
+    id 'com.android.application'
 }
 
 android {
