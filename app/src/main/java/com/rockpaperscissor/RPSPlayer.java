@@ -57,8 +57,22 @@ public class RPSPlayer implements Parcelable {
       return displayName;
    }
 
-   public static RPSPlayer getInstance(PlayerTemplate template) {
-      return new RPSPlayer(template.getId(), template.getUsername(), template.getSession(), template.getPlayed(), template.getScore());
+   public RPSPlayer(PlayerTemplate template) {
+      this.uid = template.getId();
+      this.displayName = template.getUsername();
+      this.session = template.getSession();
+      this.totalGamePlayed = template.getPlayed();
+      this.totalGameWon = template.getScore();
+   }
+
+   public static RPSPlayer[] getRPSPlayerArray(PlayerTemplate[] template) {
+      RPSPlayer[] newInstance = new RPSPlayer[template.length];
+      for (int i = 0; i < template.length; ++i)
+         newInstance[i] = new RPSPlayer(template[i].getId(),
+               template[i].getUsername(), template[i].getSession(), template[i].getPlayed(),
+               template[i].getScore());
+
+      return newInstance;
    }
 
    public int getTotalGamePlayed() {

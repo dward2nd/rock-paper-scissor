@@ -10,9 +10,7 @@
    android:background="@drawable/yelbg"
    tools:context=".LoginActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-       xmlns:app="http://schemas.android.com/apk/res-auto"
-       xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.motion.widget.MotionLayout
        android:id="@+id/innerContainer"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
@@ -20,6 +18,7 @@
        android:layout_alignParentBottom="true"
        android:paddingTop="24dp"
        android:paddingBottom="48dp"
+       app:layoutDescription="@xml/login_xml_innercontainer_scene"
        tools:context=".LoginActivity">
 
         <ImageView
@@ -34,7 +33,7 @@
            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-           android:id="@+id/rps_online"
+           android:id="@+id/loginGameName"
            android:layout_width="wrap_content"
            android:layout_height="0dp"
            android:layout_alignParentTop="true"
@@ -50,30 +49,6 @@
            app:layout_constraintHorizontal_bias="0.5"
            app:layout_constraintStart_toStartOf="parent"
            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-           android:id="@+id/imageView5"
-           android:layout_width="110dp"
-           android:layout_height="110dp"
-           android:layout_centerHorizontal="true"
-           android:layout_centerVertical="true"
-           android:layout_marginTop="6dp"
-           android:src="@drawable/scissor"
-           app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintHorizontal_bias="0.498"
-           app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toBottomOf="@+id/rps_online" />
-
-        <ImageView
-           android:id="@+id/imageView"
-           android:layout_width="110dp"
-           android:layout_height="110dp"
-           android:layout_marginTop="72dp"
-           android:layout_marginEnd="11dp"
-           android:src="@drawable/rock"
-           app:layout_constraintEnd_toStartOf="@+id/imageView5"
-           app:layout_constraintTop_toBottomOf="@+id/rps_online"
-           tools:ignore="MissingConstraints" />
 
         <ImageView
            android:id="@+id/imageView8"
@@ -145,24 +120,46 @@
            app:layout_constraintTop_toTopOf="@+id/nextBtn" />
 
         <ImageView
-           android:id="@+id/imageView24"
+           android:id="@+id/loginScissorsIcon"
+           android:layout_width="110dp"
+           android:layout_height="110dp"
+           android:layout_centerHorizontal="true"
+           android:layout_centerVertical="true"
+           android:layout_marginTop="6dp"
+           android:src="@drawable/scissor"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintHorizontal_bias="0.498"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/loginGameName" />
+
+        <ImageView
+           android:id="@+id/loginRockIcon"
+           android:layout_width="110dp"
+           android:layout_height="110dp"
+           android:layout_marginTop="72dp"
+           android:layout_marginEnd="11dp"
+           android:src="@drawable/rock"
+           app:layout_constraintEnd_toStartOf="@+id/loginScissorsIcon"
+           app:layout_constraintTop_toBottomOf="@+id/loginGameName"
+           tools:ignore="MissingConstraints" />
+
+        <ImageView
+           android:id="@+id/loginPaperIcon"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_marginStart="11dp"
            android:layout_marginTop="72dp"
-           app:layout_constraintStart_toEndOf="@+id/imageView5"
-           app:layout_constraintTop_toBottomOf="@+id/rps_online"
+           app:layout_constraintStart_toEndOf="@+id/loginScissorsIcon"
+           app:layout_constraintTop_toBottomOf="@+id/loginGameName"
            app:srcCompat="@drawable/paper" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 
     <androidx.fragment.app.FragmentContainerView
        android:id="@+id/loginConfirmDialog"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       app:layout_constraintBottom_toBottomOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toTopOf="parent" />
+       tools:layout_editor_absoluteY="2dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

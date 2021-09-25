@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
          @Override
          public void run() {
             String responseString = getResponse().substring(1, getResponse().length() - 1);
-            RPSPlayer player = RPSPlayer.getInstance(RPSJson.fromJson(responseString, PlayerTemplate.class));
+            RPSPlayer player = new RPSPlayer((PlayerTemplate) RPSJson.fromJson(responseString, PlayerTemplate.class));
             Log.d("TAG", "Display name: " + player.getDisplayName());
 
             Intent intent = new Intent(LoginActivity.this, SelectPlayer.class);

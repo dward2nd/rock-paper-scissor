@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
    xmlns:app="http://schemas.android.com/apk/res-auto"
    xmlns:tools="http://schemas.android.com/tools"
    android:layout_width="match_parent"
    android:layout_height="match_parent"
-   android:background="#AA000000"
-   android:clickable="true">
+   android:clickable="true"
+   app:layoutDescription="@xml/setting_fragment_scene">
+
+   <View
+      android:id="@+id/view3"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:background="#AA000000"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
    <ImageButton
       android:id="@+id/settingBackBtn"
@@ -95,4 +105,4 @@
       app:layout_constraintStart_toStartOf="@+id/imageView42"
       app:layout_constraintTop_toTopOf="@+id/imageView42" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

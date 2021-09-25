@@ -10,13 +10,15 @@
    android:background="@drawable/yelbg"
    tools:context=".GameplayActivity">
 
-   <androidx.constraintlayout.widget.ConstraintLayout
+   <androidx.constraintlayout.motion.widget.MotionLayout
+      android:id="@+id/constraintLayout2"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:layout_alignParentTop="true"
       android:layout_alignParentBottom="true"
       android:paddingTop="24dp"
-      android:paddingBottom="48dp">
+      android:paddingBottom="48dp"
+      app:layoutDescription="@xml/gameplay_xml_constraintlayout2_scene">
 
       <ImageView
          android:id="@+id/imageView12"
@@ -245,7 +247,7 @@
          app:layout_constraintStart_toStartOf="@+id/imageView12"
          app:layout_constraintTop_toTopOf="@+id/imageView13" />
 
-   </androidx.constraintlayout.widget.ConstraintLayout>
+   </androidx.constraintlayout.motion.widget.MotionLayout>
 
    <androidx.fragment.app.FragmentContainerView
       android:id="@+id/gamePlaySurrenderConfirmDialog"

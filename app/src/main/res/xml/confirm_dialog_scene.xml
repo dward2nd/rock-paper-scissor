@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+   <Transition
+      motion:autoTransition="animateToEnd"
+      motion:constraintSetEnd="@+id/end"
+      motion:constraintSetStart="@id/start"
+      motion:duration="400"
+      motion:motionInterpolator="cubic(0.08,0.82,0.34,0.9)">
+      <KeyFrameSet></KeyFrameSet>
+   </Transition>
+
+   <ConstraintSet android:id="@+id/start">
+      <Constraint
+         android:id="@+id/imageView41"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:alpha="0"
+         android:scaleX="1.1"
+         motion:layout_constraintBottom_toBottomOf="parent"
+         motion:layout_constraintEnd_toEndOf="parent"
+         motion:layout_constraintStart_toStartOf="parent"
+         motion:layout_constraintTop_toTopOf="parent" />
+      <Constraint
+         android:id="@+id/confirmBtn"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginEnd="64dp"
+         android:layout_marginBottom="-32dp"
+         android:alpha="0"
+         android:translationY="20dp"
+         motion:layout_constraintBottom_toBottomOf="@+id/imageView41"
+         motion:layout_constraintEnd_toEndOf="@+id/imageView41" />
+      <Constraint
+         android:id="@+id/cancelBtn"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="64dp"
+         android:layout_marginBottom="-32dp"
+         android:alpha="0"
+         android:translationY="20dp"
+         motion:layout_constraintBottom_toBottomOf="@+id/imageView41"
+         motion:layout_constraintStart_toStartOf="@+id/imageView41" />
+      <Constraint
+         android:id="@+id/confirmDialogDescription"
+         android:layout_width="0dp"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="16dp"
+         android:layout_marginTop="18dp"
+         android:layout_marginEnd="16dp"
+         android:alpha="0"
+         android:translationY="20dp"
+         motion:layout_constraintEnd_toEndOf="@+id/imageView41"
+         motion:layout_constraintStart_toStartOf="@+id/imageView41"
+         motion:layout_constraintTop_toBottomOf="@+id/confirmDialogTitle" />
+      <Constraint
+         android:id="@+id/confirmDialogTitle"
+         android:layout_width="0dp"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="16dp"
+         android:layout_marginTop="16dp"
+         android:layout_marginEnd="16dp"
+         android:alpha="0"
+         android:translationY="20dp"
+         motion:layout_constraintEnd_toEndOf="@+id/imageView41"
+         motion:layout_constraintHorizontal_bias="0.0"
+         motion:layout_constraintStart_toStartOf="@+id/imageView41"
+         motion:layout_constraintTop_toTopOf="@+id/imageView41" />
+      <Constraint
+         android:id="@+id/view"
+         android:layout_width="0dp"
+         android:layout_height="0dp"
+         android:alpha="0"
+         motion:layout_constraintBottom_toBottomOf="parent"
+         motion:layout_constraintEnd_toEndOf="parent"
+         motion:layout_constraintStart_toStartOf="parent"
+         motion:layout_constraintTop_toTopOf="parent" />
+   </ConstraintSet>
+
+   <ConstraintSet android:id="@+id/end"></ConstraintSet>
+</MotionScene>

@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +22,8 @@ import com.rockpaperscissor.components.ConfirmDialog;
 import com.rockpaperscissor.components.ScoreboardFragment;
 import com.rockpaperscissor.components.SelectPlayerSessionManager;
 import com.rockpaperscissor.components.SettingDialog;
+import com.rockpaperscissor.json.RPSJson;
+import com.rockpaperscissor.json.jsontemplate.data.PlayerTemplate;
 
 import okhttp3.FormBody;
 
@@ -32,6 +35,7 @@ public class SelectPlayer extends AppCompatActivity {
 
    private RPSPlayer clientPlayer;
    private RPSPlayer pseudoOpponentPlayer;
+   private RPSServer[] scoreboardPlayers;
 
    // ui components
    private Button sessionBtn;
@@ -85,6 +89,16 @@ public class SelectPlayer extends AppCompatActivity {
       sessionFragment.setPseudoOpponentPlayer(pseudoOpponentPlayer);
 
       switchToSessionFragment();
+
+      String scoreboardPath = "/playerstatus";
+      RPSResponseRunnable runnable = new RPSResponseRunnable() {
+         @Override
+         public void run() {
+            String responseString = getResponse();
+            Log.d("TAG", responseString);
+         }
+      };
+      RPSServer.get(scoreboardPath, runnable);
 
       scoreboardFragment = ScoreboardFragment.getInstance();
    }

@@ -10,13 +10,12 @@ import okhttp3.RequestBody;
 
 public class RPSServer {
    private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-   private static final String SERVER_ADDRESS = "192.168.1.8";
+   private static final String SERVER_ADDRESS = "cbf4-2405-9800-b910-8003-c155-fc34-bc49-fb47.ngrok.io";
    private static final String SERVER_PORT = "8080";
-   private static final String SERVER_URL = String.format("http://%s:%s", SERVER_ADDRESS, SERVER_PORT);
+   private static final String SERVER_URL = String.format("http://%s", SERVER_ADDRESS);
    // http api constants
    private static final OkHttpClient client = new OkHttpClient();
 
-   /* Maybe use later, if needed.
    public static void get(String path, RPSResponseRunnable runnable) {
       Request request = new Request.Builder()
             .url(SERVER_URL + path)
@@ -24,7 +23,6 @@ public class RPSServer {
 
       client.newCall(request).enqueue(new RPSServerCallback(runnable));
    }
-    */
 
    public static void post(FormBody body, RPSResponseRunnable runnable, String path) {
       Request request = new Request.Builder()
