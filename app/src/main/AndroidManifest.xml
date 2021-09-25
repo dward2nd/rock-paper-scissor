@@ -7,9 +7,9 @@
    <application
       android:allowBackup="true"
       android:fullBackupOnly="false"
-      android:icon="@mipmap/ic_launcher"
+      android:icon="@mipmap/rps_launcher"
       android:label="@string/app_name"
-      android:roundIcon="@mipmap/ic_launcher_round"
+      android:roundIcon="@mipmap/rps_launcher_round"
       android:supportsRtl="true"
       android:theme="@style/Theme.RockPaperScissor"
       android:usesCleartextTraffic="true">

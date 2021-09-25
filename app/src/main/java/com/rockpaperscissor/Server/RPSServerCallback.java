@@ -17,7 +17,6 @@ public class RPSServerCallback implements Callback {
    private RPSResponseRunnable runnable;
 
    public RPSServerCallback(RPSResponseRunnable runnable) {
-      super();
       this.runnable = runnable;
    }
 
@@ -34,15 +33,17 @@ public class RPSServerCallback implements Callback {
          // for debugging pupose only
          Headers responseHeaders = response.headers();
          for (int i = 0, size = responseHeaders.size(); i < size; i++) {
-            Log.d("TAG", responseHeaders.name(i) + ": " + responseHeaders.value(i));
+            Log.d("TAG", "HEADER " + responseHeaders.name(i) + ": " + responseHeaders.value(i));
          }
 
          String responseBodyString = responseBody.string();
-         responseBodyString = responseBodyString.substring(1,responseBodyString.length()-1);
+         // For long-term development purpose, if you wish to remove the array part,
+         // do that in Runnable objects instead.
+         //responseBodyString = responseBodyString.substring(1, responseBodyString.length() - 1);
          runnable.setResponse(responseBodyString);
          runnable.run();
 
-         Log.d("TAG", responseBodyString);
+         Log.d("TAG", "BODY " + responseBodyString);
       }
    }
 }
