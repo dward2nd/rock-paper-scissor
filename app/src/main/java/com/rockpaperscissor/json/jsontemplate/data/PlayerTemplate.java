@@ -1,19 +1,11 @@
 package com.rockpaperscissor.json.jsontemplate.data;
 
-import com.rockpaperscissor.RPSPlayer;
-import com.rockpaperscissor.json.jsontemplate.RequestTemplate;
-
-import java.util.HashMap;
-
-import java.util.ArrayList;
-
 public class PlayerTemplate {
    private String id;
    private String username;
    private String session;
    private int score;
    private int played;
-   private HashMap<String, HashMap<String, String>> request;
 
    public int getPlayed() {
       return played;
@@ -21,13 +13,6 @@ public class PlayerTemplate {
 
    public void setPlayed(int played) {
       this.played = played;
-   }
-   public HashMap<String, HashMap<String, String>> getRequest() {
-      return request;
-   }
-
-   public void setRequest(HashMap<String, HashMap<String, String>> request) {
-      this.request = request;
    }
 
    public PlayerTemplate(String id, String username) {
