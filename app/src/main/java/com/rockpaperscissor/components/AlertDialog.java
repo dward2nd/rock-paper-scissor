@@ -32,13 +32,13 @@ public class AlertDialog extends Fragment {
 
    @Override
    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-      confirmDialogTitle = view.findViewById(R.id.confirmDialogTitle);
-      confirmDialogDescription = view.findViewById(R.id.confirmDialogDescription);
+      confirmDialogTitle = view.findViewById(R.id.alertDialogTitle);
+      confirmDialogDescription = view.findViewById(R.id.alertDialogDescription);
 
       confirmDialogTitle.setText(dialogTitle);
       confirmDialogDescription.setText(dialogDescription);
 
-      cancelBtn = view.findViewById(R.id.cancelBtn);
+      cancelBtn = view.findViewById(R.id.alertDismissBtn);
 
       cancelBtn.setOnClickListener(onCancel);
 

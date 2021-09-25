@@ -14,6 +14,9 @@ import androidx.fragment.app.FragmentManager;
 import com.rockpaperscissor.components.ConfirmDialog;
 import com.rockpaperscissor.components.GameplayFinalResultFragment;
 import com.rockpaperscissor.components.GameplayResultFragment;
+import com.rockpaperscissor.components.SettingDialog;
+
+import org.w3c.dom.Text;
 
 import java.util.Timer;
 
@@ -33,9 +36,11 @@ public class GameplayActivity extends AppCompatActivity {
    private final Handler resultFragmentHandler = new Handler();
    // ui components
    private ImageButton gamePlayBackBtn;
+   private ImageButton gamePlaySettingBtn;
    private ImageButton gamePlayRock;
    private ImageButton gamePlayPaper;
    private ImageButton gamePlayScissor;
+   private TextView gamePlayChoose;
    private TextView gamePlayClientPlayerScore;
    private TextView gamePlayOpponentPlayerScore;
    private TextView gamePlayClientPlayerName;
@@ -60,10 +65,8 @@ public class GameplayActivity extends AppCompatActivity {
       startActivity(intent);
    };
    private boolean gameFinished = false;
-   private boolean isResultShowing = false;
    private final Runnable afterResultFragmentShowed = () -> {
-      isResultShowing = false;
-
+      showChoice();
       getSupportFragmentManager().beginTransaction()
             .remove(resultFragment)
             .commit();
@@ -71,6 +74,20 @@ public class GameplayActivity extends AppCompatActivity {
       if (round >= 5)
          onFinishedEvent();
    };
+
+   private void hideChoices() {
+      gamePlayChoose.setVisibility(TextView.INVISIBLE);
+      gamePlayRock.setVisibility(TextView.INVISIBLE);
+      gamePlayPaper.setVisibility(TextView.INVISIBLE);
+      gamePlayScissor.setVisibility(TextView.INVISIBLE);
+   }
+
+   private void showChoice() {
+      gamePlayChoose.setVisibility(TextView.VISIBLE);
+      gamePlayRock.setVisibility(TextView.VISIBLE);
+      gamePlayPaper.setVisibility(TextView.VISIBLE);
+      gamePlayScissor.setVisibility(TextView.VISIBLE);
+   }
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +113,10 @@ public class GameplayActivity extends AppCompatActivity {
       this.gamePlayStatus = findViewById(R.id.gamePlayStatus);
       this.gamePlayStatus.setText("Game started!");
 
+      this.gamePlayChoose = findViewById(R.id.gamePlayChoose);
+
       this.gamePlayBackBtn = findViewById(R.id.gamePlayBackBtn);
+      this.gamePlaySettingBtn = findViewById(R.id.gamePlaySettingBtn);
       this.gamePlayRock = findViewById(R.id.gamePlayRock);
       this.gamePlayPaper = findViewById(R.id.gamePlayPaper);
       this.gamePlayScissor = findViewById(R.id.gamePlayScissor);
@@ -104,6 +124,16 @@ public class GameplayActivity extends AppCompatActivity {
       this.gamePlayBackBtn.setOnClickListener((View view) -> {
          onBackPressed();
       });
+
+      this.gamePlaySettingBtn.setOnClickListener((View view) -> {
+         FragmentManager fragmentManager = getSupportFragmentManager();
+         SettingDialog settingDialog = SettingDialog.getInstance();
+
+         fragmentManager.beginTransaction()
+               .add(R.id.gamePlaySurrenderConfirmDialog, settingDialog)
+               .commit();
+      });
+
       this.gamePlayRock.setOnClickListener((View view) -> {
          userChoose(1);
       });
@@ -124,6 +154,7 @@ public class GameplayActivity extends AppCompatActivity {
    }
 
    private void onFinishedEvent() {
+      hideChoices();
       gameFinished = true;
 
       boolean doesWin = clientScore > opponentScore && !surrendered;
@@ -182,13 +213,13 @@ public class GameplayActivity extends AppCompatActivity {
             isDraw ? "equals" : doesWin ? "wins" : "loses to",
             shapeName[opponentChoice - 1]));
 
+      hideChoices();
       resultFragment.setClientChoice(clientChoice);
       resultFragment.setOpponentChoice(opponentChoice);
       getSupportFragmentManager().beginTransaction()
             .add(R.id.gamePlayShowResult, resultFragment)
             .commit();
 
-      isResultShowing = true;
       resultFragmentHandler.postDelayed(afterResultFragmentShowed, 2000L);
    }
 
@@ -229,7 +260,7 @@ public class GameplayActivity extends AppCompatActivity {
                   .commit();
          } else
             fragmentManager.beginTransaction()
-                  .remove(surrenderConfirmDialog)
+                  .remove(currentFragment)
                   .commit();
       }
    }

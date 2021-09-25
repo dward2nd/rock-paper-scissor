@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
+   xmlns:tools="http://schemas.android.com/tools"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   android:background="#AA000000"
+   android:clickable="true">
+
+   <ImageButton
+      android:id="@+id/settingBackBtn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="48dp"
+      android:background="@null"
+      android:onClick="onBackBtnPressed"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.497"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/imageView40"
+      app:srcCompat="@drawable/redrecbutton" />
+
+   <ImageView
+      android:id="@+id/imageView40"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/player_menu_white"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.495"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:ignore="MissingConstraints" />
+
+   <TextView
+      android:id="@+id/textView29"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:clickable="false"
+      android:fontFamily="@font/gomarice_rockin_record"
+      android:text="BACK"
+      android:textAlignment="center"
+      android:textColor="#FFFFFF"
+      android:textSize="24sp"
+      app:layout_constraintBottom_toBottomOf="@+id/settingBackBtn"
+      app:layout_constraintEnd_toEndOf="@+id/settingBackBtn"
+      app:layout_constraintStart_toStartOf="@+id/settingBackBtn"
+      app:layout_constraintTop_toTopOf="@+id/settingBackBtn" />
+
+   <TextView
+      android:id="@+id/textView28"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="24dp"
+      android:layout_marginTop="7dp"
+      android:fontFamily="@font/gomarice_rockin_record"
+      android:text="BGM"
+      android:textColor="#000000"
+      android:textSize="18sp"
+      app:layout_constraintStart_toStartOf="@+id/imageView40"
+      app:layout_constraintTop_toTopOf="@+id/settingBgmCheckBox" />
+
+   <ImageButton
+      android:id="@+id/settingBgmCheckBox"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="30dp"
+      android:layout_marginEnd="24dp"
+      android:background="@drawable/checkbox"
+      app:layout_constraintEnd_toEndOf="@+id/imageView40"
+      app:layout_constraintTop_toBottomOf="@+id/imageView42"
+      app:srcCompat="@drawable/checkbox" />
+
+   <ImageView
+      android:id="@+id/imageView42"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="-38dp"
+      android:src="@drawable/bluebanner"
+      app:layout_constraintEnd_toEndOf="@+id/imageView40"
+      app:layout_constraintStart_toStartOf="@+id/imageView40"
+      app:layout_constraintTop_toTopOf="@+id/imageView40"
+      tools:ignore="MissingConstraints" />
+
+   <TextView
+      android:id="@+id/textView26"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/gomarice_rockin_record"
+      android:text="SETTING"
+      android:textColor="#FFFFFF"
+      android:textSize="24sp"
+      app:layout_constraintBottom_toBottomOf="@+id/imageView42"
+      app:layout_constraintEnd_toEndOf="@+id/imageView42"
+      app:layout_constraintStart_toStartOf="@+id/imageView42"
+      app:layout_constraintTop_toTopOf="@+id/imageView42" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

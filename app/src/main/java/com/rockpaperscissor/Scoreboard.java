@@ -14,8 +14,6 @@ public class Scoreboard extends AppCompatActivity {
 
    private RecyclerView playerList;
 
-   private RPSPlayer clientPlayer;
-
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
@@ -23,13 +21,12 @@ public class Scoreboard extends AppCompatActivity {
       getSupportActionBar().hide();
 
       Bundle intentExtras = getIntent().getExtras();
-      clientPlayer = intentExtras.getParcelable(SelectPlayer.INTENT_CLIENT);
 
       this.initPlayers();
 
       playerList = findViewById(R.id.scoreBoardPlayerList);
       SelectPlayerAdapter selectPlayerAdapter
-            = new SelectPlayerAdapter(this, samplePlayer, clientPlayer);
+            = new SelectPlayerAdapter(this, samplePlayer);
       playerList.setAdapter(selectPlayerAdapter);
       playerList.setLayoutManager(new LinearLayoutManager(this));
    }
@@ -37,7 +34,7 @@ public class Scoreboard extends AppCompatActivity {
    private void initPlayers() {
       this.samplePlayer = new RPSPlayer[this.playerLength];
       for (int i = 0; i < this.playerLength; ++i) {
-         this.samplePlayer[i] = new RPSPlayer(String.format("%09d", i), "Player " + (i + 1));
+         this.samplePlayer[i] = new RPSPlayer(String.format("%09d", i), "Player " + (i + 1), "Session " + (i + 1));
       }
    }
 }

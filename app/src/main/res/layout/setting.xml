@@ -94,7 +94,7 @@
          app:layout_constraintStart_toStartOf="@+id/imageView9" />
 
       <ImageButton
-         android:id="@+id/settingBgmCheckBox"
+         android:id="@+id/oldSettingBgmCheckBox"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:layout_marginEnd="79dp"
@@ -105,7 +105,7 @@
          app:srcCompat="@drawable/checkbox" />
 
       <ImageButton
-         android:id="@+id/settingBackBtn"
+         android:id="@+id/oldSettingBackBtn"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:layout_marginBottom="41dp"
@@ -127,10 +127,10 @@
          android:textAlignment="center"
          android:textColor="#FFFFFF"
          android:textSize="24sp"
-         app:layout_constraintBottom_toBottomOf="@+id/settingBackBtn"
-         app:layout_constraintEnd_toEndOf="@+id/settingBackBtn"
-         app:layout_constraintStart_toStartOf="@+id/settingBackBtn"
-         app:layout_constraintTop_toTopOf="@+id/settingBackBtn" />
+         app:layout_constraintBottom_toBottomOf="@+id/oldSettingBackBtn"
+         app:layout_constraintEnd_toEndOf="@+id/oldSettingBackBtn"
+         app:layout_constraintStart_toStartOf="@+id/oldSettingBackBtn"
+         app:layout_constraintTop_toTopOf="@+id/oldSettingBackBtn" />
 
    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

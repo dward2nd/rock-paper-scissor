@@ -1,10 +1,10 @@
 package com.rockpaperscissor;
 
+import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +18,9 @@ import com.rockpaperscissor.Server.RPSResponseRunnable;
 import com.rockpaperscissor.Server.RPSServer;
 import com.rockpaperscissor.components.AlertDialog;
 import com.rockpaperscissor.components.ConfirmDialog;
-import com.rockpaperscissor.components.SelectPlayerAdapter;
+import com.rockpaperscissor.components.ScoreboardFragment;
+import com.rockpaperscissor.components.SelectPlayerSessionManager;
+import com.rockpaperscissor.components.SettingDialog;
 
 import okhttp3.FormBody;
 
@@ -29,16 +31,17 @@ public class SelectPlayer extends AppCompatActivity {
    public static final String INTENT_SESSION = "com.rockpaperscissor.SESSION";
 
    private RPSPlayer clientPlayer;
+   private RPSPlayer pseudoOpponentPlayer;
 
    // ui components
-   private EditText clientSessionIdLabel;
-   private EditText opponentSessionIdLabel;
-
-   private Button startBtn;
+   private Button sessionBtn;
    private Button scoreboardBtn;
    private ImageButton exitBtn;
-
    private TextView clientInfoLabel;
+
+   // fragments
+   private SelectPlayerSessionManager sessionFragment;
+   private ScoreboardFragment scoreboardFragment;
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
@@ -55,19 +58,16 @@ public class SelectPlayer extends AppCompatActivity {
             this.clientPlayer = intentExtras.getParcelable(SummarizeActivity.INTENT_CLIENT);
       }
 
-      clientSessionIdLabel = findViewById(R.id.sessionClientSessionIdBox);
-      clientSessionIdLabel.setText(clientPlayer.getSession());
+      this.pseudoOpponentPlayer = new RPSPlayer("1234567890987654321", "Bot", "somesession");
 
-      opponentSessionIdLabel = findViewById(R.id.sessionOpponentSessionIdBox);
-
-      startBtn = findViewById(R.id.sessionStartGameBtn);
-      startBtn.setOnClickListener((View view) -> {
-
+      sessionBtn = findViewById(R.id.sessionBtn);
+      sessionBtn.setOnClickListener((View view) -> {
+         switchToSessionFragment();
       });
 
       scoreboardBtn = findViewById(R.id.scoreboardBtn);
       scoreboardBtn.setOnClickListener((View view) -> {
-
+         switchToScoreboardFragment();
       });
 
       clientInfoLabel = findViewById(R.id.selectPlayerClientInfo);
@@ -79,13 +79,54 @@ public class SelectPlayer extends AppCompatActivity {
       this.exitBtn.setOnClickListener((View view) -> {
          onBackPressed();
       });
+
+      sessionFragment = SelectPlayerSessionManager.getInstance();
+      sessionFragment.setClientPlayer(clientPlayer);
+      sessionFragment.setPseudoOpponentPlayer(pseudoOpponentPlayer);
+
+      switchToSessionFragment();
+
+      scoreboardFragment = ScoreboardFragment.getInstance();
    }
 
+   private void switchToSessionFragment() {
+      sessionBtn.setBackgroundColor(0xFFFFFFFF);
+      scoreboardBtn.setBackgroundColor(0xFFFFCE70);
+
+      FragmentManager fragmentManager = getSupportFragmentManager();
+      Fragment currentFragment = fragmentManager.findFragmentById(R.id.selectPlayerMainFragment);
+
+      if (currentFragment != null)
+         fragmentManager.beginTransaction()
+               .remove(currentFragment)
+               .commit();
+
+      fragmentManager.beginTransaction()
+            .add(R.id.selectPlayerMainFragment, sessionFragment)
+            .commit();
+   }
+
+   private void switchToScoreboardFragment() {
+      sessionBtn.setBackgroundColor(0xFFFFCE70);
+      scoreboardBtn.setBackgroundColor(0xFFFFFFFF);
+
+      FragmentManager fragmentManager = getSupportFragmentManager();
+      Fragment currentFragment = fragmentManager.findFragmentById(R.id.selectPlayerMainFragment);
+
+      if (currentFragment != null)
+         fragmentManager.beginTransaction()
+               .remove(currentFragment)
+               .commit();
+
+      fragmentManager.beginTransaction()
+            .add(R.id.selectPlayerMainFragment, scoreboardFragment)
+            .commit();
+   }
 
    @Override
    public void onBackPressed() {
       FragmentManager fragmentManager = getSupportFragmentManager();
-      Fragment currentFragment = fragmentManager.findFragmentById(R.id.playerMenuConfirmDialog);
+      Fragment currentFragment = fragmentManager.findFragmentById(R.id.playerMenuFragment);
 
       ConfirmDialog logoutDialog = ConfirmDialog.getInstance();
 
@@ -105,72 +146,22 @@ public class SelectPlayer extends AppCompatActivity {
          });
 
          fragmentManager.beginTransaction()
-               .add(R.id.playerMenuConfirmDialog, logoutDialog)
+               .add(R.id.playerMenuFragment, logoutDialog)
                .commit();
       } else {
          fragmentManager.beginTransaction()
-               .remove(logoutDialog)
+               .remove(currentFragment)
                .commit();
       }
    }
 
    public void onSettingClicked(View view) {
-      Intent settingIntent = new Intent(this, SettingActivity.class);
-      startActivity(settingIntent);
+      FragmentManager fragmentManager = getSupportFragmentManager();
+      SettingDialog settingDialog = SettingDialog.getInstance();
+
+      fragmentManager.beginTransaction()
+            .add(R.id.playerMenuFragment, settingDialog)
+            .commit();
    }
 
-   private void startGame(String session) {
-      FormBody formBody = new FormBody.Builder()
-            .add("Id", clientPlayer.getUid())
-            .add("Session", session)
-            .build();
-
-      RPSResponseRunnable runnable = new RPSResponseRunnable() {
-         @Override
-         public void run() {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            Fragment currentFragment = fragmentManager.findFragmentById(R.id.playerMenuConfirmDialog);
-            AlertDialog notfoundDialog = AlertDialog.getInstance();
-            notfoundDialog.setOnCancel((View view) -> {
-               fragmentManager.beginTransaction()
-                     .remove(notfoundDialog)
-                     .commit();
-            });
-
-            if (getResponse().equals("joined")) {
-               Intent intent = new Intent(SelectPlayer.this, GameplayActivity.class);
-               intent.putExtra(INTENT_CLIENT, clientPlayer);
-               intent.putExtra(INTENT_SESSION, session);
-               startActivity(intent);
-            } else if (getResponse().equals("full")) {
-               if (currentFragment == null) {
-                  notfoundDialog.setDialogTitle("Already taken");
-                  notfoundDialog.setDialogDescription("The session `" + session + "` is currently active with the other player.");
-               } else {
-                  fragmentManager.beginTransaction()
-                        .remove(currentFragment)
-                        .commit();
-               }
-               fragmentManager.beginTransaction()
-                     .add(R.id.playerMenuConfirmDialog, notfoundDialog)
-                     .commit();
-            } else {
-               if (currentFragment == null) {
-                  notfoundDialog.setDialogTitle("Not found");
-                  notfoundDialog.setDialogDescription("The session `" + session + "` not found on the server.");
-               } else {
-                  fragmentManager.beginTransaction()
-                        .remove(currentFragment)
-                        .commit();
-               }
-               fragmentManager.beginTransaction()
-                     .add(R.id.playerMenuConfirmDialog, notfoundDialog)
-                     .commit();
-
-            }
-         }
-      };
-
-      RPSServer.post(formBody, runnable, String.format("%s/join", clientPlayer.getUid()));
-   }
 }

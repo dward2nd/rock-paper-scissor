@@ -18,8 +18,8 @@ public class SettingActivity extends AppCompatActivity {
       setContentView(R.layout.setting);
       getSupportActionBar().hide();
 
-      bgmCheckBox = findViewById(R.id.settingBgmCheckBox);
-      backBtn = findViewById(R.id.settingBackBtn);
+      bgmCheckBox = findViewById(R.id.oldSettingBgmCheckBox);
+      backBtn = findViewById(R.id.oldSettingBackBtn);
 
       bgmCheckBox.setOnClickListener((View view) -> {
          bgmChecked = !bgmChecked;

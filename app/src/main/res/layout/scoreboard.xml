@@ -82,11 +82,6 @@
          app:layout_constraintTop_toTopOf="@+id/imageView4"
          tools:ignore="MissingConstraints" />
 
-      <androidx.fragment.app.FragmentContainerView
-         android:id="@+id/scoreBoardConfirmDialog"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent" />
-
       <ImageButton
          android:id="@+id/scoreBoardExitBtn"
          android:layout_width="wrap_content"
@@ -111,7 +106,7 @@
          app:srcCompat="@drawable/setting_55" />
 
       <androidx.recyclerview.widget.RecyclerView
-         android:id="@+id/scoreBoardPlayerList"
+         android:id="@+id/oldScoreBoardPlayerList"
          android:layout_width="0dp"
          android:layout_height="0dp"
          android:layout_marginStart="16dp"
@@ -131,5 +126,11 @@
          app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
    </androidx.constraintlayout.widget.ConstraintLayout>
+
+   <androidx.fragment.app.FragmentContainerView
+      android:id="@+id/scoreBoardConfirmDialog"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      tools:layout_editor_absoluteY="24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

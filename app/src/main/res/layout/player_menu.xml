@@ -49,7 +49,7 @@
            android:id="@+id/imageView7"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:layout_marginBottom="137dp"
+           android:layout_marginBottom="108dp"
            android:src="@drawable/player_menu_white"
            app:layout_constraintBottom_toBottomOf="parent"
            app:layout_constraintEnd_toEndOf="parent"
@@ -82,52 +82,6 @@
            app:layout_constraintTop_toTopOf="@+id/imageView4"
            tools:ignore="MissingConstraints" />
 
-        <androidx.fragment.app.FragmentContainerView
-           android:id="@+id/playerMenuConfirmDialog"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent" />
-
-        <EditText
-           android:id="@+id/sessionClientSessionIdBox"
-           android:layout_width="0dp"
-           android:layout_height="48dp"
-           android:layout_marginStart="16dp"
-           android:layout_marginTop="8dp"
-           android:layout_marginEnd="16dp"
-           android:background="@drawable/round_text"
-           android:editable="false"
-           android:focusable="true"
-           android:fontFamily="@font/gomarice_rockin_record"
-           android:includeFontPadding="false"
-           android:padding="4dp"
-           android:singleLine="true"
-           android:textAlignment="center"
-           android:textIsSelectable="true"
-           app:layout_constraintEnd_toEndOf="@+id/imageView7"
-           app:layout_constraintStart_toStartOf="@+id/imageView7"
-           app:layout_constraintTop_toBottomOf="@+id/textView4"
-           tools:ignore="MissingConstraints" />
-
-        <EditText
-           android:id="@+id/sessionOpponentSessionIdBox"
-           android:layout_width="0dp"
-           android:layout_height="48dp"
-           android:layout_marginStart="16dp"
-           android:layout_marginTop="8dp"
-           android:layout_marginEnd="16dp"
-           android:background="@drawable/round_text"
-           android:editable="true"
-           android:focusable="true"
-           android:fontFamily="@font/gomarice_rockin_record"
-           android:padding="4dp"
-           android:singleLine="true"
-           android:textAlignment="center"
-           app:layout_constraintEnd_toEndOf="@+id/imageView7"
-           app:layout_constraintHorizontal_bias="0.0"
-           app:layout_constraintStart_toStartOf="@+id/imageView7"
-           app:layout_constraintTop_toBottomOf="@+id/textView23"
-           tools:ignore="MissingConstraints" />
-
         <ImageButton
            android:id="@+id/selectPlayerExitBtn"
            android:layout_width="wrap_content"
@@ -140,7 +94,7 @@
            app:srcCompat="@drawable/exit_to_app55" />
 
         <ImageButton
-           android:id="@+id/scoreBoardSettingBtn"
+           android:id="@+id/sessionSettingBtn"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_marginEnd="21dp"
@@ -169,79 +123,80 @@
            app:layout_constraintTop_toBottomOf="@+id/textView"
            app:lineHeight="40sp" />
 
-        <TextView
-           android:id="@+id/textView4"
-           android:layout_width="0dp"
-           android:layout_height="15dp"
-           android:layout_marginStart="16dp"
-           android:layout_marginTop="32dp"
-           android:layout_marginEnd="16dp"
-           android:fontFamily="@font/gomarice_rockin_record"
-           android:text="@string/client_sessionlabel"
-           android:textColor="@color/black"
-           app:layout_constraintEnd_toEndOf="@+id/imageView7"
-           app:layout_constraintStart_toStartOf="@+id/imageView7"
-           app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+       <Button
+          android:id="@+id/scoreboardBtn"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:backgroundTint="@color/rps_primary"
+          android:fontFamily="@font/gomarice_rockin_record"
+          android:insetTop="0dp"
+          android:insetBottom="0dp"
+          android:paddingLeft="0dp"
+          android:paddingTop="16dp"
+          android:paddingRight="0dp"
+          android:paddingBottom="16dp"
+          android:text="Scoreboard"
+          android:textColor="@color/black"
+          app:cornerRadius="0dp"
+          app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+          app:layout_constraintEnd_toEndOf="@+id/imageView7"
+          app:layout_constraintStart_toStartOf="@+id/guideline2" />
 
-        <TextView
-           android:id="@+id/textView9"
-           android:layout_width="0dp"
-           android:layout_height="15dp"
-           android:layout_marginStart="16dp"
-           android:layout_marginTop="32dp"
-           android:layout_marginEnd="16dp"
-           android:fontFamily="@font/gomarice_rockin_record"
-           android:text="or"
-           android:textAlignment="center"
-           android:textColor="@color/black"
-           app:layout_constraintEnd_toEndOf="@+id/imageView7"
-           app:layout_constraintStart_toStartOf="@+id/imageView7"
-           app:layout_constraintTop_toBottomOf="@+id/sessionClientSessionIdBox" />
+       <Button
+          android:id="@+id/sessionBtn"
+          style="@style/Widget.MaterialComponents.Button"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:backgroundTint="#FFFFFF"
+          android:backgroundTintMode="add"
+          android:fontFamily="@font/gomarice_rockin_record"
+          android:insetTop="0dp"
+          android:insetBottom="0dp"
+          android:paddingLeft="0dp"
+          android:paddingTop="16dp"
+          android:paddingRight="0dp"
+          android:paddingBottom="16dp"
+          android:text="Play"
+          android:textColor="@color/black"
+          app:cornerRadius="0dp"
+          app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+          app:layout_constraintEnd_toStartOf="@+id/guideline2"
+          app:layout_constraintHorizontal_bias="0.0"
+          app:layout_constraintStart_toStartOf="@+id/imageView7" />
 
-        <TextView
-           android:id="@+id/textView23"
-           android:layout_width="0dp"
-           android:layout_height="15dp"
-           android:layout_marginStart="16dp"
-           android:layout_marginTop="16dp"
-           android:layout_marginEnd="16dp"
-           android:fontFamily="@font/gomarice_rockin_record"
-           android:text="Input your friend's code"
-           android:textAlignment="textStart"
-           android:textColor="@color/black"
-           app:layout_constraintEnd_toEndOf="@+id/imageView7"
-           app:layout_constraintHorizontal_bias="0.0"
-           app:layout_constraintStart_toStartOf="@+id/imageView7"
-           app:layout_constraintTop_toBottomOf="@+id/textView9" />
+       <androidx.constraintlayout.widget.Guideline
+          android:id="@+id/guideline2"
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:orientation="vertical"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintGuide_begin="205dp"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-           android:id="@+id/sessionStartGameBtn"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="16dp"
-           android:layout_marginEnd="16dp"
-           android:fontFamily="@font/gomarice_rockin_record"
-           android:text="Start"
-           app:cornerRadius="10dp"
-           app:layout_constraintEnd_toEndOf="@+id/imageView7"
-           app:layout_constraintTop_toBottomOf="@+id/sessionOpponentSessionIdBox" />
-
-        <Button
-           android:id="@+id/scoreboardBtn"
-           android:layout_width="0dp"
-           android:layout_height="wrap_content"
-           android:layout_marginStart="24dp"
-           android:layout_marginEnd="24dp"
-           android:layout_marginBottom="24dp"
-           android:backgroundTint="@color/rps_secondary"
-           android:fontFamily="@font/gomarice_rockin_record"
-           android:text="Scoreboard"
-           android:textColor="@color/black"
-           app:cornerRadius="10dp"
-           app:layout_constraintBottom_toBottomOf="@+id/imageView7"
-           app:layout_constraintEnd_toEndOf="@+id/imageView7"
-           app:layout_constraintStart_toStartOf="@+id/imageView7" />
+       <androidx.fragment.app.FragmentContainerView
+          android:id="@+id/selectPlayerMainFragment"
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:layout_marginStart="16dp"
+          android:layout_marginTop="32dp"
+          android:layout_marginEnd="16dp"
+          android:layout_marginBottom="32dp"
+          app:layout_constraintBottom_toTopOf="@+id/sessionBtn"
+          app:layout_constraintEnd_toEndOf="@+id/imageView7"
+          app:layout_constraintStart_toStartOf="@+id/imageView7"
+          app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+   <androidx.fragment.app.FragmentContainerView
+      android:id="@+id/playerMenuFragment"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

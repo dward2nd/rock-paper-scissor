@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent">
+
+   <TextView
+      android:id="@+id/textView10"
+      android:layout_width="0dp"
+      android:layout_height="15dp"
+      android:fontFamily="@font/gomarice_rockin_record"
+      android:text="@string/client_sessionlabel"
+      android:textColor="@color/black"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+   <EditText
+      android:id="@+id/sessionClientSessionIdBox"
+      android:layout_width="0dp"
+      android:layout_height="48dp"
+      android:layout_marginTop="8dp"
+      android:background="@drawable/round_text"
+      android:editable="false"
+      android:focusable="true"
+      android:fontFamily="@font/gomarice_rockin_record"
+      android:includeFontPadding="false"
+      android:padding="4dp"
+      android:singleLine="true"
+      android:textAlignment="center"
+      android:textIsSelectable="true"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+   <TextView
+      android:id="@+id/textView24"
+      android:layout_width="0dp"
+      android:layout_height="15dp"
+      android:layout_marginTop="32dp"
+      android:fontFamily="@font/gomarice_rockin_record"
+      android:text="or"
+      android:textAlignment="center"
+      android:textColor="@color/black"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/sessionClientSessionIdBox" />
+
+   <TextView
+      android:id="@+id/textView25"
+      android:layout_width="0dp"
+      android:layout_height="15dp"
+      android:layout_marginTop="8dp"
+      android:fontFamily="@font/gomarice_rockin_record"
+      android:text="Input your friend's code"
+      android:textAlignment="textStart"
+      android:textColor="@color/black"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+   <EditText
+      android:id="@+id/sessionOpponentSessionIdBox"
+      android:layout_width="0dp"
+      android:layout_height="48dp"
+      android:layout_marginTop="8dp"
+      android:background="@drawable/round_text"
+      android:editable="true"
+      android:focusable="true"
+      android:fontFamily="@font/gomarice_rockin_record"
+      android:padding="4dp"
+      android:singleLine="true"
+      android:textAlignment="center"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+   <Button
+      android:id="@+id/sessionStartGameBtn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:fontFamily="@font/gomarice_rockin_record"
+      android:text="Start"
+      app:cornerRadius="10dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/sessionOpponentSessionIdBox" />
+</androidx.constraintlayout.widget.ConstraintLayout>

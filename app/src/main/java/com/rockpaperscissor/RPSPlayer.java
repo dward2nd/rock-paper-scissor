@@ -23,9 +23,10 @@ public class RPSPlayer implements Parcelable {
       this.totalGameWon = totalGameWon;
    }
 
-   public RPSPlayer(String uid, String displayName) {
+   public RPSPlayer(String uid, String displayName, String session) {
       this.uid = uid;
       this.displayName = displayName;
+      this.session = session;
    }
 
    public static final Creator<RPSPlayer> CREATOR = new Creator<RPSPlayer>() {

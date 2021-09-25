@@ -19,14 +19,12 @@ import com.rockpaperscissor.SelectPlayer;
 
 public class SelectPlayerAdapter extends RecyclerView.Adapter<SelectPlayerAdapter.ViewHolder> {
 
-   private RPSPlayer clientPlayer;
    private RPSPlayer[] players;
    private Context context;
 
-   public SelectPlayerAdapter(Context context, RPSPlayer[] players, RPSPlayer clientPlayer) {
+   public SelectPlayerAdapter(Context context, RPSPlayer[] players) {
       this.context = context;
       this.players = players;
-      this.clientPlayer = clientPlayer;
    }
 
    @NonNull
@@ -43,13 +41,6 @@ public class SelectPlayerAdapter extends RecyclerView.Adapter<SelectPlayerAdapte
       holder.getPlayerStatLabel().setText(String.format("%d played\n%d won",
             players[position].getTotalGamePlayed(),
             players[position].getTotalGameWon()));
-
-      holder.getSelectPlayerCard().setOnClickListener((View view) -> {
-         Intent intent = new Intent(context, GameplayActivity.class);
-         intent.putExtra(SelectPlayer.INTENT_CLIENT, clientPlayer);
-         intent.putExtra(SelectPlayer.INTENT_OPPONENT, players[position]);
-         context.startActivity(intent);
-      });
    }
 
    @Override

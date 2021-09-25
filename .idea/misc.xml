@@ -21,10 +21,13 @@
         <entry key="app/src/main/res/layout/gameplay_showresult_fragment.xml" value="0.1013157894736842" />
         <entry key="app/src/main/res/layout/login.xml" value="0.25" />
         <entry key="app/src/main/res/layout/player_menu.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/player_session.xml" value="0.25" />
         <entry key="app/src/main/res/layout/playercard.xml" value="0.25" />
         <entry key="app/src/main/res/layout/result.xml" value="0.25" />
         <entry key="app/src/main/res/layout/scoreboard.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/scoreboard_fragment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/setting.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/setting_fragment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/victory.xml" value="0.11019736842105263" />
         <entry key="app/src/main/res/layout/victory_win_component.xml" value="0.25" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/rps_launcher.xml" value="0.11710526315789474" />

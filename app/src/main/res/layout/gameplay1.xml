@@ -30,7 +30,7 @@
        app:srcCompat="@drawable/exit_to_app" />
 
     <ImageButton
-       android:id="@+id/gamePlaySettingBtn"
+       android:id="@+id/oldGamePlaySettingBtn"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_marginTop="27dp"
