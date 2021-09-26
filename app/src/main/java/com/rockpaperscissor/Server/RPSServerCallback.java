@@ -1,6 +1,8 @@
 package com.rockpaperscissor.Server;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,13 +24,15 @@ public class RPSServerCallback implements Callback {
 
    @Override
    public void onFailure(Call call, IOException e) {
+      this.runnable.error(e);
       e.printStackTrace();
    }
 
    @Override
    public void onResponse(Call call, Response response) throws IOException {
       try (ResponseBody responseBody = response.body()) {
-         if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+         if (!response.isSuccessful())
+            throw new IOException("Unexpected code " + response);
 
          // for debugging pupose only
          Headers responseHeaders = response.headers();

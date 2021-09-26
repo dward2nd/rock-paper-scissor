@@ -1,9 +1,13 @@
 package com.rockpaperscissor.Server;
 
+import java.io.IOException;
+
 public abstract class RPSResponseRunnable implements Runnable {
    private String response;
 
    public abstract void run();
+
+   public abstract void error(IOException e);
 
    public String getResponse() {
       return response;

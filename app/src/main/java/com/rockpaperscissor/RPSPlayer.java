@@ -6,6 +6,7 @@ import android.os.Parcelable;
 
 import com.rockpaperscissor.json.jsontemplate.data.PlayerTemplate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RPSPlayer implements Parcelable {
@@ -14,13 +15,15 @@ public class RPSPlayer implements Parcelable {
    private String session;
    private int totalGamePlayed = 0;
    private int totalGameWon = 0;
+   private String challenge;
 
-   public RPSPlayer(String uid, String displayName, String session, int totalGamePlayed, int totalGameWon) {
+   public RPSPlayer(String uid, String displayName, String session, int totalGamePlayed, int totalGameWon, String challenge) {
       this.uid = uid;
       this.displayName = displayName;
       this.session = session;
       this.totalGamePlayed = totalGamePlayed;
       this.totalGameWon = totalGameWon;
+      this.challenge = challenge;
    }
 
    public RPSPlayer(String uid, String displayName, String session) {
@@ -63,6 +66,7 @@ public class RPSPlayer implements Parcelable {
       this.session = template.getSession();
       this.totalGamePlayed = template.getPlayed();
       this.totalGameWon = template.getScore();
+      this.challenge = template.getChallenge();
    }
 
    public static RPSPlayer[] getRPSPlayerArray(PlayerTemplate[] template) {
@@ -70,7 +74,16 @@ public class RPSPlayer implements Parcelable {
       for (int i = 0; i < template.length; ++i)
          newInstance[i] = new RPSPlayer(template[i].getId(),
                template[i].getUsername(), template[i].getSession(), template[i].getPlayed(),
-               template[i].getScore());
+               template[i].getScore(), template[i].getChallenge());
+
+      return newInstance;
+   }
+
+   public static ArrayList<RPSPlayer> getRPSPlayerArrayList(PlayerTemplate[] template) {
+      ArrayList<RPSPlayer> newInstance = new ArrayList<RPSPlayer>();
+      for (PlayerTemplate el : template)
+         newInstance.add(new RPSPlayer(el.getId(), el.getUsername(), el.getSession(), el.getPlayed(),
+               el.getScore(), el.getChallenge()));
 
       return newInstance;
    }
@@ -89,6 +102,10 @@ public class RPSPlayer implements Parcelable {
 
    public void countWon() {
       ++this.totalGameWon;
+   }
+
+   public String getChallenge() {
+      return challenge;
    }
 
    @Override

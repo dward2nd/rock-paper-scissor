@@ -4,14 +4,14 @@
 
    <Transition
       motion:autoTransition="animateToEnd"
-      motion:constraintSetEnd="@+id/end"
-      motion:constraintSetStart="@id/start"
+      motion:constraintSetEnd="@+id/step2"
+      motion:constraintSetStart="@id/step1"
       motion:duration="400"
       motion:motionInterpolator="cubic(0.08,0.82,0.34,0.9)">
       <KeyFrameSet></KeyFrameSet>
    </Transition>
 
-   <ConstraintSet android:id="@+id/start">
+   <ConstraintSet android:id="@+id/step1">
       <Constraint
          android:id="@+id/imageView41"
          android:layout_width="wrap_content"
@@ -78,5 +78,5 @@
          motion:layout_constraintTop_toTopOf="parent" />
    </ConstraintSet>
 
-   <ConstraintSet android:id="@+id/end"></ConstraintSet>
+   <ConstraintSet android:id="@+id/step2"></ConstraintSet>
 </MotionScene>

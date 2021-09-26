@@ -1,17 +1,16 @@
 package com.rockpaperscissor;
 
-import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -25,6 +24,9 @@ import com.rockpaperscissor.components.SettingDialog;
 import com.rockpaperscissor.json.RPSJson;
 import com.rockpaperscissor.json.jsontemplate.data.PlayerTemplate;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import okhttp3.FormBody;
 
 public class SelectPlayer extends AppCompatActivity {
@@ -35,7 +37,8 @@ public class SelectPlayer extends AppCompatActivity {
 
    private RPSPlayer clientPlayer;
    private RPSPlayer pseudoOpponentPlayer;
-   private RPSServer[] scoreboardPlayers;
+   private final Handler selectPlayerHandler = new Handler(Looper.getMainLooper());
+   private ArrayList<RPSPlayer> scoreboardPlayers;
 
    // ui components
    private Button sessionBtn;
@@ -65,14 +68,10 @@ public class SelectPlayer extends AppCompatActivity {
       this.pseudoOpponentPlayer = new RPSPlayer("1234567890987654321", "Bot", "somesession");
 
       sessionBtn = findViewById(R.id.sessionBtn);
-      sessionBtn.setOnClickListener((View view) -> {
-         switchToSessionFragment();
-      });
+      sessionBtn.setOnClickListener((View view) -> switchToSessionFragment());
 
       scoreboardBtn = findViewById(R.id.scoreboardBtn);
-      scoreboardBtn.setOnClickListener((View view) -> {
-         switchToScoreboardFragment();
-      });
+      scoreboardBtn.setOnClickListener((View view) -> switchToScoreboardFragment());
 
       clientInfoLabel = findViewById(R.id.selectPlayerClientInfo);
       clientInfoLabel.setText(String.format("Hello %s!\nPlayed %d   |   Won %d",
@@ -80,27 +79,14 @@ public class SelectPlayer extends AppCompatActivity {
             clientPlayer.getTotalGameWon()));
 
       this.exitBtn = findViewById(R.id.selectPlayerExitBtn);
-      this.exitBtn.setOnClickListener((View view) -> {
-         onBackPressed();
-      });
+      this.exitBtn.setOnClickListener((View view) -> onBackPressed());
 
       sessionFragment = SelectPlayerSessionManager.getInstance();
       sessionFragment.setClientPlayer(clientPlayer);
       sessionFragment.setPseudoOpponentPlayer(pseudoOpponentPlayer);
 
       switchToSessionFragment();
-
-      String scoreboardPath = "/playerstatus";
-      RPSResponseRunnable runnable = new RPSResponseRunnable() {
-         @Override
-         public void run() {
-            String responseString = getResponse();
-            Log.d("TAG", responseString);
-         }
-      };
-      RPSServer.get(scoreboardPath, runnable);
-
-      scoreboardFragment = ScoreboardFragment.getInstance();
+      getScoreboardFromServer();
    }
 
    private void switchToSessionFragment() {
@@ -147,11 +133,9 @@ public class SelectPlayer extends AppCompatActivity {
       if (currentFragment == null) {
          logoutDialog.setDialogTitle("Log Out");
          logoutDialog.setDialogDescription("You are about to logout and lose all the stat. Proceed?");
-         logoutDialog.setOnCancel((View view) -> {
-            fragmentManager.beginTransaction()
-                  .remove(logoutDialog)
-                  .commit();
-         });
+         logoutDialog.setOnCancel((View view) -> fragmentManager.beginTransaction()
+               .remove(logoutDialog)
+               .commit());
          logoutDialog.setOnConfirm((View view) -> {
             Intent intent = new Intent(SelectPlayer.this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -176,6 +160,43 @@ public class SelectPlayer extends AppCompatActivity {
       fragmentManager.beginTransaction()
             .add(R.id.playerMenuFragment, settingDialog)
             .commit();
+   }
+
+   private void getScoreboardFromServer() {
+      // load scoreboard
+      String scoreboardPath = "/leaderboard";
+      RPSResponseRunnable runnable = new RPSResponseRunnable() {
+         @Override
+         public void error(IOException e) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            Fragment currentFragment = fragmentManager.findFragmentById(R.id.playerMenuFragment);
+
+            AlertDialog notfoundDialog = AlertDialog.getInstance();
+            notfoundDialog.setDialogTitle("Network Error");
+            notfoundDialog.setDialogDescription(e.getMessage());
+
+            if (currentFragment != null)
+               fragmentManager.beginTransaction()
+                     .remove(currentFragment)
+                     .commit();
+
+            fragmentManager.beginTransaction()
+                  .add(R.id.playerMenuFragment, notfoundDialog)
+                  .commit();
+         }
+
+         @Override
+         public void run() {
+            Log.d("TAG", getResponse());
+            scoreboardPlayers = RPSPlayer.getRPSPlayerArrayList(
+                  RPSJson.fromJson(getResponse(), PlayerTemplate[].class));
+
+            scoreboardFragment = ScoreboardFragment.getInstance();
+            scoreboardFragment.setPlayers(scoreboardPlayers);
+         }
+      };
+
+      RPSServer.get(this, scoreboardPath, runnable);
    }
 
 }

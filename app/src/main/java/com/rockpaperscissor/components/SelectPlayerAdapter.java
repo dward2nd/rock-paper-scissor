@@ -1,7 +1,6 @@
 package com.rockpaperscissor.components;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,19 +11,24 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.rockpaperscissor.GameplayActivity;
 import com.rockpaperscissor.R;
 import com.rockpaperscissor.RPSPlayer;
-import com.rockpaperscissor.SelectPlayer;
+
+import java.util.ArrayList;
 
 public class SelectPlayerAdapter extends RecyclerView.Adapter<SelectPlayerAdapter.ViewHolder> {
 
-   private RPSPlayer[] players;
+   private ArrayList<RPSPlayer> players;
    private Context context;
 
-   public SelectPlayerAdapter(Context context, RPSPlayer[] players) {
+   public SelectPlayerAdapter(Context context, ArrayList<RPSPlayer> players) {
       this.context = context;
       this.players = players;
+   }
+
+   public void update(ArrayList<RPSPlayer> players) {
+      this.players.clear();
+      this.players.addAll(players);
    }
 
    @NonNull
@@ -37,15 +41,15 @@ public class SelectPlayerAdapter extends RecyclerView.Adapter<SelectPlayerAdapte
 
    @Override
    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-      holder.getPlayerNameLabel().setText(players[position].getDisplayName());
+      holder.getPlayerNameLabel().setText(players.get(position).getDisplayName());
       holder.getPlayerStatLabel().setText(String.format("%d played\n%d won",
-            players[position].getTotalGamePlayed(),
-            players[position].getTotalGameWon()));
+            players.get(position).getTotalGamePlayed(),
+            players.get(position).getTotalGameWon()));
    }
 
    @Override
    public int getItemCount() {
-      return this.players.length;
+      return this.players.size();
    }
 
    public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -71,10 +75,6 @@ public class SelectPlayerAdapter extends RecyclerView.Adapter<SelectPlayerAdapte
          while (randomShape == 3)
             randomShape = (int) Math.floor(Math.random() * 3);
          playerAvatar.setImageResource(SHAPE_ICON[randomShape]);
-      }
-
-      public CardView getSelectPlayerCard() {
-         return selectPlayerCard;
       }
 
       public TextView getPlayerNameLabel() {

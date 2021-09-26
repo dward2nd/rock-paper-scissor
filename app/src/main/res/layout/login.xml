@@ -55,6 +55,7 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_marginBottom="228dp"
+           android:scaleY="2"
            android:src="@drawable/rectangle4"
            app:layout_constraintBottom_toBottomOf="parent"
            app:layout_constraintEnd_toEndOf="parent"
@@ -65,15 +66,14 @@
            android:id="@+id/userInputBox"
            android:layout_width="275dp"
            android:layout_height="70dp"
-           android:layout_marginBottom="284dp"
            android:background="@drawable/round_text"
            android:focusable="true"
            android:fontFamily="@font/gomarice_rockin_record"
            android:padding="10dp"
            android:singleLine="true"
-           app:layout_constraintBottom_toBottomOf="parent"
            app:layout_constraintEnd_toEndOf="@+id/imageView8"
            app:layout_constraintStart_toStartOf="@+id/imageView8"
+           app:layout_constraintTop_toBottomOf="@+id/textView3"
            tools:ignore="MissingConstraints" />
 
         <TextView
@@ -84,10 +84,39 @@
            android:text="@string/username"
            android:textColor="#70C041"
            android:textSize="28sp"
-           app:layout_constraintBottom_toTopOf="@+id/userInputBox"
            app:layout_constraintEnd_toEndOf="@+id/imageView8"
            app:layout_constraintHorizontal_bias="0.201"
            app:layout_constraintStart_toStartOf="@+id/imageView8"
+           app:layout_constraintTop_toTopOf="@+id/imageView3"
+           tools:ignore="MissingConstraints" />
+
+        <TextView
+           android:id="@+id/textView4"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="20dp"
+           android:fontFamily="@font/gomarice_rockin_record"
+           android:text="Server URL"
+           android:textColor="#70C041"
+           android:textSize="28sp"
+           app:layout_constraintEnd_toEndOf="@+id/imageView8"
+           app:layout_constraintHorizontal_bias="0.201"
+           app:layout_constraintStart_toStartOf="@+id/imageView8"
+           app:layout_constraintTop_toBottomOf="@+id/userInputBox"
+           tools:ignore="MissingConstraints" />
+
+        <EditText
+           android:id="@+id/serverURLInputBox"
+           android:layout_width="275dp"
+           android:layout_height="70dp"
+           android:background="@drawable/round_text"
+           android:focusable="true"
+           android:fontFamily="@font/gomarice_rockin_record"
+           android:padding="10dp"
+           android:singleLine="true"
+           app:layout_constraintEnd_toEndOf="@+id/imageView8"
+           app:layout_constraintStart_toStartOf="@+id/imageView8"
+           app:layout_constraintTop_toBottomOf="@+id/textView4"
            tools:ignore="MissingConstraints" />
 
         <ImageButton

@@ -12,9 +12,12 @@ import android.widget.EditText;
 
 import com.rockpaperscissor.Server.RPSResponseRunnable;
 import com.rockpaperscissor.Server.RPSServer;
+import com.rockpaperscissor.components.AlertDialog;
 import com.rockpaperscissor.components.ConfirmDialog;
 import com.rockpaperscissor.json.RPSJson;
 import com.rockpaperscissor.json.jsontemplate.data.PlayerTemplate;
+
+import java.io.IOException;
 
 import okhttp3.FormBody;
 
@@ -23,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
 
    // components
    private EditText userInputBox;
+   private EditText serverUrlBox;
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
       getSupportActionBar().hide();
 
       this.userInputBox = findViewById(R.id.userInputBox);
+      this.serverUrlBox = findViewById(R.id.serverURLInputBox);
    }
 
    @Override
@@ -71,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
     **/
    public void onNextBtnClicked(View view) {
       String displayName = userInputBox.getText().toString();
+      RPSServer.setServerUrl(serverUrlBox.getText().toString());
 
       // connect to the server
       login(displayName);
@@ -79,6 +85,25 @@ public class LoginActivity extends AppCompatActivity {
    private void login(String displayName) {
       String path = "/register";
       RPSResponseRunnable runnable = new RPSResponseRunnable() {
+         @Override
+         public void error(IOException e) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            Fragment currentFragment = fragmentManager.findFragmentById(R.id.loginConfirmDialog);
+
+            AlertDialog alertDialog = AlertDialog.getInstance();
+            alertDialog.setDialogTitle("Network Error");
+            alertDialog.setDialogDescription(e.getMessage());
+
+            if (currentFragment != null)
+               fragmentManager.beginTransaction()
+                     .remove(currentFragment)
+                     .commit();
+
+            fragmentManager.beginTransaction()
+                  .add(R.id.loginConfirmDialog, alertDialog)
+                  .commit();
+         }
+
          @Override
          public void run() {
             String responseString = getResponse().substring(1, getResponse().length() - 1);
@@ -94,6 +119,6 @@ public class LoginActivity extends AppCompatActivity {
       FormBody formBody = new FormBody.Builder()
             .add("username", displayName)
             .build();
-      RPSServer.post(formBody, runnable, path);
+      RPSServer.post(this, formBody, runnable, path);
    }
 }

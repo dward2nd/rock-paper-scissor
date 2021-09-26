@@ -17,6 +17,8 @@ import com.rockpaperscissor.SelectPlayer;
 import com.rockpaperscissor.Server.RPSResponseRunnable;
 import com.rockpaperscissor.Server.RPSServer;
 
+import java.io.IOException;
+
 import okhttp3.FormBody;
 
 public class SelectPlayerSessionManager extends Fragment {
@@ -46,9 +48,8 @@ public class SelectPlayerSessionManager extends Fragment {
       opponentSessionIdLabel = view.findViewById(R.id.sessionOpponentSessionIdBox);
 
       startBtn = view.findViewById(R.id.sessionStartGameBtn);
-      startBtn.setOnClickListener((View listenerView) -> {
-         startGame(opponentSessionIdLabel.getText().toString());
-      });
+      startBtn.setOnClickListener((View listenerView) ->
+            startGame(opponentSessionIdLabel.getText().toString()));
    }
 
    public void setClientPlayer(RPSPlayer clientPlayer) {
@@ -68,60 +69,79 @@ public class SelectPlayerSessionManager extends Fragment {
 
       RPSResponseRunnable runnable = new RPSResponseRunnable() {
          @Override
+         public void error(IOException e) {
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            Fragment currentFragment = fragmentManager.findFragmentById(R.id.playerMenuFragment);
+
+            AlertDialog notfoundDialog = AlertDialog.getInstance();
+            notfoundDialog.setDialogTitle("Network Error");
+            notfoundDialog.setDialogDescription(e.getMessage());
+
+            if (currentFragment != null)
+               fragmentManager.beginTransaction()
+                     .remove(currentFragment)
+                     .commit();
+
+            fragmentManager.beginTransaction()
+                  .add(R.id.playerMenuFragment, notfoundDialog)
+                  .commit();
+         }
+
+         @Override
          public void run() {
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             Fragment currentFragment = fragmentManager.findFragmentById(R.id.playerMenuFragment);
             AlertDialog notfoundDialog = AlertDialog.getInstance();
-            notfoundDialog.setOnCancel((View view) -> {
-               fragmentManager.beginTransaction()
-                     .remove(notfoundDialog)
-                     .commit();
-            });
 
-            if (getResponse().equals("joined")) {
-               Intent intent = new Intent(getActivity(), GameplayActivity.class);
-               intent.putExtra(SelectPlayer.INTENT_CLIENT, clientPlayer);
-               intent.putExtra(SelectPlayer.INTENT_OPPONENT, pseudoOpponentPlayer);
-               intent.putExtra(SelectPlayer.INTENT_SESSION, session);
-               startActivity(intent);
-            } else if (getResponse().equals("full")) {
-               if (currentFragment != null) {
+            switch (getResponse()) {
+               case "Joined":
+                  Intent intent = new Intent(getActivity(), GameplayActivity.class);
+                  intent.putExtra(SelectPlayer.INTENT_CLIENT, clientPlayer);
+                  intent.putExtra(SelectPlayer.INTENT_OPPONENT, pseudoOpponentPlayer);
+                  intent.putExtra(SelectPlayer.INTENT_SESSION, session);
+                  startActivity(intent);
+                  break;
+               case "Session is full":
+                  if (currentFragment != null) {
+                     fragmentManager.beginTransaction()
+                           .remove(currentFragment)
+                           .commit();
+                  }
+                  notfoundDialog.setDialogTitle("Already taken");
+                  notfoundDialog.setDialogDescription("The session `" + session + "` is currently active with the other player.");
                   fragmentManager.beginTransaction()
-                        .remove(currentFragment)
+                        .add(R.id.playerMenuFragment, notfoundDialog)
                         .commit();
-               }
-               notfoundDialog.setDialogTitle("Already taken");
-               notfoundDialog.setDialogDescription("The session `" + session + "` is currently active with the other player.");
-               fragmentManager.beginTransaction()
-                     .add(R.id.playerMenuFragment, notfoundDialog)
-                     .commit();
-            } else if (getResponse().equals("yourself")) {
-               if (currentFragment != null) {
+                  break;
+               case "yourself":
+                  if (currentFragment != null) {
+                     fragmentManager.beginTransaction()
+                           .remove(currentFragment)
+                           .commit();
+                  }
+                  notfoundDialog.setDialogTitle("This is yours.");
+                  notfoundDialog.setDialogDescription("The session `" + session + "` is your session ID. You cannot join yourself.");
                   fragmentManager.beginTransaction()
-                        .remove(currentFragment)
+                        .add(R.id.playerMenuFragment, notfoundDialog)
                         .commit();
-               }
-               notfoundDialog.setDialogTitle("This is yours.");
-               notfoundDialog.setDialogDescription("The session `" + session + "` is your session ID. You cannot join yourself.");
-               fragmentManager.beginTransaction()
-                     .add(R.id.playerMenuFragment, notfoundDialog)
-                     .commit();
-            } else {
-               if (currentFragment != null) {
+                  break;
+               default:
+                  if (currentFragment != null) {
+                     fragmentManager.beginTransaction()
+                           .remove(currentFragment)
+                           .commit();
+                  }
+                  notfoundDialog.setDialogTitle("Not found");
+                  notfoundDialog.setDialogDescription("The session `" + session + "` not found on the server.");
                   fragmentManager.beginTransaction()
-                        .remove(currentFragment)
+                        .add(R.id.playerMenuFragment, notfoundDialog)
                         .commit();
-               }
-               notfoundDialog.setDialogTitle("Not found");
-               notfoundDialog.setDialogDescription("The session `" + session + "` not found on the server.");
-               fragmentManager.beginTransaction()
-                     .add(R.id.playerMenuFragment, notfoundDialog)
-                     .commit();
 
+                  break;
             }
          }
       };
 
-      RPSServer.post(formBody, runnable, path);
+      RPSServer.post(getContext(), formBody, runnable, path);
    }
 }
