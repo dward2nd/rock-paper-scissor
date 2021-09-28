@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
+   xmlns:tools="http://schemas.android.com/tools"
+   android:id="@+id/outerContainer"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   android:layout_alignParentTop="true"
+   android:layout_alignParentBottom="true"
+   android:background="@drawable/yelbg"
+   tools:context=".SelectPlayerActivity">
+
+   <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_alignParentTop="true"
+      android:layout_alignParentBottom="true"
+      android:paddingTop="24dp"
+      android:paddingBottom="48dp">
+
+      <ImageView
+           android:id="@+id/imageView6"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:src="@drawable/bluebg"
+           app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           tools:ignore="MissingConstraints" />
+
+        <TextView
+           android:id="@+id/textView"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentStart="true"
+           android:layout_alignParentTop="true"
+           android:layout_marginTop="24dp"
+           android:fontFamily="@font/gomarice_rockin_record"
+           android:text="@string/rps_online"
+           android:textAppearance="@style/rps_online"
+           android:textSize="60sp"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintHorizontal_bias="0.5"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toTopOf="parent"
+           tools:ignore="MissingConstraints" />
+
+        <ImageView
+           android:id="@+id/imageView7"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginBottom="108dp"
+           android:src="@drawable/player_menu_white"
+           app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintHorizontal_bias="0.495"
+           app:layout_constraintStart_toStartOf="parent"
+           tools:ignore="MissingConstraints" />
+
+        <ImageView
+           android:id="@+id/imageView4"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginBottom="408dp"
+           android:src="@drawable/bluebanner"
+           app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           tools:ignore="MissingConstraints" />
+
+        <TextView
+           android:id="@+id/textView27"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:fontFamily="@font/gomarice_rockin_record"
+           android:text="@string/select_players"
+           android:textAppearance="@style/select_play"
+           app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintHorizontal_bias="0.497"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toTopOf="@+id/imageView4"
+           tools:ignore="MissingConstraints" />
+
+        <ImageButton
+           android:id="@+id/selectPlayerExitBtn"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginStart="21dp"
+           android:layout_marginBottom="21dp"
+           android:background="@null"
+           app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintStart_toStartOf="@+id/imageView6"
+           app:srcCompat="@drawable/exit_to_app55" />
+
+        <ImageButton
+           android:id="@+id/sessionSettingBtn"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginEnd="21dp"
+           android:layout_marginBottom="21dp"
+           android:background="@null"
+           android:onClick="onSettingClicked"
+           app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintEnd_toEndOf="@+id/imageView6"
+           app:srcCompat="@drawable/setting_55" />
+
+        <TextView
+           android:id="@+id/selectPlayerClientInfo"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_marginStart="48dp"
+           android:layout_marginTop="24dp"
+           android:layout_marginEnd="48dp"
+           android:fontFamily="@font/gomarice_rockin_record"
+           android:text="@string/n_a_n_a"
+           android:textAlignment="center"
+           android:textAppearance="@style/n_a_n_a"
+           android:textColor="@color/white"
+           android:textSize="24sp"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/textView"
+           app:lineHeight="40sp" />
+
+       <Button
+          android:id="@+id/scoreboardBtn"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:backgroundTint="@color/rps_primary"
+          android:fontFamily="@font/gomarice_rockin_record"
+          android:insetTop="0dp"
+          android:insetBottom="0dp"
+          android:paddingLeft="0dp"
+          android:paddingTop="16dp"
+          android:paddingRight="0dp"
+          android:paddingBottom="16dp"
+          android:text="Scoreboard"
+          android:textColor="@color/black"
+          app:cornerRadius="0dp"
+          app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+          app:layout_constraintEnd_toEndOf="@+id/imageView7"
+          app:layout_constraintStart_toStartOf="@+id/guideline2" />
+
+       <Button
+          android:id="@+id/sessionBtn"
+          style="@style/Widget.MaterialComponents.Button"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:backgroundTint="#FFFFFF"
+          android:backgroundTintMode="add"
+          android:fontFamily="@font/gomarice_rockin_record"
+          android:insetTop="0dp"
+          android:insetBottom="0dp"
+          android:paddingLeft="0dp"
+          android:paddingTop="16dp"
+          android:paddingRight="0dp"
+          android:paddingBottom="16dp"
+          android:text="Play"
+          android:textColor="@color/black"
+          app:cornerRadius="0dp"
+          app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+          app:layout_constraintEnd_toStartOf="@+id/guideline2"
+          app:layout_constraintHorizontal_bias="0.0"
+          app:layout_constraintStart_toStartOf="@+id/imageView7" />
+
+       <androidx.constraintlayout.widget.Guideline
+          android:id="@+id/guideline2"
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:orientation="vertical"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintGuide_begin="205dp"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+       <androidx.fragment.app.FragmentContainerView
+          android:id="@+id/selectPlayerMainFragment"
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:layout_marginStart="16dp"
+          android:layout_marginTop="16dp"
+          android:layout_marginEnd="16dp"
+          android:layout_marginBottom="16dp"
+          app:layout_constraintBottom_toTopOf="@+id/sessionBtn"
+          app:layout_constraintEnd_toEndOf="@+id/imageView7"
+          app:layout_constraintStart_toStartOf="@+id/imageView7"
+          app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+   <androidx.fragment.app.FragmentContainerView
+      android:id="@+id/playerMenuFragment"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

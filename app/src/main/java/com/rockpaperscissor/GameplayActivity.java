@@ -3,7 +3,6 @@ package com.rockpaperscissor;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -12,15 +11,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.rockpaperscissor.Server.RPSResponseRunnable;
-import com.rockpaperscissor.Server.RPSServer;
-import com.rockpaperscissor.components.AlertDialog;
-import com.rockpaperscissor.components.ConfirmDialog;
-import com.rockpaperscissor.components.GameplayFinalResultFragment;
-import com.rockpaperscissor.components.GameplayResultFragment;
-import com.rockpaperscissor.components.SettingDialog;
+import com.rockpaperscissor.server.RPSResponseRunnable;
+import com.rockpaperscissor.server.RPSServer;
+import com.rockpaperscissor.dialogs.AlertDialog;
+import com.rockpaperscissor.dialogs.ConfirmDialog;
+import com.rockpaperscissor.fragments.GameplayFinalResultFragment;
+import com.rockpaperscissor.fragments.GameplayResultFragment;
+import com.rockpaperscissor.dialogs.SettingDialog;
 import com.rockpaperscissor.json.RPSJson;
-import com.rockpaperscissor.json.jsontemplate.data.SessionData;
+import com.rockpaperscissor.json.jsontemplate.SessionData;
 
 import java.io.IOException;
 
@@ -66,7 +65,7 @@ public class GameplayActivity extends AppCompatActivity {
             .remove(finalResultFragment)
             .commit();
 
-      Intent intent = new Intent(GameplayActivity.this, SummarizeActivity.class);
+      Intent intent = new Intent(GameplayActivity.this, SummaryActivity.class);
       intent.putExtra(INTENT_RPSCLIENT, clientPlayer);
       intent.putExtra(INTENT_RPSOPPONENT, opponentPlayer);
       intent.putExtra(INTENT_SCORE_CLIENT, clientScore);
@@ -188,13 +187,13 @@ public class GameplayActivity extends AppCompatActivity {
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
-      setContentView(R.layout.gameplay);
+      setContentView(R.layout.activity_gameplay);
       getSupportActionBar().hide();
 
       Intent gameplayIntent = getIntent();
-      this.clientPlayer = gameplayIntent.getParcelableExtra(SelectPlayer.INTENT_CLIENT);
-      this.opponentPlayer = gameplayIntent.getParcelableExtra(SelectPlayer.INTENT_OPPONENT);
-      this.sessionId = gameplayIntent.getStringExtra(SelectPlayer.INTENT_SESSION);
+      this.clientPlayer = gameplayIntent.getParcelableExtra(SelectPlayerActivity.INTENT_CLIENT);
+      this.opponentPlayer = gameplayIntent.getParcelableExtra(SelectPlayerActivity.INTENT_OPPONENT);
+      this.sessionId = gameplayIntent.getStringExtra(SelectPlayerActivity.INTENT_SESSION);
 
       this.gamePlayClientPlayerScore = findViewById(R.id.gamePlayClientPlayerScore);
       this.gamePlayOpponentPlayerScore = findViewById(R.id.gamePlayOpponentPlayerScore);

@@ -1,13 +1,11 @@
 package com.rockpaperscissor;
 
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.rockpaperscissor.json.jsontemplate.data.PlayerTemplate;
+import com.rockpaperscissor.json.jsontemplate.PlayerTemplate;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class RPSPlayer implements Parcelable {
    private String uid;

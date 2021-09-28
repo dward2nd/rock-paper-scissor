@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
+   xmlns:tools="http://schemas.android.com/tools"
+   android:layout_width="match_parent"
+   android:layout_height="wrap_content"
+   android:background="#FFFFFF"
+   app:layoutDescription="@xml/viewholder_playerlist_scene">
+
+   <androidx.cardview.widget.CardView
+      android:id="@+id/selectPlayerCard"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hapticFeedbackEnabled="true"
+      app:cardBackgroundColor="@color/cardview_light_background"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+
+         <TextView
+            android:id="@+id/playerStatLabel"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/gomarice_rockin_record"
+            android:text="n/a PLAYED\nn/a WIN"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/selectPlayerAvatar"
+            app:layout_constraintTop_toBottomOf="@+id/playerNameLabel" />
+
+         <ImageView
+            android:id="@+id/selectPlayerAvatar"
+            android:layout_width="82dp"
+            android:layout_height="82dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/scissor_playericon" />
+
+         <TextView
+            android:id="@+id/playerNameLabel"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/gomarice_rockin_record"
+            android:text="PLAYER"
+            android:textColor="#3CB1FF"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/selectPlayerAvatar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+         <ImageView
+            android:id="@+id/imageView34"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/line" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+   </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.motion.widget.MotionLayout>

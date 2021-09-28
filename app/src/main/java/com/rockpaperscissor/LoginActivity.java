@@ -10,12 +10,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import com.rockpaperscissor.Server.RPSResponseRunnable;
-import com.rockpaperscissor.Server.RPSServer;
-import com.rockpaperscissor.components.AlertDialog;
-import com.rockpaperscissor.components.ConfirmDialog;
+import com.rockpaperscissor.server.RPSResponseRunnable;
+import com.rockpaperscissor.server.RPSServer;
+import com.rockpaperscissor.dialogs.AlertDialog;
+import com.rockpaperscissor.dialogs.ConfirmDialog;
 import com.rockpaperscissor.json.RPSJson;
-import com.rockpaperscissor.json.jsontemplate.data.PlayerTemplate;
+import com.rockpaperscissor.json.jsontemplate.PlayerTemplate;
 
 import java.io.IOException;
 
@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
-      setContentView(R.layout.login);
+      setContentView(R.layout.activity_login);
       getSupportActionBar().hide();
 
       this.userInputBox = findViewById(R.id.userInputBox);
@@ -110,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
             RPSPlayer player = new RPSPlayer((PlayerTemplate) RPSJson.fromJson(responseString, PlayerTemplate.class));
             Log.d("TAG", "Display name: " + player.getDisplayName());
 
-            Intent intent = new Intent(LoginActivity.this, SelectPlayer.class);
+            Intent intent = new Intent(LoginActivity.this, SelectPlayerActivity.class);
             intent.putExtra(INTENT_LOGIN, player);
             startActivity(intent);
             finish();

@@ -14,23 +14,23 @@
       android:theme="@style/Theme.RockPaperScissor"
       android:usesCleartextTraffic="true">
       <activity
-         android:name=".SummarizeActivity"
+         android:name=".SummaryActivity"
          android:exported="true"
-         android:parentActivityName=".SelectPlayer">
+         android:parentActivityName=".SelectPlayerActivity">
          <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value=".SelectPlayer" />
+            android:value=".SelectPlayerActivity" />
       </activity>
       <activity
          android:name=".GameplayActivity"
          android:exported="true"
-         android:parentActivityName=".SelectPlayer">
+         android:parentActivityName=".SelectPlayerActivity">
          <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value=".SelectPlayer" />
+            android:value=".SelectPlayerActivity" />
       </activity>
       <activity
-         android:name=".SelectPlayer"
+         android:name=".SelectPlayerActivity"
          android:exported="true" />
       <activity
          android:name=".LoginActivity"
