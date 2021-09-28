@@ -22,11 +22,7 @@ import com.rockpaperscissor.components.SettingDialog;
 import com.rockpaperscissor.json.RPSJson;
 import com.rockpaperscissor.json.jsontemplate.data.SessionData;
 
-import org.w3c.dom.Text;
-
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Timer;
 
 import okhttp3.FormBody;
 
@@ -79,12 +75,6 @@ public class GameplayActivity extends AppCompatActivity {
       intent.putExtra(INTENT_OPPONENT_OUT, opponentOut);
       startActivity(intent);
    };
-   private Runnable keepServerRunnable = () -> {
-      FormBody formBody = new FormBody.Builder()
-            .add("sessionid", sessionId)
-            .build();
-      RPSServer.post(this, formBody, keepServerResponse, "/sessionstatus");
-   };
    private RPSResponseRunnable keepServerResponse = new RPSResponseRunnable() {
       @Override
       public void run() {
@@ -116,6 +106,12 @@ public class GameplayActivity extends AppCompatActivity {
       }
    };
 
+   private Runnable keepServerRunnable = () -> {
+      FormBody formBody = new FormBody.Builder()
+            .add("sessionid", sessionId)
+            .build();
+      RPSServer.post(this, formBody, keepServerResponse, "/sessionstatus");
+   };
    private boolean gameFinished = false;
    private final Runnable afterResultFragmentShowed = () -> {
       showChoice();

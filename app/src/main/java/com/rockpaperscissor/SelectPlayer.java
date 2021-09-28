@@ -159,7 +159,7 @@ public class SelectPlayer extends AppCompatActivity {
       this.exitBtn = findViewById(R.id.selectPlayerExitBtn);
       this.exitBtn.setOnClickListener((View view) -> onBackPressed());
 
-      sessionFragment = SelectPlayerSessionManager.getInstance();
+      sessionFragment = new SelectPlayerSessionManager();
       sessionFragment.setClientPlayer(clientPlayer);
 
       getScoreboardFromServer();

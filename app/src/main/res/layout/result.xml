@@ -10,11 +10,13 @@
    android:background="@drawable/yelbg"
    tools:context=".GameplayActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
+       android:id="@+id/constraintLayout3"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:paddingTop="24dp"
-       android:paddingBottom="48dp">
+       android:paddingBottom="48dp"
+       app:layoutDescription="@xml/result_xml_constraintlayout3_scene">
 
         <ImageView
            android:id="@+id/imageView29"
@@ -59,17 +61,6 @@
            app:layout_constraintEnd_toEndOf="parent"
            app:layout_constraintStart_toStartOf="parent"
            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-           android:id="@+id/sumSettingBtn"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="27dp"
-           android:layout_marginEnd="22dp"
-           android:background="@null"
-           app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintTop_toTopOf="parent"
-           app:srcCompat="@drawable/setting_fill" />
 
         <ImageView
            android:id="@+id/imageView27"
@@ -230,5 +221,5 @@
            app:layout_constraintEnd_toEndOf="@+id/imageView32"
            app:layout_constraintStart_toStartOf="@+id/imageView32" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

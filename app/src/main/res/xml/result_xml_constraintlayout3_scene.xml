@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+   <Transition
+      motion:autoTransition="animateToEnd"
+      motion:constraintSetEnd="@+id/result2"
+      motion:constraintSetStart="@id/result1"
+      motion:duration="600">
+      <KeyFrameSet>
+         <KeyAttribute
+            android:alpha="0"
+            android:scaleX="4"
+            android:scaleY="4"
+            motion:framePosition="33"
+            motion:motionTarget="@+id/imageView29" />
+         <KeyAttribute
+            android:alpha="0"
+            android:scaleX="4"
+            android:scaleY="4"
+            motion:framePosition="33"
+            motion:motionTarget="@+id/imageView28" />
+         <KeyAttribute
+            android:alpha="0"
+            android:scaleX="4"
+            android:scaleY="4"
+            motion:framePosition="67"
+            motion:motionTarget="@+id/imageView30" />
+         <KeyAttribute
+            android:alpha="1"
+            android:scaleX="1"
+            android:scaleY="1"
+            motion:framePosition="67"
+            motion:motionTarget="@+id/imageView29" />
+      </KeyFrameSet>
+   </Transition>
+
+   <ConstraintSet android:id="@+id/result1">
+      <Constraint
+         android:id="@+id/imageView29"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginEnd="5dp"
+         android:layout_marginBottom="5dp"
+         android:alpha="0"
+         android:scaleX="4"
+         android:scaleY="4"
+         motion:layout_constraintBottom_toTopOf="@+id/textView20"
+         motion:layout_constraintEnd_toStartOf="@+id/imageView28" />
+      <Constraint
+         android:id="@+id/imageView30"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="5dp"
+         android:layout_marginBottom="5dp"
+         android:alpha="0"
+         android:scaleX="4"
+         android:scaleY="4"
+         motion:layout_constraintBottom_toTopOf="@+id/textView20"
+         motion:layout_constraintStart_toEndOf="@+id/imageView28" />
+      <Constraint
+         android:id="@+id/imageView28"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginBottom="5dp"
+         android:alpha="0"
+         android:scaleX="4"
+         android:scaleY="4"
+         motion:layout_constraintBottom_toTopOf="@+id/textView20"
+         motion:layout_constraintEnd_toEndOf="parent"
+         motion:layout_constraintHorizontal_bias="0.498"
+         motion:layout_constraintStart_toStartOf="parent" />
+      <Constraint
+         android:id="@+id/textView20"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="89dp"
+         android:alpha="0"
+         motion:layout_constraintEnd_toEndOf="parent"
+         motion:layout_constraintStart_toStartOf="parent"
+         motion:layout_constraintTop_toTopOf="parent" />
+      <Constraint
+         android:id="@+id/imageView27"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:translationY="640dp"
+         motion:layout_constraintBottom_toBottomOf="parent"
+         motion:layout_constraintEnd_toEndOf="parent"
+         motion:layout_constraintStart_toStartOf="parent" />
+      <Constraint
+         android:id="@+id/imageView32"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:translationY="640dp"
+         motion:layout_constraintBottom_toBottomOf="@+id/imageView27"
+         motion:layout_constraintEnd_toEndOf="@+id/imageView27"
+         motion:layout_constraintStart_toStartOf="@+id/imageView27"
+         motion:layout_constraintTop_toTopOf="@+id/imageView27" />
+      <Constraint
+         android:id="@+id/textView21"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:translationY="640dp"
+         motion:layout_constraintBottom_toBottomOf="@+id/imageView31"
+         motion:layout_constraintEnd_toEndOf="@+id/imageView31"
+         motion:layout_constraintStart_toStartOf="@+id/imageView31"
+         motion:layout_constraintTop_toTopOf="@+id/imageView31"
+         motion:layout_constraintVertical_bias="0.453" />
+      <Constraint
+         android:id="@+id/imageView31"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginBottom="481dp"
+         android:translationY="640dp"
+         motion:layout_constraintBottom_toBottomOf="@+id/imageView32"
+         motion:layout_constraintEnd_toEndOf="parent"
+         motion:layout_constraintHorizontal_bias="0.497"
+         motion:layout_constraintStart_toStartOf="parent" />
+      <Constraint
+         android:id="@+id/sumBackBtn"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginBottom="21dp"
+         android:alpha="0"
+         motion:layout_constraintBottom_toBottomOf="@+id/imageView32"
+         motion:layout_constraintEnd_toEndOf="@+id/imageView32"
+         motion:layout_constraintStart_toStartOf="@+id/imageView32" />
+      <Constraint
+         android:id="@+id/textView22"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:alpha="0"
+         motion:layout_constraintBottom_toBottomOf="@+id/sumBackBtn"
+         motion:layout_constraintEnd_toEndOf="@+id/sumBackBtn"
+         motion:layout_constraintStart_toStartOf="@+id/sumBackBtn"
+         motion:layout_constraintTop_toTopOf="@+id/sumBackBtn" />
+      <Constraint
+         android:id="@+id/sumOpponentScore"
+         android:layout_width="34dp"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="53dp"
+         android:layout_marginEnd="24dp"
+         android:translationY="640dp"
+         motion:layout_constraintEnd_toEndOf="@+id/imageView32"
+         motion:layout_constraintTop_toBottomOf="@+id/sumClientScore" />
+      <Constraint
+         android:id="@+id/sumOpponentLabel"
+         android:layout_width="0dp"
+         android:layout_height="22dp"
+         android:layout_marginStart="24dp"
+         android:layout_marginTop="53dp"
+         android:layout_marginEnd="24dp"
+         android:translationY="640dp"
+         motion:layout_constraintEnd_toStartOf="@+id/sumOpponentScore"
+         motion:layout_constraintStart_toEndOf="@+id/sumOpponentImage"
+         motion:layout_constraintTop_toBottomOf="@+id/sumClientLabel" />
+      <Constraint
+         android:id="@+id/sumOpponentImage"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="32dp"
+         android:layout_marginTop="16dp"
+         android:translationY="640dp"
+         motion:layout_constraintStart_toStartOf="@+id/imageView32"
+         motion:layout_constraintTop_toBottomOf="@+id/sumClientImage" />
+      <Constraint
+         android:id="@+id/sumClientImage"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="32dp"
+         android:layout_marginTop="51dp"
+         android:translationY="640dp"
+         motion:layout_constraintStart_toStartOf="@+id/imageView32"
+         motion:layout_constraintTop_toTopOf="@+id/imageView32" />
+      <Constraint
+         android:id="@+id/sumClientLabel"
+         android:layout_width="0dp"
+         android:layout_height="22dp"
+         android:layout_marginStart="24dp"
+         android:layout_marginTop="72dp"
+         android:layout_marginEnd="24dp"
+         android:translationY="640dp"
+         motion:layout_constraintEnd_toStartOf="@+id/sumClientScore"
+         motion:layout_constraintStart_toEndOf="@+id/sumClientImage"
+         motion:layout_constraintTop_toTopOf="@+id/imageView32" />
+      <Constraint
+         android:id="@+id/sumClientScore"
+         android:layout_width="34dp"
+         android:layout_height="22dp"
+         android:layout_marginTop="72dp"
+         android:layout_marginEnd="24dp"
+         android:translationY="640dp"
+         motion:layout_constraintEnd_toEndOf="@+id/imageView32"
+         motion:layout_constraintTop_toTopOf="@+id/imageView32" />
+      <Constraint
+         android:id="@+id/sumClientStatus"
+         android:layout_width="wrap_content"
+         android:layout_height="31dp"
+         android:layout_marginBottom="48dp"
+         android:translationY="640dp"
+         motion:layout_constraintBottom_toTopOf="@+id/sumBackBtn"
+         motion:layout_constraintEnd_toEndOf="@+id/imageView32"
+         motion:layout_constraintStart_toStartOf="@+id/imageView32" />
+   </ConstraintSet>
+
+   <ConstraintSet android:id="@+id/result2">
+      <Constraint
+         android:id="@+id/imageView27"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:translationY="640dp"
+         motion:layout_constraintBottom_toBottomOf="parent"
+         motion:layout_constraintEnd_toEndOf="parent"
+         motion:layout_constraintStart_toStartOf="parent" />
+      <Constraint
+         android:id="@+id/imageView32"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:translationY="640dp"
+         motion:layout_constraintBottom_toBottomOf="@+id/imageView27"
+         motion:layout_constraintEnd_toEndOf="@+id/imageView27"
+         motion:layout_constraintStart_toStartOf="@+id/imageView27"
+         motion:layout_constraintTop_toTopOf="@+id/imageView27" />
+      <Constraint
+         android:id="@+id/sumOpponentScore"
+         android:layout_width="34dp"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="53dp"
+         android:layout_marginEnd="24dp"
+         android:translationY="640dp"
+         motion:layout_constraintEnd_toEndOf="@+id/imageView32"
+         motion:layout_constraintTop_toBottomOf="@+id/sumClientScore" />
+      <Constraint
+         android:id="@+id/sumOpponentLabel"
+         android:layout_width="0dp"
+         android:layout_height="22dp"
+         android:layout_marginStart="24dp"
+         android:layout_marginTop="53dp"
+         android:layout_marginEnd="24dp"
+         android:translationY="640dp"
+         motion:layout_constraintEnd_toStartOf="@+id/sumOpponentScore"
+         motion:layout_constraintStart_toEndOf="@+id/sumOpponentImage"
+         motion:layout_constraintTop_toBottomOf="@+id/sumClientLabel" />
+      <Constraint
+         android:id="@+id/sumOpponentImage"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="32dp"
+         android:layout_marginTop="16dp"
+         android:translationY="640dp"
+         motion:layout_constraintStart_toStartOf="@+id/imageView32"
+         motion:layout_constraintTop_toBottomOf="@+id/sumClientImage" />
+      <Constraint
+         android:id="@+id/imageView31"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginBottom="481dp"
+         android:translationY="640dp"
+         motion:layout_constraintBottom_toBottomOf="@+id/imageView32"
+         motion:layout_constraintEnd_toEndOf="parent"
+         motion:layout_constraintHorizontal_bias="0.497"
+         motion:layout_constraintStart_toStartOf="parent" />
+      <Constraint
+         android:id="@+id/textView21"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:translationY="640dp"
+         motion:layout_constraintBottom_toBottomOf="@+id/imageView31"
+         motion:layout_constraintEnd_toEndOf="@+id/imageView31"
+         motion:layout_constraintStart_toStartOf="@+id/imageView31"
+         motion:layout_constraintTop_toTopOf="@+id/imageView31"
+         motion:layout_constraintVertical_bias="0.453" />
+      <Constraint
+         android:id="@+id/sumBackBtn"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginBottom="21dp"
+         android:alpha="0"
+         motion:layout_constraintBottom_toBottomOf="@+id/imageView32"
+         motion:layout_constraintEnd_toEndOf="@+id/imageView32"
+         motion:layout_constraintStart_toStartOf="@+id/imageView32" />
+      <Constraint
+         android:id="@+id/textView22"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:alpha="0"
+         motion:layout_constraintBottom_toBottomOf="@+id/sumBackBtn"
+         motion:layout_constraintEnd_toEndOf="@+id/sumBackBtn"
+         motion:layout_constraintStart_toStartOf="@+id/sumBackBtn"
+         motion:layout_constraintTop_toTopOf="@+id/sumBackBtn" />
+      <Constraint
+         android:id="@+id/sumClientImage"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="32dp"
+         android:layout_marginTop="51dp"
+         android:translationY="640dp"
+         motion:layout_constraintStart_toStartOf="@+id/imageView32"
+         motion:layout_constraintTop_toTopOf="@+id/imageView32" />
+      <Constraint
+         android:id="@+id/sumClientLabel"
+         android:layout_width="0dp"
+         android:layout_height="22dp"
+         android:layout_marginStart="24dp"
+         android:layout_marginTop="72dp"
+         android:layout_marginEnd="24dp"
+         android:translationY="640dp"
+         motion:layout_constraintEnd_toStartOf="@+id/sumClientScore"
+         motion:layout_constraintStart_toEndOf="@+id/sumClientImage"
+         motion:layout_constraintTop_toTopOf="@+id/imageView32" />
+      <Constraint
+         android:id="@+id/sumClientScore"
+         android:layout_width="34dp"
+         android:layout_height="22dp"
+         android:layout_marginTop="72dp"
+         android:layout_marginEnd="24dp"
+         android:translationY="640dp"
+         motion:layout_constraintEnd_toEndOf="@+id/imageView32"
+         motion:layout_constraintTop_toTopOf="@+id/imageView32" />
+      <Constraint
+         android:id="@+id/sumClientStatus"
+         android:layout_width="wrap_content"
+         android:layout_height="31dp"
+         android:layout_marginBottom="48dp"
+         android:translationY="640dp"
+         motion:layout_constraintBottom_toTopOf="@+id/sumBackBtn"
+         motion:layout_constraintEnd_toEndOf="@+id/imageView32"
+         motion:layout_constraintStart_toStartOf="@+id/imageView32" />
+   </ConstraintSet>
+   <ConstraintSet
+      android:id="@+id/result3"
+      motion:deriveConstraintsFrom="@+id/result2">
+      <Constraint
+         android:id="@+id/imageView27"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:translationY="0dp"
+         motion:layout_constraintBottom_toBottomOf="parent"
+         motion:layout_constraintEnd_toEndOf="parent"
+         motion:layout_constraintStart_toStartOf="parent" />
+      <Constraint
+         android:id="@+id/imageView32"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:translationY="0dp"
+         motion:layout_constraintBottom_toBottomOf="@+id/imageView27"
+         motion:layout_constraintEnd_toEndOf="@+id/imageView27"
+         motion:layout_constraintStart_toStartOf="@+id/imageView27"
+         motion:layout_constraintTop_toTopOf="@+id/imageView27" />
+      <Constraint
+         android:id="@+id/imageView31"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginBottom="481dp"
+         android:translationY="0dp"
+         motion:layout_constraintBottom_toBottomOf="@+id/imageView32"
+         motion:layout_constraintEnd_toEndOf="parent"
+         motion:layout_constraintHorizontal_bias="0.497"
+         motion:layout_constraintStart_toStartOf="parent" />
+      <Constraint
+         android:id="@+id/textView21"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:translationY="0dp"
+         motion:layout_constraintBottom_toBottomOf="@+id/imageView31"
+         motion:layout_constraintEnd_toEndOf="@+id/imageView31"
+         motion:layout_constraintStart_toStartOf="@+id/imageView31"
+         motion:layout_constraintTop_toTopOf="@+id/imageView31"
+         motion:layout_constraintVertical_bias="0.453" />
+   </ConstraintSet>
+   <Transition
+      motion:autoTransition="animateToEnd"
+      motion:constraintSetEnd="@+id/result3"
+      motion:constraintSetStart="@+id/result2"
+      motion:duration="800"
+      motion:motionInterpolator="overshoot" />
+   <ConstraintSet
+      android:id="@+id/result4"
+      motion:deriveConstraintsFrom="@+id/result3">
+      <Constraint
+         android:id="@+id/sumOpponentScore"
+         android:layout_width="34dp"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="53dp"
+         android:layout_marginEnd="24dp"
+         android:translationY="0dp"
+         motion:layout_constraintEnd_toEndOf="@+id/imageView32"
+         motion:layout_constraintTop_toBottomOf="@+id/sumClientScore" />
+      <Constraint
+         android:id="@+id/sumOpponentLabel"
+         android:layout_width="0dp"
+         android:layout_height="22dp"
+         android:layout_marginStart="24dp"
+         android:layout_marginTop="53dp"
+         android:layout_marginEnd="24dp"
+         android:translationY="0dp"
+         motion:layout_constraintEnd_toStartOf="@+id/sumOpponentScore"
+         motion:layout_constraintStart_toEndOf="@+id/sumOpponentImage"
+         motion:layout_constraintTop_toBottomOf="@+id/sumClientLabel" />
+      <Constraint
+         android:id="@+id/sumOpponentImage"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="32dp"
+         android:layout_marginTop="16dp"
+         android:translationY="0dp"
+         motion:layout_constraintStart_toStartOf="@+id/imageView32"
+         motion:layout_constraintTop_toBottomOf="@+id/sumClientImage" />
+      <Constraint
+         android:id="@+id/sumClientImage"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="32dp"
+         android:layout_marginTop="51dp"
+         android:translationY="0dp"
+         motion:layout_constraintStart_toStartOf="@+id/imageView32"
+         motion:layout_constraintTop_toTopOf="@+id/imageView32" />
+      <Constraint
+         android:id="@+id/sumClientLabel"
+         android:layout_width="0dp"
+         android:layout_height="22dp"
+         android:layout_marginStart="24dp"
+         android:layout_marginTop="72dp"
+         android:layout_marginEnd="24dp"
+         android:translationY="0dp"
+         motion:layout_constraintEnd_toStartOf="@+id/sumClientScore"
+         motion:layout_constraintStart_toEndOf="@+id/sumClientImage"
+         motion:layout_constraintTop_toTopOf="@+id/imageView32" />
+      <Constraint
+         android:id="@+id/sumClientScore"
+         android:layout_width="34dp"
+         android:layout_height="22dp"
+         android:layout_marginTop="72dp"
+         android:layout_marginEnd="24dp"
+         android:translationY="0dp"
+         motion:layout_constraintEnd_toEndOf="@+id/imageView32"
+         motion:layout_constraintTop_toTopOf="@+id/imageView32" />
+      <Constraint
+         android:id="@+id/sumClientStatus"
+         android:layout_width="wrap_content"
+         android:layout_height="31dp"
+         android:layout_marginBottom="48dp"
+         android:translationY="0dp"
+         motion:layout_constraintBottom_toTopOf="@+id/sumBackBtn"
+         motion:layout_constraintEnd_toEndOf="@+id/imageView32"
+         motion:layout_constraintStart_toStartOf="@+id/imageView32" />
+   </ConstraintSet>
+   <Transition
+      motion:autoTransition="animateToEnd"
+      motion:constraintSetEnd="@+id/result4"
+      motion:constraintSetStart="@+id/result3"
+      motion:duration="1000"
+      motion:motionInterpolator="linear"
+      motion:staggered=".5" />
+   <ConstraintSet
+      android:id="@+id/result5"
+      motion:deriveConstraintsFrom="@+id/result4">
+      <Constraint
+         android:id="@+id/sumBackBtn"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginBottom="21dp"
+         android:alpha="1"
+         motion:layout_constraintBottom_toBottomOf="@+id/imageView32"
+         motion:layout_constraintEnd_toEndOf="@+id/imageView32"
+         motion:layout_constraintStart_toStartOf="@+id/imageView32" />
+      <Constraint
+         android:id="@+id/textView22"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:alpha="1"
+         motion:layout_constraintBottom_toBottomOf="@+id/sumBackBtn"
+         motion:layout_constraintEnd_toEndOf="@+id/sumBackBtn"
+         motion:layout_constraintStart_toStartOf="@+id/sumBackBtn"
+         motion:layout_constraintTop_toTopOf="@+id/sumBackBtn" />
+   </ConstraintSet>
+   <Transition
+      motion:autoTransition="animateToEnd"
+      motion:constraintSetEnd="@+id/result5"
+      motion:constraintSetStart="@+id/result4"
+      motion:duration="300" />
+</MotionScene>

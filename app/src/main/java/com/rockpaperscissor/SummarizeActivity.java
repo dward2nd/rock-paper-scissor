@@ -60,7 +60,6 @@ public class SummarizeActivity extends AppCompatActivity {
       this.opponentOut = intentExtras.getBoolean(GameplayActivity.INTENT_OPPONENT_OUT);
 
       this.backBtn = findViewById(R.id.sumBackBtn);
-      this.settingBtn = findViewById(R.id.sumSettingBtn);
       this.backBtn.setOnClickListener((View view) -> {
          onBackPressed();
       });

@@ -19,11 +19,11 @@
         <entry key="app/src/main/res/layout/gameplay2.xml" value="0.25" />
         <entry key="app/src/main/res/layout/gameplay2_component.xml" value="0.25" />
         <entry key="app/src/main/res/layout/gameplay_showresult_fragment.xml" value="0.1013157894736842" />
-        <entry key="app/src/main/res/layout/login.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/login.xml" value="0.11" />
         <entry key="app/src/main/res/layout/player_menu.xml" value="0.25" />
         <entry key="app/src/main/res/layout/player_session.xml" value="0.25" />
         <entry key="app/src/main/res/layout/playercard.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/result.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/result.xml" value="0.335" />
         <entry key="app/src/main/res/layout/scoreboard.xml" value="0.165" />
         <entry key="app/src/main/res/layout/scoreboard_fragment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/setting.xml" value="0.25" />

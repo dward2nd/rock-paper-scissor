@@ -25,8 +25,6 @@ import java.io.IOException;
 import okhttp3.FormBody;
 
 public class SelectPlayerSessionManager extends Fragment {
-   private static final SelectPlayerSessionManager myself = new SelectPlayerSessionManager();
-
    private EditText clientSessionIdLabel;
    private EditText opponentSessionIdLabel;
 
@@ -36,10 +34,6 @@ public class SelectPlayerSessionManager extends Fragment {
 
    public SelectPlayerSessionManager() {
       super(R.layout.player_session);
-   }
-
-   public static SelectPlayerSessionManager getInstance() {
-      return myself;
    }
 
    @Override
