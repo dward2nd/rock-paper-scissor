@@ -22,9 +22,11 @@ import com.rockpaperscissor.components.ScoreboardFragment;
 import com.rockpaperscissor.components.SelectPlayerSessionManager;
 import com.rockpaperscissor.components.SettingDialog;
 import com.rockpaperscissor.json.RPSJson;
+import com.rockpaperscissor.json.jsontemplate.data.MiniData;
 import com.rockpaperscissor.json.jsontemplate.data.PlayerTemplate;
 
 import java.io.IOException;
+import java.text.Normalizer;
 import java.util.ArrayList;
 
 import okhttp3.FormBody;
@@ -37,7 +39,7 @@ public class SelectPlayer extends AppCompatActivity {
 
    private RPSPlayer clientPlayer;
    private RPSPlayer pseudoOpponentPlayer;
-   private final Handler selectPlayerHandler = new Handler(Looper.getMainLooper());
+   private final Handler selectPlayerHandler = new Handler();
    private ArrayList<RPSPlayer> scoreboardPlayers;
 
    // ui components
@@ -49,6 +51,82 @@ public class SelectPlayer extends AppCompatActivity {
    // fragments
    private SelectPlayerSessionManager sessionFragment;
    private ScoreboardFragment scoreboardFragment;
+   private boolean isOnSessionFragment;
+   private Runnable checkChallengeRunnable = () -> checkChallenge();
+   private RPSResponseRunnable checkChallengeHelper = new RPSResponseRunnable() {
+      @Override
+      public void error(IOException e) {
+         networkErrorDialogShow(e);
+      }
+
+      @Override
+      public void run() {
+         //Log.d("TAG", getResponse());
+         PlayerTemplate playerUpdate = RPSJson.fromJson(getResponse(), PlayerTemplate.class);
+         if (playerUpdate.getChallenge()) {
+            selectPlayerHandler.removeCallbacks(checkChallengeRunnable);
+            String invitedPath = "/forcejoin";
+            FormBody formBody = new FormBody.Builder()
+                  .add("session", clientPlayer.getSession())
+                  .build();
+            RPSResponseRunnable runnable = new RPSResponseRunnable() {
+               @Override
+               public void run() {
+                  MiniData response = RPSJson.fromJson(getResponse(), MiniData.class);
+                  RPSPlayer opponent = new RPSPlayer(response.getId(), response.getUsername(),
+                        clientPlayer.getSession());
+
+                  Intent intent = new Intent(SelectPlayer.this, GameplayActivity.class);
+                  intent.putExtra(SelectPlayer.INTENT_CLIENT, clientPlayer);
+                  intent.putExtra(SelectPlayer.INTENT_OPPONENT, opponent);
+                  intent.putExtra(SelectPlayer.INTENT_SESSION, clientPlayer.getSession());
+                  startActivity(intent);
+               }
+
+               @Override
+               public void error(IOException e) {
+                  networkErrorDialogShow(e);
+               }
+            };
+
+            RPSServer.post(SelectPlayer.this, formBody, runnable, invitedPath);
+         }
+      }
+   };
+
+   private void networkErrorDialogShow(IOException e) {
+      FragmentManager fragmentManager = getSupportFragmentManager();
+      Fragment currentFragment = fragmentManager.findFragmentById(R.id.playerMenuFragment);
+
+      AlertDialog notfoundDialog = AlertDialog.getInstance();
+      notfoundDialog.setOnCancel((View view) -> {
+         Intent intent = new Intent(SelectPlayer.this, LoginActivity.class);
+         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+         startActivity(intent);
+         finishAndRemoveTask();
+      });
+      notfoundDialog.setDialogTitle("Network Error");
+      notfoundDialog.setDialogDescription(e.getMessage());
+
+      if (currentFragment != null)
+         fragmentManager.beginTransaction()
+               .remove(currentFragment)
+               .commit();
+
+      fragmentManager.beginTransaction()
+            .add(R.id.playerMenuFragment, notfoundDialog)
+            .commit();
+   }
+
+   private void checkChallenge() {
+      String commonPath = "/playerstatus";
+      FormBody formBody = new FormBody.Builder()
+            .add("Id", clientPlayer.getUid())
+            .build();
+
+      RPSServer.post(this, formBody, checkChallengeHelper, commonPath);
+      selectPlayerHandler.postDelayed(checkChallengeRunnable, 2000);
+   }
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
@@ -83,44 +161,64 @@ public class SelectPlayer extends AppCompatActivity {
 
       sessionFragment = SelectPlayerSessionManager.getInstance();
       sessionFragment.setClientPlayer(clientPlayer);
-      sessionFragment.setPseudoOpponentPlayer(pseudoOpponentPlayer);
 
-      switchToSessionFragment();
       getScoreboardFromServer();
+
+      isOnSessionFragment = false;
+      switchToSessionFragment();
+      selectPlayerHandler.postDelayed(() -> checkChallenge(), 2000);
    }
 
+   /*
+   @Override
+   public void onStart() {
+      super.onStart();
+
+      isOnSessionFragment = false;
+      switchToSessionFragment();
+   }
+    */
+
    private void switchToSessionFragment() {
-      sessionBtn.setBackgroundColor(0xFFFFFFFF);
-      scoreboardBtn.setBackgroundColor(0xFFFFCE70);
+      if (!isOnSessionFragment) {
+         sessionBtn.setBackgroundColor(0xFFFFFFFF);
+         scoreboardBtn.setBackgroundColor(0xFFFFCE70);
 
-      FragmentManager fragmentManager = getSupportFragmentManager();
-      Fragment currentFragment = fragmentManager.findFragmentById(R.id.selectPlayerMainFragment);
+         FragmentManager fragmentManager = getSupportFragmentManager();
+         Fragment currentFragment = fragmentManager.findFragmentById(R.id.selectPlayerMainFragment);
 
-      if (currentFragment != null)
+         if (currentFragment != null)
+            fragmentManager.beginTransaction()
+                  .remove(currentFragment)
+                  .commit();
+
          fragmentManager.beginTransaction()
-               .remove(currentFragment)
+               .add(R.id.selectPlayerMainFragment, sessionFragment)
                .commit();
 
-      fragmentManager.beginTransaction()
-            .add(R.id.selectPlayerMainFragment, sessionFragment)
-            .commit();
+         isOnSessionFragment = true;
+      }
    }
 
    private void switchToScoreboardFragment() {
-      sessionBtn.setBackgroundColor(0xFFFFCE70);
-      scoreboardBtn.setBackgroundColor(0xFFFFFFFF);
+      if (isOnSessionFragment) {
+         sessionBtn.setBackgroundColor(0xFFFFCE70);
+         scoreboardBtn.setBackgroundColor(0xFFFFFFFF);
 
-      FragmentManager fragmentManager = getSupportFragmentManager();
-      Fragment currentFragment = fragmentManager.findFragmentById(R.id.selectPlayerMainFragment);
+         FragmentManager fragmentManager = getSupportFragmentManager();
+         Fragment currentFragment = fragmentManager.findFragmentById(R.id.selectPlayerMainFragment);
 
-      if (currentFragment != null)
+         if (currentFragment != null)
+            fragmentManager.beginTransaction()
+                  .remove(currentFragment)
+                  .commit();
+
          fragmentManager.beginTransaction()
-               .remove(currentFragment)
+               .add(R.id.selectPlayerMainFragment, scoreboardFragment)
                .commit();
 
-      fragmentManager.beginTransaction()
-            .add(R.id.selectPlayerMainFragment, scoreboardFragment)
-            .commit();
+         isOnSessionFragment = false;
+      }
    }
 
    @Override

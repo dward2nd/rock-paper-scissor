@@ -258,8 +258,8 @@
          android:layout_marginEnd="24dp"
          android:layout_marginBottom="20dp"
          android:alpha="0"
-         android:scaleX="7"
-         android:scaleY="7"
+         android:scaleX="8"
+         android:scaleY="8"
          motion:layout_constraintBottom_toTopOf="@+id/imageView13"
          motion:layout_constraintEnd_toEndOf="parent"
          motion:layout_constraintHorizontal_bias="0.0"
@@ -380,6 +380,7 @@
       motion:constraintSetEnd="@+id/step3"
       motion:constraintSetStart="@+id/step2"
       motion:duration="750"
+      motion:motionInterpolator="anticipate"
       motion:staggered="0.35" />
    <ConstraintSet
       android:id="@+id/step4"
@@ -408,7 +409,7 @@
       motion:constraintSetEnd="@+id/step4"
       motion:constraintSetStart="@+id/step3"
       motion:duration="1000"
-      motion:motionInterpolator="cubic(0.24,1,0,0.72)" />
+      motion:motionInterpolator="bounce" />
    <ConstraintSet
       android:id="@+id/step5"
       motion:deriveConstraintsFrom="@+id/step4">

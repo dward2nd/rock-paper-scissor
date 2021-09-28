@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+   <Transition
+      motion:autoTransition="animateToEnd"
+      motion:constraintSetEnd="@+id/finalStep2"
+      motion:constraintSetStart="@id/finalStep1"
+      motion:duration="800"
+      motion:motionInterpolator="cubic(1,0,1,1)">
+      <KeyFrameSet>
+         <KeyAttribute
+            android:alpha="0"
+            android:scaleX="4"
+            android:scaleY="4"
+            motion:framePosition="50"
+            motion:motionTarget="@+id/opponentPlayerNameLabel" />
+         <KeyAttribute
+            android:alpha="0"
+            android:scaleX="4"
+            android:scaleY="4"
+            motion:framePosition="50"
+            motion:motionTarget="@+id/opponentPlayerChoiceImageView" />
+         <KeyAttribute
+            android:translationY="0dp"
+            motion:framePosition="50"
+            motion:motionTarget="@+id/imageView47" />
+      </KeyFrameSet>
+   </Transition>
+
+   <ConstraintSet android:id="@+id/finalStep1">
+      <Constraint
+         android:id="@+id/imageView47"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:alpha="0"
+         android:translationY="475dp"
+         motion:layout_constraintEnd_toEndOf="parent"
+         motion:layout_constraintHorizontal_bias="0.5"
+         motion:layout_constraintStart_toStartOf="parent"
+         motion:layout_constraintTop_toTopOf="parent" />
+      <Constraint
+         android:id="@+id/opponentPlayerNameLabel"
+         android:layout_width="0dp"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="32dp"
+         android:alpha="0"
+         android:scaleX="4"
+         android:scaleY="4"
+         motion:layout_constraintEnd_toEndOf="@+id/opponentPlayerChoiceImageView"
+         motion:layout_constraintStart_toStartOf="@+id/opponentPlayerChoiceImageView"
+         motion:layout_constraintTop_toBottomOf="@+id/opponentPlayerChoiceImageView" />
+      <Constraint
+         android:id="@+id/clientPlayerChoiceImageView"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="10dp"
+         android:layout_marginTop="52dp"
+         android:alpha="0"
+         motion:layout_constraintStart_toStartOf="@+id/imageView47"
+         motion:layout_constraintTop_toTopOf="@+id/imageView47" />
+      <Constraint
+         android:id="@+id/clientPlayerNameLabel"
+         android:layout_width="0dp"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="32dp"
+         android:alpha="0"
+         motion:layout_constraintEnd_toEndOf="@+id/clientPlayerChoiceImageView"
+         motion:layout_constraintHorizontal_bias="0.0"
+         motion:layout_constraintStart_toStartOf="@+id/clientPlayerChoiceImageView"
+         motion:layout_constraintTop_toBottomOf="@+id/clientPlayerChoiceImageView" />
+      <Constraint
+         android:id="@+id/opponentPlayerChoiceImageView"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="52dp"
+         android:layout_marginEnd="10dp"
+         android:alpha="0"
+         android:scaleX="4"
+         android:scaleY="4"
+         motion:layout_constraintEnd_toEndOf="@+id/imageView47"
+         motion:layout_constraintTop_toTopOf="@+id/imageView47" />
+   </ConstraintSet>
+
+   <ConstraintSet android:id="@+id/finalStep2"></ConstraintSet>
+</MotionScene>

@@ -2,6 +2,7 @@ package com.rockpaperscissor.components;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,8 @@ import com.rockpaperscissor.RPSPlayer;
 import com.rockpaperscissor.SelectPlayer;
 import com.rockpaperscissor.Server.RPSResponseRunnable;
 import com.rockpaperscissor.Server.RPSServer;
+import com.rockpaperscissor.json.RPSJson;
+import com.rockpaperscissor.json.jsontemplate.data.MiniData;
 
 import java.io.IOException;
 
@@ -30,7 +33,6 @@ public class SelectPlayerSessionManager extends Fragment {
    private Button startBtn;
 
    private RPSPlayer clientPlayer;
-   private RPSPlayer pseudoOpponentPlayer;
 
    public SelectPlayerSessionManager() {
       super(R.layout.player_session);
@@ -49,15 +51,11 @@ public class SelectPlayerSessionManager extends Fragment {
 
       startBtn = view.findViewById(R.id.sessionStartGameBtn);
       startBtn.setOnClickListener((View listenerView) ->
-            startGame(opponentSessionIdLabel.getText().toString()));
+            startGame(opponentSessionIdLabel.getText().toString().toUpperCase()));
    }
 
    public void setClientPlayer(RPSPlayer clientPlayer) {
       this.clientPlayer = clientPlayer;
-   }
-
-   public void setPseudoOpponentPlayer(RPSPlayer pseudoOpponentPlayer) {
-      this.pseudoOpponentPlayer = pseudoOpponentPlayer;
    }
 
    private void startGame(String session) {
@@ -94,12 +92,18 @@ public class SelectPlayerSessionManager extends Fragment {
             AlertDialog notfoundDialog = AlertDialog.getInstance();
 
             switch (getResponse()) {
-               case "Joined":
-                  Intent intent = new Intent(getActivity(), GameplayActivity.class);
-                  intent.putExtra(SelectPlayer.INTENT_CLIENT, clientPlayer);
-                  intent.putExtra(SelectPlayer.INTENT_OPPONENT, pseudoOpponentPlayer);
-                  intent.putExtra(SelectPlayer.INTENT_SESSION, session);
-                  startActivity(intent);
+               case "Room is not found":
+                  if (currentFragment != null) {
+                     fragmentManager.beginTransaction()
+                           .remove(currentFragment)
+                           .commit();
+                  }
+                  notfoundDialog.setDialogTitle("Not found");
+                  notfoundDialog.setDialogDescription("The session '" + session + "' not found on the server.");
+                  fragmentManager.beginTransaction()
+                        .add(R.id.playerMenuFragment, notfoundDialog)
+                        .commit();
+
                   break;
                case "Session is full":
                   if (currentFragment != null) {
@@ -108,7 +112,7 @@ public class SelectPlayerSessionManager extends Fragment {
                            .commit();
                   }
                   notfoundDialog.setDialogTitle("Already taken");
-                  notfoundDialog.setDialogDescription("The session `" + session + "` is currently active with the other player.");
+                  notfoundDialog.setDialogDescription("The session '" + session + "' is currently active with the other player.");
                   fragmentManager.beginTransaction()
                         .add(R.id.playerMenuFragment, notfoundDialog)
                         .commit();
@@ -120,22 +124,21 @@ public class SelectPlayerSessionManager extends Fragment {
                            .commit();
                   }
                   notfoundDialog.setDialogTitle("This is yours.");
-                  notfoundDialog.setDialogDescription("The session `" + session + "` is your session ID. You cannot join yourself.");
+                  notfoundDialog.setDialogDescription("The session '" + session + "' is your session ID. You cannot join yourself.");
                   fragmentManager.beginTransaction()
                         .add(R.id.playerMenuFragment, notfoundDialog)
                         .commit();
                   break;
                default:
-                  if (currentFragment != null) {
-                     fragmentManager.beginTransaction()
-                           .remove(currentFragment)
-                           .commit();
-                  }
-                  notfoundDialog.setDialogTitle("Not found");
-                  notfoundDialog.setDialogDescription("The session `" + session + "` not found on the server.");
-                  fragmentManager.beginTransaction()
-                        .add(R.id.playerMenuFragment, notfoundDialog)
-                        .commit();
+                  Log.d("TAG", getResponse());
+                  MiniData response = RPSJson.fromJson(getResponse(), MiniData.class);
+                  RPSPlayer opponent = new RPSPlayer(response.getId(), response.getUsername(), session);
+
+                  Intent intent = new Intent(getActivity(), GameplayActivity.class);
+                  intent.putExtra(SelectPlayer.INTENT_CLIENT, clientPlayer);
+                  intent.putExtra(SelectPlayer.INTENT_OPPONENT, opponent);
+                  intent.putExtra(SelectPlayer.INTENT_SESSION, session);
+                  startActivity(intent);
 
                   break;
             }

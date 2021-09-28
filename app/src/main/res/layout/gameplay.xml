@@ -8,6 +8,7 @@
    android:layout_alignParentTop="true"
    android:layout_alignParentBottom="true"
    android:background="@drawable/yelbg"
+   android:overScrollMode="always"
    tools:context=".GameplayActivity">
 
    <androidx.constraintlayout.motion.widget.MotionLayout
@@ -16,6 +17,7 @@
       android:layout_height="match_parent"
       android:layout_alignParentTop="true"
       android:layout_alignParentBottom="true"
+      android:overScrollMode="always"
       android:paddingTop="24dp"
       android:paddingBottom="48dp"
       app:layoutDescription="@xml/gameplay_xml_constraintlayout2_scene">
@@ -66,10 +68,9 @@
          android:id="@+id/gamePlayScissor"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:layout_marginEnd="16dp"
+         android:layout_marginEnd="24dp"
          android:layout_marginBottom="16dp"
          android:background="@null"
-         android:clickable="false"
          app:layout_constraintBottom_toTopOf="@+id/gamePlayRock"
          app:layout_constraintEnd_toEndOf="@+id/imageView12"
          app:srcCompat="@drawable/scissor_gameplay1" />
@@ -80,7 +81,6 @@
          android:layout_height="wrap_content"
          android:layout_marginBottom="56dp"
          android:background="@null"
-         android:clickable="false"
          app:layout_constraintBottom_toBottomOf="parent"
          app:layout_constraintEnd_toEndOf="parent"
          app:layout_constraintHorizontal_bias="0.498"
@@ -91,10 +91,9 @@
          android:id="@+id/gamePlayPaper"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:layout_marginStart="16dp"
+         android:layout_marginStart="24dp"
          android:layout_marginBottom="16dp"
          android:background="@null"
-         android:clickable="false"
          app:layout_constraintBottom_toTopOf="@+id/gamePlayRock"
          app:layout_constraintStart_toStartOf="@+id/imageView12"
          app:srcCompat="@drawable/paper_gameplay1" />
@@ -103,6 +102,7 @@
          android:id="@+id/gamePlayChoose"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
+         android:layout_marginTop="16dp"
          android:fontFamily="@font/gomarice_rockin_record"
          android:text="@string/gameplay_chooseshape"
          android:textColor="#FFFFFF"
@@ -250,12 +250,12 @@
          app:layout_constraintStart_toStartOf="@+id/imageView12"
          app:layout_constraintTop_toTopOf="@+id/imageView13" />
 
-      <androidx.fragment.app.FragmentContainerView
-         android:id="@+id/gamePlaySurrenderConfirmDialog"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent"
-         tools:layout_editor_absoluteY="24dp" />
-
    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+   <androidx.fragment.app.FragmentContainerView
+      android:id="@+id/gamePlaySurrenderConfirmDialog"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      tools:layout_editor_absoluteY="24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

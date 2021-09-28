@@ -6,7 +6,7 @@ public class PlayerTemplate {
    private String session;
    private int score;
    private int played;
-   private String challenge;
+   private boolean challenge;
 
    public int getPlayed() {
       return played;
@@ -16,11 +16,11 @@ public class PlayerTemplate {
       this.played = played;
    }
 
-   public String getChallenge() {
+   public boolean getChallenge() {
       return challenge;
    }
 
-   public void setChallenge(String challenge) {
+   public void setChallenge(boolean challenge) {
       this.challenge = challenge;
    }
 

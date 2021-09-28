@@ -20,11 +20,20 @@ public class AlertDialog extends Fragment {
    private String dialogTitle;
    private String dialogDescription;
    // event handler
-   private final View.OnClickListener ON_CANCEL = (View view) -> {
+   private View.OnClickListener onCancel;
+   private final View.OnClickListener DEFAULT_ON_CANCEL = (View view) -> {
       getActivity().getSupportFragmentManager().beginTransaction()
+            .setReorderingAllowed(true)
             .remove(this)
             .commit();
+
+      if (onCancel != null) {
+         onCancel.onClick(getView());
+         // this is to make sure if AlertDialog instance will be reused.
+         onCancel = null;
+      }
    };
+
 
    public AlertDialog() {
       super(R.layout.alert_dialog);
@@ -43,7 +52,7 @@ public class AlertDialog extends Fragment {
       confirmDialogDescription.setText(dialogDescription);
 
       cancelBtn = view.findViewById(R.id.alertDismissBtn);
-      cancelBtn.setOnClickListener(ON_CANCEL);
+      cancelBtn.setOnClickListener(DEFAULT_ON_CANCEL);
 
       view.setClickable(true);
    }
@@ -54,5 +63,9 @@ public class AlertDialog extends Fragment {
 
    public void setDialogDescription(String dialogDescription) {
       this.dialogDescription = dialogDescription;
+   }
+
+   public void setOnCancel(View.OnClickListener onCancel) {
+      this.onCancel = onCancel;
    }
 }

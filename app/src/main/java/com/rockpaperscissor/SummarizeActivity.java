@@ -35,6 +35,7 @@ public class SummarizeActivity extends AppCompatActivity {
    private int clientScore;
    private int opponentScore;
    private boolean surrendered;
+   private boolean opponentOut;
 
    @Override
    public void onBackPressed() {
@@ -56,6 +57,7 @@ public class SummarizeActivity extends AppCompatActivity {
       this.clientScore = intentExtras.getInt(GameplayActivity.INTENT_SCORE_CLIENT);
       this.opponentScore = intentExtras.getInt(GameplayActivity.INTENT_SCORE_OPPONENT);
       this.surrendered = intentExtras.getBoolean(GameplayActivity.INTENT_SURRENDER);
+      this.opponentOut = intentExtras.getBoolean(GameplayActivity.INTENT_OPPONENT_OUT);
 
       this.backBtn = findViewById(R.id.sumBackBtn);
       this.settingBtn = findViewById(R.id.sumSettingBtn);
