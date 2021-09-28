@@ -63,7 +63,7 @@ public class SelectPlayerSessionManager extends Fragment {
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
             Fragment currentFragment = fragmentManager.findFragmentById(R.id.playerMenuFragment);
 
-            AlertDialog notfoundDialog = AlertDialog.getInstance();
+            AlertDialog notfoundDialog = new AlertDialog();
             notfoundDialog.setDialogTitle("Network Error");
             notfoundDialog.setDialogDescription(e.getMessage());
 
@@ -81,7 +81,7 @@ public class SelectPlayerSessionManager extends Fragment {
          public void run() {
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
             Fragment currentFragment = fragmentManager.findFragmentById(R.id.playerMenuFragment);
-            AlertDialog notfoundDialog = AlertDialog.getInstance();
+            AlertDialog notfoundDialog = new AlertDialog();
 
             switch (getResponse()) {
                case "Room is not found":

@@ -9,8 +9,6 @@ import androidx.fragment.app.Fragment;
 
 import com.rockpaperscissor.R;
 
-import java.util.Objects;
-
 public class SettingDialog extends Fragment {
    private ImageButton bgmCheckBox;
    private ImageButton backBtn;
