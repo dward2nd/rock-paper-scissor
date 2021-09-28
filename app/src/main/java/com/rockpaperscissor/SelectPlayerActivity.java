@@ -26,6 +26,7 @@ import com.rockpaperscissor.json.jsontemplate.PlayerTemplate;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import okhttp3.FormBody;
 
@@ -36,22 +37,18 @@ public class SelectPlayerActivity extends AppCompatActivity {
    public static final String INTENT_SESSION = "com.rockpaperscissor.SESSION";
 
    private RPSPlayer clientPlayer;
-   private RPSPlayer pseudoOpponentPlayer;
    private final Handler selectPlayerHandler = new Handler();
    private ArrayList<RPSPlayer> scoreboardPlayers;
 
    // ui components
    private Button sessionBtn;
    private Button scoreboardBtn;
-   private ImageButton exitBtn;
-   private TextView clientInfoLabel;
 
    // fragments
    private SelectPlayerSessionManager sessionFragment;
    private ScoreboardFragment scoreboardFragment;
    private boolean isOnSessionFragment;
-   private Runnable checkChallengeRunnable = () -> checkChallenge();
-   private RPSResponseRunnable checkChallengeHelper = new RPSResponseRunnable() {
+   private final RPSResponseRunnable checkChallengeHelper = new RPSResponseRunnable() {
       @Override
       public void error(IOException e) {
          networkErrorDialogShow(e);
@@ -87,16 +84,17 @@ public class SelectPlayerActivity extends AppCompatActivity {
                }
             };
 
-            RPSServer.post(SelectPlayerActivity.this, formBody, runnable, invitedPath);
+            RPSServer.post(formBody, invitedPath, runnable);
          }
       }
    };
+   private final Runnable checkChallengeRunnable = this::checkChallenge;
 
    private void networkErrorDialogShow(IOException e) {
       FragmentManager fragmentManager = getSupportFragmentManager();
       Fragment currentFragment = fragmentManager.findFragmentById(R.id.playerMenuFragment);
 
-      AlertDialog notfoundDialog = AlertDialog.getInstance();
+      AlertDialog notfoundDialog = new AlertDialog();
       notfoundDialog.setOnCancel((View view) -> {
          Intent intent = new Intent(SelectPlayerActivity.this, LoginActivity.class);
          intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -122,7 +120,7 @@ public class SelectPlayerActivity extends AppCompatActivity {
             .add("Id", clientPlayer.getUid())
             .build();
 
-      RPSServer.post(this, formBody, checkChallengeHelper, commonPath);
+      RPSServer.post(formBody, commonPath, checkChallengeHelper);
       selectPlayerHandler.postDelayed(checkChallengeRunnable, 2000);
    }
 
@@ -130,7 +128,7 @@ public class SelectPlayerActivity extends AppCompatActivity {
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_selectplayer);
-      getSupportActionBar().hide();
+      Objects.requireNonNull(getSupportActionBar()).hide();
 
       // receive a message from LoginActivity and display here.
       Bundle intentExtras = getIntent().getExtras();
@@ -141,21 +139,19 @@ public class SelectPlayerActivity extends AppCompatActivity {
             this.clientPlayer = intentExtras.getParcelable(SummaryActivity.INTENT_CLIENT);
       }
 
-      this.pseudoOpponentPlayer = new RPSPlayer("1234567890987654321", "Bot", "somesession");
-
       sessionBtn = findViewById(R.id.sessionBtn);
       sessionBtn.setOnClickListener((View view) -> switchToSessionFragment());
 
       scoreboardBtn = findViewById(R.id.scoreboardBtn);
       scoreboardBtn.setOnClickListener((View view) -> switchToScoreboardFragment());
 
-      clientInfoLabel = findViewById(R.id.selectPlayerClientInfo);
+      TextView clientInfoLabel = findViewById(R.id.selectPlayerClientInfo);
       clientInfoLabel.setText(String.format("Hello %s!\nPlayed %d   |   Won %d",
             clientPlayer.getDisplayName(), clientPlayer.getTotalGamePlayed(),
             clientPlayer.getTotalGameWon()));
 
-      this.exitBtn = findViewById(R.id.selectPlayerExitBtn);
-      this.exitBtn.setOnClickListener((View view) -> onBackPressed());
+      ImageButton exitBtn = findViewById(R.id.selectPlayerExitBtn);
+      exitBtn.setOnClickListener((View view) -> onBackPressed());
 
       sessionFragment = new SelectPlayerSessionManager();
       sessionFragment.setClientPlayer(clientPlayer);
@@ -164,18 +160,8 @@ public class SelectPlayerActivity extends AppCompatActivity {
 
       isOnSessionFragment = false;
       switchToSessionFragment();
-      selectPlayerHandler.postDelayed(() -> checkChallenge(), 2000);
+      selectPlayerHandler.postDelayed(this::checkChallenge, 2000);
    }
-
-   /*
-   @Override
-   public void onStart() {
-      super.onStart();
-
-      isOnSessionFragment = false;
-      switchToSessionFragment();
-   }
-    */
 
    private void switchToSessionFragment() {
       if (!isOnSessionFragment) {
@@ -224,7 +210,7 @@ public class SelectPlayerActivity extends AppCompatActivity {
       FragmentManager fragmentManager = getSupportFragmentManager();
       Fragment currentFragment = fragmentManager.findFragmentById(R.id.playerMenuFragment);
 
-      ConfirmDialog logoutDialog = ConfirmDialog.getInstance();
+      ConfirmDialog logoutDialog = new ConfirmDialog();
 
       if (currentFragment == null) {
          logoutDialog.setDialogTitle("Log Out");
@@ -251,7 +237,7 @@ public class SelectPlayerActivity extends AppCompatActivity {
 
    public void onSettingClicked(View view) {
       FragmentManager fragmentManager = getSupportFragmentManager();
-      SettingDialog settingDialog = SettingDialog.getInstance();
+      SettingDialog settingDialog = new SettingDialog();
 
       fragmentManager.beginTransaction()
             .add(R.id.playerMenuFragment, settingDialog)
@@ -267,7 +253,7 @@ public class SelectPlayerActivity extends AppCompatActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             Fragment currentFragment = fragmentManager.findFragmentById(R.id.playerMenuFragment);
 
-            AlertDialog notfoundDialog = AlertDialog.getInstance();
+            AlertDialog notfoundDialog = new AlertDialog();
             notfoundDialog.setDialogTitle("Network Error");
             notfoundDialog.setDialogDescription(e.getMessage());
 
@@ -287,12 +273,12 @@ public class SelectPlayerActivity extends AppCompatActivity {
             scoreboardPlayers = RPSPlayer.getRPSPlayerArrayList(
                   RPSJson.fromJson(getResponse(), PlayerTemplate[].class));
 
-            scoreboardFragment = ScoreboardFragment.getInstance();
+            scoreboardFragment = new ScoreboardFragment();
             scoreboardFragment.setPlayers(scoreboardPlayers);
          }
       };
 
-      RPSServer.get(this, scoreboardPath, runnable);
+      RPSServer.get(scoreboardPath, runnable);
    }
 
 }

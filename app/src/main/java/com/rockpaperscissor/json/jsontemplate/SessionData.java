@@ -8,7 +8,7 @@ public class SessionData {
    protected HashMap<String, String> Player2;
    protected String session;
    //round: ID: choice
-   protected HashMap<Integer, HashMap<String, Integer>> round = new HashMap<Integer, HashMap<String, Integer>>();
+   protected HashMap<Integer, HashMap<String, Integer>> round = new HashMap<>();
    protected Integer current;
 
    public HashMap<String, Integer> createHash(Integer choose, String userId) {

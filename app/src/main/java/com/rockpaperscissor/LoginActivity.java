@@ -18,6 +18,7 @@ import com.rockpaperscissor.json.RPSJson;
 import com.rockpaperscissor.json.jsontemplate.PlayerTemplate;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import okhttp3.FormBody;
 
@@ -32,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_login);
-      getSupportActionBar().hide();
+      Objects.requireNonNull(getSupportActionBar()).hide();
 
       this.userInputBox = findViewById(R.id.userInputBox);
       this.serverUrlBox = findViewById(R.id.serverURLInputBox);
@@ -43,16 +44,14 @@ public class LoginActivity extends AppCompatActivity {
       FragmentManager fragmentManager = getSupportFragmentManager();
       Fragment currentFragment = fragmentManager.findFragmentById(R.id.loginConfirmDialog);
 
-      ConfirmDialog exitDialog = ConfirmDialog.getInstance();
+      ConfirmDialog exitDialog = new ConfirmDialog();
 
       if (currentFragment == null) {
          exitDialog.setDialogTitle("Exit Game");
          exitDialog.setDialogDescription("Are you sure you want to quit the game?");
-         exitDialog.setOnCancel((View view) -> {
-            fragmentManager.beginTransaction()
-                  .remove(exitDialog)
-                  .commit();
-         });
+         exitDialog.setOnCancel((View view) -> fragmentManager.beginTransaction()
+               .remove(exitDialog)
+               .commit());
          exitDialog.setOnConfirm((View view) -> {
             finishAffinity();
             System.exit(0);
@@ -90,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             Fragment currentFragment = fragmentManager.findFragmentById(R.id.loginConfirmDialog);
 
-            AlertDialog alertDialog = AlertDialog.getInstance();
+            AlertDialog alertDialog = new AlertDialog();
             alertDialog.setDialogTitle("Network Error");
             alertDialog.setDialogDescription(e.getMessage());
 
@@ -119,6 +118,6 @@ public class LoginActivity extends AppCompatActivity {
       FormBody formBody = new FormBody.Builder()
             .add("username", displayName)
             .build();
-      RPSServer.post(this, formBody, runnable, path);
+      RPSServer.post(formBody, path, runnable);
    }
 }

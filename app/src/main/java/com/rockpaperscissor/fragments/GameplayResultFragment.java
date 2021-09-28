@@ -21,7 +21,6 @@ public class GameplayResultFragment extends Fragment {
          R.drawable.paper_right,
          R.drawable.scissor_right
    };
-   private static final GameplayResultFragment myself = new GameplayResultFragment();
    // ui components
    ImageView clientPlayerImageView;
    ImageView opponentPlayerImageView;
@@ -34,10 +33,6 @@ public class GameplayResultFragment extends Fragment {
 
    public GameplayResultFragment() {
       super(R.layout.fragment_playerchoices);
-   }
-
-   public static GameplayResultFragment getInstance() {
-      return myself;
    }
 
    @Override

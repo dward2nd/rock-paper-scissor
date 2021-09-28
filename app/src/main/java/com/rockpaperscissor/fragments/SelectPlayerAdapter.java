@@ -18,17 +18,12 @@ import java.util.ArrayList;
 
 public class SelectPlayerAdapter extends RecyclerView.Adapter<SelectPlayerAdapter.ViewHolder> {
 
-   private ArrayList<RPSPlayer> players;
-   private Context context;
+   private final ArrayList<RPSPlayer> players;
+   private final Context context;
 
    public SelectPlayerAdapter(Context context, ArrayList<RPSPlayer> players) {
       this.context = context;
       this.players = players;
-   }
-
-   public void update(ArrayList<RPSPlayer> players) {
-      this.players.clear();
-      this.players.addAll(players);
    }
 
    @NonNull
@@ -53,21 +48,18 @@ public class SelectPlayerAdapter extends RecyclerView.Adapter<SelectPlayerAdapte
    }
 
    public static class ViewHolder extends RecyclerView.ViewHolder {
-      // components
-      private CardView selectPlayerCard;
       private static final int[] SHAPE_ICON = {
             R.drawable.rock_small,
             R.drawable.paper_small,
             R.drawable.scissor_small
       };
-      private TextView playerNameLabel;
-      private TextView playerStatLabel;
-      private ImageView playerAvatar;
+      private final TextView playerNameLabel;
+      private final TextView playerStatLabel;
 
       public ViewHolder(View itemView) {
          super(itemView);
-         selectPlayerCard = itemView.findViewById(R.id.selectPlayerCard);
-         playerAvatar = itemView.findViewById(R.id.selectPlayerAvatar);
+         // components
+         ImageView playerAvatar = itemView.findViewById(R.id.selectPlayerAvatar);
          playerNameLabel = itemView.findViewById(R.id.playerNameLabel);
          playerStatLabel = itemView.findViewById(R.id.playerStatLabel);
 

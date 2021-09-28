@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Objects;
+
 public class SummaryActivity extends AppCompatActivity {
    public static final String INTENT_CLIENT = "com.rockpaperscissor.SUMMARIZE_CLIENT";
    public static final String INTENT_OPPONENT = "com.rockpaperscissor.SUMMARIZE_OPPONENT";
@@ -17,20 +19,8 @@ public class SummaryActivity extends AppCompatActivity {
          R.drawable.paper_small,
          R.drawable.scissor_small
    };
-   private ImageButton backBtn;
-   private ImageView clientImage;
-   private ImageView opponentImage;
-   private TextView clientLabel;
-   private TextView clientScoreLabel;
-   private TextView opponentLabel;
-   private TextView opponentScoreLabel;
-   private TextView clientStatus;
    private RPSPlayer clientPlayer;
    private RPSPlayer opponentPlayer;
-   private int clientScore;
-   private int opponentScore;
-   private boolean surrendered;
-   private boolean opponentOut;
 
    @Override
    public void onBackPressed() {
@@ -44,23 +34,21 @@ public class SummaryActivity extends AppCompatActivity {
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_summary);
-      getSupportActionBar().hide();
+      Objects.requireNonNull(getSupportActionBar()).hide();
 
       Bundle intentExtras = getIntent().getExtras();
       this.clientPlayer = intentExtras.getParcelable(GameplayActivity.INTENT_RPSCLIENT);
       this.opponentPlayer = intentExtras.getParcelable(GameplayActivity.INTENT_RPSOPPONENT);
-      this.clientScore = intentExtras.getInt(GameplayActivity.INTENT_SCORE_CLIENT);
-      this.opponentScore = intentExtras.getInt(GameplayActivity.INTENT_SCORE_OPPONENT);
-      this.surrendered = intentExtras.getBoolean(GameplayActivity.INTENT_SURRENDER);
-      this.opponentOut = intentExtras.getBoolean(GameplayActivity.INTENT_OPPONENT_OUT);
+      int clientScore = intentExtras.getInt(GameplayActivity.INTENT_SCORE_CLIENT);
+      int opponentScore = intentExtras.getInt(GameplayActivity.INTENT_SCORE_OPPONENT);
+      boolean surrendered = intentExtras.getBoolean(GameplayActivity.INTENT_SURRENDER);
+      boolean opponentOut = intentExtras.getBoolean(GameplayActivity.INTENT_OPPONENT_OUT);
 
-      this.backBtn = findViewById(R.id.sumBackBtn);
-      this.backBtn.setOnClickListener((View view) -> {
-         onBackPressed();
-      });
+      ImageButton backBtn = findViewById(R.id.sumBackBtn);
+      backBtn.setOnClickListener((View view) -> onBackPressed());
 
-      this.clientImage = findViewById(R.id.sumClientImage);
-      this.opponentImage = findViewById(R.id.sumOpponentImage);
+      ImageView clientImage = findViewById(R.id.sumClientImage);
+      ImageView opponentImage = findViewById(R.id.sumOpponentImage);
 
       int clientImageChoice = 3;
       while (clientImageChoice == 3)
@@ -68,23 +56,23 @@ public class SummaryActivity extends AppCompatActivity {
       int opponentImageChoice = 3;
       while (opponentImageChoice == 3)
          opponentImageChoice = (int) Math.floor(Math.random() * 3);
-      this.clientImage.setImageResource(SHAPE_ICON[clientImageChoice]);
-      this.opponentImage.setImageResource(SHAPE_ICON[opponentImageChoice]);
+      clientImage.setImageResource(SHAPE_ICON[clientImageChoice]);
+      opponentImage.setImageResource(SHAPE_ICON[opponentImageChoice]);
 
-      this.clientLabel = findViewById(R.id.sumClientLabel);
-      this.clientScoreLabel = findViewById(R.id.sumClientScore);
-      this.opponentLabel = findViewById(R.id.sumOpponentLabel);
-      this.opponentScoreLabel = findViewById(R.id.sumOpponentScore);
-      this.clientStatus = findViewById(R.id.sumClientStatus);
+      TextView clientLabel = findViewById(R.id.sumClientLabel);
+      TextView clientScoreLabel = findViewById(R.id.sumClientScore);
+      TextView opponentLabel = findViewById(R.id.sumOpponentLabel);
+      TextView opponentScoreLabel = findViewById(R.id.sumOpponentScore);
+      TextView clientStatus = findViewById(R.id.sumClientStatus);
 
-      this.clientLabel.setText(clientPlayer.getDisplayName() +
+      clientLabel.setText(clientPlayer.getDisplayName() +
             (clientScore > opponentScore && !surrendered ? " 👑" : ""));
-      this.clientScoreLabel.setText(surrendered ? "-" : Integer.toString(clientScore));
-      this.opponentLabel.setText(opponentPlayer.getDisplayName() +
+      clientScoreLabel.setText(surrendered ? "-" : Integer.toString(clientScore));
+      opponentLabel.setText(opponentPlayer.getDisplayName() +
             (clientScore < opponentScore || surrendered ? " 👑" : ""));
-      this.opponentScoreLabel.setText(surrendered ? "-" : Integer.toString(opponentScore));
+      opponentScoreLabel.setText(surrendered ? "-" : Integer.toString(opponentScore));
 
-      this.clientStatus.setText(surrendered ? "You surrendered." :
+      clientStatus.setText(surrendered ? "You surrendered." :
             opponentOut ? "The opponent unexpectedly disconnected." :
                   clientScore > opponentScore ? "You won." :
                         clientScore == opponentScore ? "Draw." : "You lost.");

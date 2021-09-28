@@ -8,9 +8,19 @@ import com.rockpaperscissor.json.jsontemplate.PlayerTemplate;
 import java.util.ArrayList;
 
 public class RPSPlayer implements Parcelable {
-   private String uid;
-   private String displayName;
-   private String session;
+   public static final Creator<RPSPlayer> CREATOR = new Creator<>() {
+      @Override
+      public RPSPlayer createFromParcel(Parcel in) {
+         return new RPSPlayer(in);
+      }
+
+      @Override
+      public RPSPlayer[] newArray(int size) {
+         return new RPSPlayer[size];
+      }
+   };
+   private final String uid;
+   private final String displayName;
    private int totalGamePlayed = 0;
    private int totalGameWon = 0;
 
@@ -28,17 +38,7 @@ public class RPSPlayer implements Parcelable {
       this.session = session;
    }
 
-   public static final Creator<RPSPlayer> CREATOR = new Creator<RPSPlayer>() {
-      @Override
-      public RPSPlayer createFromParcel(Parcel in) {
-         return new RPSPlayer(in);
-      }
-
-      @Override
-      public RPSPlayer[] newArray(int size) {
-         return new RPSPlayer[size];
-      }
-   };
+   private final String session;
 
    public RPSPlayer(Parcel in) {
       this.uid = in.readString();
@@ -64,18 +64,8 @@ public class RPSPlayer implements Parcelable {
       this.totalGameWon = template.getScore();
    }
 
-   public static RPSPlayer[] getRPSPlayerArray(PlayerTemplate[] template) {
-      RPSPlayer[] newInstance = new RPSPlayer[template.length];
-      for (int i = 0; i < template.length; ++i)
-         newInstance[i] = new RPSPlayer(template[i].getId(),
-               template[i].getUsername(), template[i].getSession(), template[i].getPlayed(),
-               template[i].getScore());
-
-      return newInstance;
-   }
-
    public static ArrayList<RPSPlayer> getRPSPlayerArrayList(PlayerTemplate[] template) {
-      ArrayList<RPSPlayer> newInstance = new ArrayList<RPSPlayer>();
+      ArrayList<RPSPlayer> newInstance = new ArrayList<>();
       for (PlayerTemplate el : template)
          newInstance.add(new RPSPlayer(el.getId(), el.getUsername(), el.getSession(), el.getPlayed(),
                el.getScore()));

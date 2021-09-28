@@ -22,6 +22,7 @@ import com.rockpaperscissor.json.RPSJson;
 import com.rockpaperscissor.json.jsontemplate.SessionData;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import okhttp3.FormBody;
 
@@ -38,20 +39,15 @@ public class GameplayActivity extends AppCompatActivity {
    private final Handler gameplayHandler = new Handler();
    private static final String[] shapeName = {"rock", "paper", "scissors"};
    private static final String[] shapeNameCapitalized = {"Rock", "Paper", "Scissors"};
-   private final GameplayResultFragment resultFragment = GameplayResultFragment.getInstance();
-   private final GameplayFinalResultFragment finalResultFragment = GameplayFinalResultFragment.getInstance();
+   private final GameplayResultFragment resultFragment = new GameplayResultFragment();
+   private final GameplayFinalResultFragment finalResultFragment = new GameplayFinalResultFragment();
    private String sessionId;
-   // ui components
-   private ImageButton gamePlayBackBtn;
-   private ImageButton gamePlaySettingBtn;
    private ImageButton gamePlayRock;
    private ImageButton gamePlayPaper;
    private ImageButton gamePlayScissor;
    private TextView gamePlayChoose;
    private TextView gamePlayClientPlayerScore;
    private TextView gamePlayOpponentPlayerScore;
-   private TextView gamePlayClientPlayerName;
-   private TextView gamePlayOpponentPlayerName;
    private TextView gamePlayStatus;
    // game variables
    private int round = 1;
@@ -74,7 +70,13 @@ public class GameplayActivity extends AppCompatActivity {
       intent.putExtra(INTENT_OPPONENT_OUT, opponentOut);
       startActivity(intent);
    };
-   private RPSResponseRunnable keepServerResponse = new RPSResponseRunnable() {
+   private final Runnable keepServerRunnable = () -> {
+      FormBody formBody = new FormBody.Builder()
+            .add("sessionid", sessionId)
+            .build();
+      RPSServer.post(formBody, "/sessionstatus", keepServerResponse);
+   };
+   private final RPSResponseRunnable keepServerResponse = new RPSResponseRunnable() {
       @Override
       public void run() {
          SessionData session = RPSJson.fromJson(getResponse(), SessionData.class);
@@ -103,13 +105,6 @@ public class GameplayActivity extends AppCompatActivity {
       public void error(IOException e) {
          networkErrorDialogShow(e);
       }
-   };
-
-   private Runnable keepServerRunnable = () -> {
-      FormBody formBody = new FormBody.Builder()
-            .add("sessionid", sessionId)
-            .build();
-      RPSServer.post(this, formBody, keepServerResponse, "/sessionstatus");
    };
    private boolean gameFinished = false;
    private final Runnable afterResultFragmentShowed = () -> {
@@ -142,7 +137,7 @@ public class GameplayActivity extends AppCompatActivity {
       gamePlayScissor.setVisibility(TextView.VISIBLE);
    }
 
-   private RPSResponseRunnable sendChooseRunnable = new RPSResponseRunnable() {
+   private final RPSResponseRunnable sendChooseRunnable = new RPSResponseRunnable() {
       @Override
       public void run() {
          if (!getResponse().equals("done"))
@@ -159,7 +154,7 @@ public class GameplayActivity extends AppCompatActivity {
       FragmentManager fragmentManager = getSupportFragmentManager();
       Fragment currentFragment = fragmentManager.findFragmentById(R.id.playerMenuFragment);
 
-      AlertDialog notfoundDialog = AlertDialog.getInstance();
+      AlertDialog notfoundDialog = new AlertDialog();
       notfoundDialog.setOnCancel((View view) -> {
          Intent intent = new Intent(GameplayActivity.this, LoginActivity.class);
          intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -188,7 +183,7 @@ public class GameplayActivity extends AppCompatActivity {
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_gameplay);
-      getSupportActionBar().hide();
+      Objects.requireNonNull(getSupportActionBar()).hide();
 
       Intent gameplayIntent = getIntent();
       this.clientPlayer = gameplayIntent.getParcelableExtra(SelectPlayerActivity.INTENT_CLIENT);
@@ -200,45 +195,38 @@ public class GameplayActivity extends AppCompatActivity {
 
       rewriteScore();
 
-      this.gamePlayClientPlayerName = findViewById(R.id.gamePlayClientDisplayName);
-      this.gamePlayOpponentPlayerName = findViewById(R.id.gamePlayOpponentDisplayName);
+      TextView gamePlayClientPlayerName = findViewById(R.id.gamePlayClientDisplayName);
+      TextView gamePlayOpponentPlayerName = findViewById(R.id.gamePlayOpponentDisplayName);
 
-      this.gamePlayClientPlayerName.setText(clientPlayer.getDisplayName());
-      this.gamePlayOpponentPlayerName.setText(opponentPlayer.getDisplayName());
+      gamePlayClientPlayerName.setText(clientPlayer.getDisplayName());
+      gamePlayOpponentPlayerName.setText(opponentPlayer.getDisplayName());
 
       this.gamePlayStatus = findViewById(R.id.gamePlayStatus);
       this.gamePlayStatus.setText("Game started!");
 
       this.gamePlayChoose = findViewById(R.id.gamePlayChoose);
 
-      this.gamePlayBackBtn = findViewById(R.id.gamePlayBackBtn);
-      this.gamePlaySettingBtn = findViewById(R.id.gamePlaySettingBtn);
+      // ui components
+      ImageButton gamePlayBackBtn = findViewById(R.id.gamePlayBackBtn);
+      ImageButton gamePlaySettingBtn = findViewById(R.id.gamePlaySettingBtn);
       this.gamePlayRock = findViewById(R.id.gamePlayRock);
       this.gamePlayPaper = findViewById(R.id.gamePlayPaper);
       this.gamePlayScissor = findViewById(R.id.gamePlayScissor);
 
-      this.gamePlayBackBtn.setOnClickListener((View view) -> {
-         onBackPressed();
-      });
+      gamePlayBackBtn.setOnClickListener((View view) -> onBackPressed());
 
-      this.gamePlaySettingBtn.setOnClickListener((View view) -> {
+      gamePlaySettingBtn.setOnClickListener((View view) -> {
          FragmentManager fragmentManager = getSupportFragmentManager();
-         SettingDialog settingDialog = SettingDialog.getInstance();
+         SettingDialog settingDialog = new SettingDialog();
 
          fragmentManager.beginTransaction()
                .add(R.id.gamePlaySurrenderConfirmDialog, settingDialog)
                .commit();
       });
 
-      this.gamePlayRock.setOnClickListener((View view) -> {
-         userChoose(1);
-      });
-      this.gamePlayPaper.setOnClickListener((View view) -> {
-         userChoose(2);
-      });
-      this.gamePlayScissor.setOnClickListener((View view) -> {
-         userChoose(3);
-      });
+      this.gamePlayRock.setOnClickListener((View view) -> userChoose(1));
+      this.gamePlayPaper.setOnClickListener((View view) -> userChoose(2));
+      this.gamePlayScissor.setOnClickListener((View view) -> userChoose(3));
 
       resultFragment.setClientPlayerName(clientPlayer.getDisplayName());
       resultFragment.setOpponentPlayerName(opponentPlayer.getDisplayName());
@@ -280,7 +268,7 @@ public class GameplayActivity extends AppCompatActivity {
             .add("choose", Integer.toString(choice))
             .build();
       String path = "/choose";
-      RPSServer.post(this, formBody, sendChooseRunnable, path);
+      RPSServer.post(formBody, path, sendChooseRunnable);
 
       if (clientChoice != 1)
          gamePlayRock.setAlpha(0.2f);
@@ -301,12 +289,6 @@ public class GameplayActivity extends AppCompatActivity {
       // temporarily stop the connection.
       gameplayHandler.removeCallbacks(keepServerRunnable);
       // simulate the opponent choice
-      /*
-      int opponentChoice = 0;
-      while (opponentChoice == 0)
-         opponentChoice = (int) Math.ceil(Math.random() * 3);
-       */
-
       boolean isDraw = false;
       boolean doesWin = true;
 
@@ -349,16 +331,14 @@ public class GameplayActivity extends AppCompatActivity {
          FragmentManager fragmentManager = getSupportFragmentManager();
          Fragment currentFragment = fragmentManager.findFragmentById(R.id.gamePlaySurrenderConfirmDialog);
 
-         ConfirmDialog surrenderConfirmDialog = ConfirmDialog.getInstance();
+         ConfirmDialog surrenderConfirmDialog = new ConfirmDialog();
 
          if (currentFragment == null) {
             surrenderConfirmDialog.setDialogTitle("Surrender");
             surrenderConfirmDialog.setDialogDescription("If you quit now, you will lose immediately.\nProceed?");
-            surrenderConfirmDialog.setOnCancel((View view) -> {
-               fragmentManager.beginTransaction()
-                     .remove(surrenderConfirmDialog)
-                     .commit();
-            });
+            surrenderConfirmDialog.setOnCancel((View view) -> fragmentManager.beginTransaction()
+                  .remove(surrenderConfirmDialog)
+                  .commit());
             surrenderConfirmDialog.setOnConfirm((View view) -> {
                fragmentManager.beginTransaction()
                      .remove(surrenderConfirmDialog)

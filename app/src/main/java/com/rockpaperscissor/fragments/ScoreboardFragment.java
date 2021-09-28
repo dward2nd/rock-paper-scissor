@@ -15,17 +15,11 @@ import com.rockpaperscissor.RPSPlayer;
 import java.util.ArrayList;
 
 public class ScoreboardFragment extends Fragment {
-   private static ScoreboardFragment myself = new ScoreboardFragment();
    private ArrayList<RPSPlayer> players;
    private TextView loadingLabel;
    private RecyclerView playerList;
-   private SelectPlayerAdapter selectPlayerAdapter;
    private boolean playerSet = false;
    private boolean viewCreated = false;
-
-   public static ScoreboardFragment getInstance() {
-      return myself;
-   }
 
    public ScoreboardFragment() {
       super(R.layout.fragment_scoreboard);
@@ -56,7 +50,7 @@ public class ScoreboardFragment extends Fragment {
    }
 
    private void loadScoreboard() {
-      selectPlayerAdapter = new SelectPlayerAdapter(getActivity(), players);
+      SelectPlayerAdapter selectPlayerAdapter = new SelectPlayerAdapter(getActivity(), players);
       playerList.setAdapter(selectPlayerAdapter);
       playerList.setLayoutManager(new LinearLayoutManager(getActivity()));
 

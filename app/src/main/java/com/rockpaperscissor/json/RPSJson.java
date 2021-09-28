@@ -14,7 +14,9 @@ public class RPSJson {
       return GSON.fromJson(json, typeOfT);
    }
 
+   /*
    public static String toJson(Object obj) {
       return GSON.toJson(obj);
    }
+    */
 }

@@ -2,6 +2,8 @@ package com.rockpaperscissor.server;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -12,20 +14,20 @@ import okhttp3.ResponseBody;
 
 public class RPSServerCallback implements Callback {
 
-   private RPSResponseRunnable runnable;
+   private final RPSResponseRunnable runnable;
 
    public RPSServerCallback(RPSResponseRunnable runnable) {
       this.runnable = runnable;
    }
 
    @Override
-   public void onFailure(Call call, IOException e) {
+   public void onFailure(@NonNull Call call, @NonNull IOException e) {
       this.runnable.error(e);
       e.printStackTrace();
    }
 
    @Override
-   public void onResponse(Call call, Response response) throws IOException {
+   public void onResponse(@NonNull Call call, Response response) throws IOException {
       try (ResponseBody responseBody = response.body()) {
          if (!response.isSuccessful())
             throw new IOException("Unexpected code " + response);
@@ -36,6 +38,7 @@ public class RPSServerCallback implements Callback {
             Log.d("TAG", "HEADER " + responseHeaders.name(i) + ": " + responseHeaders.value(i));
          }
 
+         assert responseBody != null;
          String responseBodyString = responseBody.string();
          // For long-term development purpose, if you wish to remove the array part,
          // do that in Runnable objects instead.

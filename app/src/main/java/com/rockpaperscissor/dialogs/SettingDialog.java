@@ -9,18 +9,15 @@ import androidx.fragment.app.Fragment;
 
 import com.rockpaperscissor.R;
 
+import java.util.Objects;
+
 public class SettingDialog extends Fragment {
-   private static final SettingDialog myself = new SettingDialog();
    private ImageButton bgmCheckBox;
    private ImageButton backBtn;
    private boolean bgmChecked = false;
 
    public SettingDialog() {
       super(R.layout.dialog_setting);
-   }
-
-   public static SettingDialog getInstance() {
-      return myself;
    }
 
    @Override
@@ -35,8 +32,7 @@ public class SettingDialog extends Fragment {
          else
             bgmCheckBox.setImageResource(R.drawable.checkbox);
       });
-      backBtn.setOnClickListener((View listenerView) -> {
-         getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
-      });
+      backBtn.setOnClickListener((View listenerView) -> requireActivity().getSupportFragmentManager()
+            .beginTransaction().remove(this).commit());
    }
 }

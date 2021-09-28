@@ -15,21 +15,18 @@ import com.rockpaperscissor.GameplayActivity;
 import com.rockpaperscissor.R;
 import com.rockpaperscissor.RPSPlayer;
 import com.rockpaperscissor.SelectPlayerActivity;
-import com.rockpaperscissor.server.RPSResponseRunnable;
-import com.rockpaperscissor.server.RPSServer;
 import com.rockpaperscissor.dialogs.AlertDialog;
 import com.rockpaperscissor.json.RPSJson;
 import com.rockpaperscissor.json.jsontemplate.MiniData;
+import com.rockpaperscissor.server.RPSResponseRunnable;
+import com.rockpaperscissor.server.RPSServer;
 
 import java.io.IOException;
 
 import okhttp3.FormBody;
 
 public class SelectPlayerSessionManager extends Fragment {
-   private EditText clientSessionIdLabel;
    private EditText opponentSessionIdLabel;
-
-   private Button startBtn;
 
    private RPSPlayer clientPlayer;
 
@@ -39,12 +36,12 @@ public class SelectPlayerSessionManager extends Fragment {
 
    @Override
    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-      clientSessionIdLabel = view.findViewById(R.id.sessionClientSessionIdBox);
+      EditText clientSessionIdLabel = view.findViewById(R.id.sessionClientSessionIdBox);
       clientSessionIdLabel.setText(clientPlayer.getSession());
 
       opponentSessionIdLabel = view.findViewById(R.id.sessionOpponentSessionIdBox);
 
-      startBtn = view.findViewById(R.id.sessionStartGameBtn);
+      Button startBtn = view.findViewById(R.id.sessionStartGameBtn);
       startBtn.setOnClickListener((View listenerView) ->
             startGame(opponentSessionIdLabel.getText().toString().toUpperCase()));
    }
@@ -63,7 +60,7 @@ public class SelectPlayerSessionManager extends Fragment {
       RPSResponseRunnable runnable = new RPSResponseRunnable() {
          @Override
          public void error(IOException e) {
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
             Fragment currentFragment = fragmentManager.findFragmentById(R.id.playerMenuFragment);
 
             AlertDialog notfoundDialog = AlertDialog.getInstance();
@@ -82,7 +79,7 @@ public class SelectPlayerSessionManager extends Fragment {
 
          @Override
          public void run() {
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
             Fragment currentFragment = fragmentManager.findFragmentById(R.id.playerMenuFragment);
             AlertDialog notfoundDialog = AlertDialog.getInstance();
 
@@ -140,6 +137,6 @@ public class SelectPlayerSessionManager extends Fragment {
          }
       };
 
-      RPSServer.post(getContext(), formBody, runnable, path);
+      RPSServer.post(formBody, path, runnable);
    }
 }
