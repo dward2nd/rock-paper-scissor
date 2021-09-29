@@ -1,6 +1,7 @@
 This project is an Android application, a part of the course 204211: OOP from CSCMU.
 
-The application will only run with the required server from (https://github.com/Touutae-lab/OOPapi)[the repo].
+The application will only run with the required server
+from [this repo](https://github.com/Touutae-lab/OOPapi).
 
 # How to setup (Android Studio)
 
