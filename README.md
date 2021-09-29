@@ -1,5 +1,7 @@
 This project is an Android application, a part of the course 204211: OOP from CSCMU.
 
+The application will only run with the required server from (the repo)[https://github.com/Touutae-lab/OOPapi].
+
 # How to setup (Android Studio)
 
 1. If no proper IDEs for Android application developments are installed, download and install [Android Studio](https://developer.android.com/studio).
