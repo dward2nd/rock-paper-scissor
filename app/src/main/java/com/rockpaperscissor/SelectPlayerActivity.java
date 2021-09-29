@@ -26,6 +26,8 @@ import com.rockpaperscissor.json.jsontemplate.PlayerTemplate;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Objects;
 
 import okhttp3.FormBody;
@@ -59,7 +61,6 @@ public class SelectPlayerActivity extends AppCompatActivity {
          //Log.d("TAG", getResponse());
          PlayerTemplate playerUpdate = RPSJson.fromJson(getResponse(), PlayerTemplate.class);
          if (playerUpdate.getChallenge()) {
-            selectPlayerHandler.removeCallbacks(checkChallengeRunnable);
             String invitedPath = "/forcejoin";
             FormBody formBody = new FormBody.Builder()
                   .add("session", clientPlayer.getSession())
@@ -67,15 +68,20 @@ public class SelectPlayerActivity extends AppCompatActivity {
             RPSResponseRunnable runnable = new RPSResponseRunnable() {
                @Override
                public void run() {
+//                  selectPlayerHandler.removeCallbacks(checkChallengeRunnable);
                   MiniData response = RPSJson.fromJson(getResponse(), MiniData.class);
-                  RPSPlayer opponent = new RPSPlayer(response.getId(), response.getUsername(),
-                        clientPlayer.getSession());
 
-                  Intent intent = new Intent(SelectPlayerActivity.this, GameplayActivity.class);
-                  intent.putExtra(SelectPlayerActivity.INTENT_CLIENT, clientPlayer);
-                  intent.putExtra(SelectPlayerActivity.INTENT_OPPONENT, opponent);
-                  intent.putExtra(SelectPlayerActivity.INTENT_SESSION, clientPlayer.getSession());
-                  startActivity(intent);
+                  // check if the data is actually out of update
+                  if (!response.getStatus().equals("out of update")) {
+                     RPSPlayer opponent = new RPSPlayer(response.getId(), response.getUsername(),
+                           clientPlayer.getSession());
+
+                     Intent intent = new Intent(SelectPlayerActivity.this, GameplayActivity.class);
+                     intent.putExtra(SelectPlayerActivity.INTENT_CLIENT, clientPlayer);
+                     intent.putExtra(SelectPlayerActivity.INTENT_OPPONENT, opponent);
+                     intent.putExtra(SelectPlayerActivity.INTENT_SESSION, clientPlayer.getSession());
+                     startActivity(intent);
+                  }
                }
 
                @Override
@@ -155,12 +161,24 @@ public class SelectPlayerActivity extends AppCompatActivity {
 
       sessionFragment = new SelectPlayerSessionManager();
       sessionFragment.setClientPlayer(clientPlayer);
+//      sessionFragment.setKeepServerRunnable(checkChallengeRunnable, selectPlayerHandler);
 
       getScoreboardFromServer();
 
       isOnSessionFragment = false;
       switchToSessionFragment();
-      selectPlayerHandler.postDelayed(this::checkChallenge, 2000);
+   }
+
+   @Override
+   public void onResume() {
+      super.onResume();
+      selectPlayerHandler.postDelayed(checkChallengeRunnable, 2000);
+   }
+
+   @Override
+   public void onPause() {
+      super.onPause();
+      selectPlayerHandler.removeCallbacks(checkChallengeRunnable);
    }
 
    private void switchToSessionFragment() {
@@ -250,21 +268,7 @@ public class SelectPlayerActivity extends AppCompatActivity {
       RPSResponseRunnable runnable = new RPSResponseRunnable() {
          @Override
          public void error(IOException e) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            Fragment currentFragment = fragmentManager.findFragmentById(R.id.playerMenuFragment);
-
-            AlertDialog notfoundDialog = new AlertDialog();
-            notfoundDialog.setDialogTitle("Network Error");
-            notfoundDialog.setDialogDescription(e.getMessage());
-
-            if (currentFragment != null)
-               fragmentManager.beginTransaction()
-                     .remove(currentFragment)
-                     .commit();
-
-            fragmentManager.beginTransaction()
-                  .add(R.id.playerMenuFragment, notfoundDialog)
-                  .commit();
+            networkErrorDialogShow(e);
          }
 
          @Override
@@ -272,6 +276,8 @@ public class SelectPlayerActivity extends AppCompatActivity {
             Log.d("TAG", getResponse());
             scoreboardPlayers = RPSPlayer.getRPSPlayerArrayList(
                   RPSJson.fromJson(getResponse(), PlayerTemplate[].class));
+
+            scoreboardPlayers.sort(Comparator.comparingInt(RPSPlayer::getTotalGameWon));
 
             scoreboardFragment = new ScoreboardFragment();
             scoreboardFragment.setPlayers(scoreboardPlayers);

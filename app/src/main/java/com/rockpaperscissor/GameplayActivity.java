@@ -3,6 +3,7 @@ package com.rockpaperscissor;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -45,7 +46,6 @@ public class GameplayActivity extends AppCompatActivity {
    private ImageButton gamePlayRock;
    private ImageButton gamePlayPaper;
    private ImageButton gamePlayScissor;
-   private TextView gamePlayChoose;
    private TextView gamePlayClientPlayerScore;
    private TextView gamePlayOpponentPlayerScore;
    private TextView gamePlayStatus;
@@ -57,9 +57,11 @@ public class GameplayActivity extends AppCompatActivity {
    private boolean surrendered = false;
    private boolean opponentOut = false;
    private final Runnable goToSummarizeActivity = () -> {
-      getSupportFragmentManager().beginTransaction()
-            .remove(finalResultFragment)
-            .commit();
+      Fragment currentFragemnt = getSupportFragmentManager().findFragmentById(R.id.gamePlayShowResult);
+      if (currentFragemnt != null)
+         getSupportFragmentManager().beginTransaction()
+               .remove(currentFragemnt)
+               .commit();
 
       Intent intent = new Intent(GameplayActivity.this, SummaryActivity.class);
       intent.putExtra(INTENT_RPSCLIENT, clientPlayer);
@@ -76,39 +78,7 @@ public class GameplayActivity extends AppCompatActivity {
             .build();
       RPSServer.post(formBody, "/sessionstatus", keepServerResponse);
    };
-   private final RPSResponseRunnable keepServerResponse = new RPSResponseRunnable() {
-      @Override
-      public void run() {
-         SessionData session = RPSJson.fromJson(getResponse(), SessionData.class);
-         int opponentChoice = session.getRound().get(round).get(opponentPlayer.getUid());
-         if (opponentChoice == 4) {
-            // cut the connection to the server.
-            opponentOut = true;
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            Fragment currentResultFragment = fragmentManager.findFragmentById(R.id.gamePlayShowResult);
-            if (currentResultFragment != null)
-               fragmentManager.beginTransaction()
-                     .remove(resultFragment)
-                     .commit();
-
-            surrendered = true;
-            gameplayHandler.removeCallbacks(afterResultFragmentShowed);
-            gameplayHandler.removeCallbacks(keepServerRunnable);
-            onFinishedEvent();
-         } else if (opponentChoice != 0 && clientChoice != 0) {
-            // both have chosen.
-            evalScore(opponentScore);
-         } // else, just wait
-      }
-
-      @Override
-      public void error(IOException e) {
-         networkErrorDialogShow(e);
-      }
-   };
-   private boolean gameFinished = false;
    private final Runnable afterResultFragmentShowed = () -> {
-      showChoice();
       getSupportFragmentManager().beginTransaction()
             .remove(resultFragment)
             .commit();
@@ -118,24 +88,55 @@ public class GameplayActivity extends AppCompatActivity {
       else
          gameplayHandler.postDelayed(keepServerRunnable, 2000);
 
-      gamePlayRock.setAlpha(1.0f);
-      gamePlayPaper.setAlpha(1.0f);
-      gamePlayScissor.setAlpha(1.0f);
+      runOnUiThread(this::setButtonClickable);
+   };
+   private boolean gameFinished = false;
+   private final RPSResponseRunnable keepServerResponse = new RPSResponseRunnable() {
+      @Override
+      public void run() {
+         SessionData session = RPSJson.fromJson(getResponse(), SessionData.class);
+         int opponentChoice = session.getRound().get(round).get(opponentPlayer.getUid());
+         Log.d("TAG", "opponentChoice = " + opponentChoice);
+         if (clientChoice != 4) {
+            if (opponentChoice == 4) {
+               // cut the connection to the server.
+               opponentOut = true;
+               FragmentManager fragmentManager = getSupportFragmentManager();
+               Fragment currentResultFragment = fragmentManager.findFragmentById(R.id.gamePlayShowResult);
+               if (currentResultFragment != null)
+                  fragmentManager.beginTransaction()
+                        .remove(resultFragment)
+                        .commit();
+
+               onFinishedEvent();
+            } else if (opponentChoice != 0 && clientChoice != 0) {
+               // both have chosen.
+               runOnUiThread(() -> evalScore(opponentChoice));
+            } // else, just wait
+         }
+
+         gameplayHandler.postDelayed(keepServerRunnable, 2000);
+      }
+
+      @Override
+      public void error(IOException e) {
+         networkErrorDialogShow(e);
+      }
    };
 
-   private void hideChoices() {
-      gamePlayChoose.setVisibility(TextView.INVISIBLE);
-      gamePlayRock.setVisibility(TextView.INVISIBLE);
-      gamePlayPaper.setVisibility(TextView.INVISIBLE);
-      gamePlayScissor.setVisibility(TextView.INVISIBLE);
-   }
+   //private void hideChoices() {
+   //   gamePlayChoose.setVisibility(TextView.INVISIBLE);
+   //   gamePlayRock.setVisibility(TextView.INVISIBLE);
+   //   gamePlayPaper.setVisibility(TextView.INVISIBLE);
+   //   gamePlayScissor.setVisibility(TextView.INVISIBLE);
+   //}
 
-   private void showChoice() {
-      gamePlayChoose.setVisibility(TextView.VISIBLE);
-      gamePlayRock.setVisibility(TextView.VISIBLE);
-      gamePlayPaper.setVisibility(TextView.VISIBLE);
-      gamePlayScissor.setVisibility(TextView.VISIBLE);
-   }
+   //private void showChoice() {
+   //   gamePlayChoose.setVisibility(TextView.VISIBLE);
+   //   gamePlayRock.setVisibility(TextView.VISIBLE);
+   //   gamePlayPaper.setVisibility(TextView.VISIBLE);
+   //   gamePlayScissor.setVisibility(TextView.VISIBLE);
+   //}
 
    private final RPSResponseRunnable sendChooseRunnable = new RPSResponseRunnable() {
       @Override
@@ -170,7 +171,7 @@ public class GameplayActivity extends AppCompatActivity {
                .commit();
 
       fragmentManager.beginTransaction()
-            .add(R.id.playerMenuFragment, notfoundDialog)
+            .add(R.id.gamePlaySurrenderConfirmDialog, notfoundDialog)
             .commit();
    }
 
@@ -204,8 +205,6 @@ public class GameplayActivity extends AppCompatActivity {
       this.gamePlayStatus = findViewById(R.id.gamePlayStatus);
       this.gamePlayStatus.setText("Game started!");
 
-      this.gamePlayChoose = findViewById(R.id.gamePlayChoose);
-
       // ui components
       ImageButton gamePlayBackBtn = findViewById(R.id.gamePlayBackBtn);
       ImageButton gamePlaySettingBtn = findViewById(R.id.gamePlaySettingBtn);
@@ -236,7 +235,7 @@ public class GameplayActivity extends AppCompatActivity {
    }
 
    private void onFinishedEvent() {
-      hideChoices();
+      runOnUiThread(this::setButtonUnclickable);
       gameFinished = true;
 
       boolean doesWin = clientScore > opponentScore && !surrendered || opponentOut;
@@ -260,16 +259,7 @@ public class GameplayActivity extends AppCompatActivity {
       gameplayHandler.postDelayed(goToSummarizeActivity, 2000L);
    }
 
-   private void userChoose(int choice) {
-      clientChoice = choice;
-      FormBody formBody = new FormBody.Builder()
-            .add("Id", clientPlayer.getUid())
-            .add("round", Integer.toString(round))
-            .add("choose", Integer.toString(choice))
-            .build();
-      String path = "/choose";
-      RPSServer.post(formBody, path, sendChooseRunnable);
-
+   private void setButtonUnclickable() {
       if (clientChoice != 1)
          gamePlayRock.setAlpha(0.2f);
       if (clientChoice != 2)
@@ -277,7 +267,41 @@ public class GameplayActivity extends AppCompatActivity {
       if (clientChoice != 3)
          gamePlayScissor.setAlpha(0.2f);
 
-      gamePlayStatus.setText("Wait for the opponent to choose.");
+      gamePlayRock.setClickable(false);
+      gamePlayPaper.setClickable(false);
+      gamePlayScissor.setClickable(false);
+   }
+
+   private void setButtonClickable() {
+      gamePlayRock.setAlpha(1.0f);
+      gamePlayPaper.setAlpha(1.0f);
+      gamePlayScissor.setAlpha(1.0f);
+
+      gamePlayRock.setClickable(true);
+      gamePlayPaper.setClickable(true);
+      gamePlayScissor.setClickable(true);
+   }
+
+   private void userChoose(int choice) {
+      clientChoice = choice;
+      FormBody formBody = new FormBody.Builder()
+            .add("session", sessionId)
+            .add("Id", clientPlayer.getUid())
+            .add("round", Integer.toString(round))
+            .add("choose", Integer.toString(choice))
+            .build();
+      String path = "/choose";
+      RPSServer.post(formBody, path, sendChooseRunnable);
+
+      runOnUiThread(this::setButtonUnclickable);
+
+      if (choice == 4) {
+         gamePlayStatus.setText("You have just surrendered.");
+         gameplayHandler.removeCallbacks(afterResultFragmentShowed);
+         gameplayHandler.removeCallbacks(keepServerRunnable);
+         onFinishedEvent();
+      } else
+         gamePlayStatus.setText("Wait for the opponent to choose.");
    }
 
    /*
@@ -307,13 +331,14 @@ public class GameplayActivity extends AppCompatActivity {
          isDraw = true;
 
       rewriteScore();
+      Log.d("TAG", String.format("%d %d", clientChoice, opponentChoice));
       gamePlayStatus.setText(String.format("Round %d: %s!\n%s %s %s.",
             ++round, isDraw ? "Draw" : doesWin ? "You win" : "You lose",
             shapeNameCapitalized[clientChoice - 1],
             isDraw ? "equals" : doesWin ? "wins" : "loses to",
             shapeName[opponentChoice - 1]));
 
-      hideChoices();
+      runOnUiThread(this::setButtonUnclickable);
       resultFragment.setClientChoice(clientChoice);
       resultFragment.setOpponentChoice(opponentChoice);
       getSupportFragmentManager().beginTransaction()
@@ -347,13 +372,11 @@ public class GameplayActivity extends AppCompatActivity {
                Fragment currentResultFragment = fragmentManager.findFragmentById(R.id.gamePlayShowResult);
                if (currentResultFragment != null)
                   fragmentManager.beginTransaction()
-                        .remove(resultFragment)
+                        .remove(currentFragment)
                         .commit();
 
                surrendered = true;
-               gameplayHandler.removeCallbacks(afterResultFragmentShowed);
-               gameplayHandler.removeCallbacks(keepServerRunnable);
-               onFinishedEvent();
+               userChoose(4);
             });
 
             fragmentManager.beginTransaction()

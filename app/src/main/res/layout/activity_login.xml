@@ -67,7 +67,6 @@
            android:layout_width="275dp"
            android:layout_height="70dp"
            android:background="@drawable/round_text"
-           android:focusable="true"
            android:fontFamily="@font/gomarice_rockin_record"
            android:padding="10dp"
            android:singleLine="true"
