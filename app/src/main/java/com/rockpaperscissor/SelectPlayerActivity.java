@@ -95,6 +95,8 @@ public class SelectPlayerActivity extends AppCompatActivity {
    private final Runnable checkChallengeRunnable = this::checkChallenge;
 
    private void networkErrorDialogShow(IOException e) {
+      selectPlayerHandler.removeCallbacks(checkChallengeRunnable);
+
       FragmentManager fragmentManager = getSupportFragmentManager();
       Fragment currentFragment = fragmentManager.findFragmentById(R.id.playerMenuFragment);
 

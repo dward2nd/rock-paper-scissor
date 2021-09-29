@@ -9,7 +9,13 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.rockpaperscissor.server.RPSResponseRunnable;
+import com.rockpaperscissor.server.RPSServer;
+
+import java.io.IOException;
 import java.util.Objects;
+
+import okhttp3.FormBody;
 
 public class SummaryActivity extends AppCompatActivity {
    public static final String INTENT_CLIENT = "com.rockpaperscissor.SUMMARIZE_CLIENT";
@@ -72,9 +78,27 @@ public class SummaryActivity extends AppCompatActivity {
       opponentScoreLabel.setText(surrendered ? "-" : Integer.toString(opponentScore));
 
       clientStatus.setText(surrendered ? "You surrendered." :
-            opponentOut ? "Opponent Disconnected." :
+            opponentOut ? "Opponent\nDisconnected." :
                   clientScore > opponentScore ? "You won." :
                         clientScore == opponentScore ? "Draw." : "You lost.");
+
+      FormBody formBody;
+      formBody = new FormBody.Builder()
+            .add("State", clientScore > opponentScore ? "win" : "lose/tie")
+            .add("Id", clientPlayer.getUid())
+            .build();
+
+      RPSServer.post(formBody, "/winner", new RPSResponseRunnable() {
+         @Override
+         public void run() {
+
+         }
+
+         @Override
+         public void error(IOException e) {
+
+         }
+      });
    }
 
 }

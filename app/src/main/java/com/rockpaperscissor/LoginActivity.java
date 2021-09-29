@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.rockpaperscissor.server.RPSResponseRunnable;
 import com.rockpaperscissor.server.RPSServer;
@@ -28,6 +29,9 @@ public class LoginActivity extends AppCompatActivity {
    // components
    private EditText userInputBox;
    private EditText serverUrlBox;
+   private ImageButton letsPlayBtn;
+
+   private boolean loggingIn;
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,9 @@ public class LoginActivity extends AppCompatActivity {
 
       this.userInputBox = findViewById(R.id.userInputBox);
       this.serverUrlBox = findViewById(R.id.serverURLInputBox);
+      this.letsPlayBtn = findViewById(R.id.nextBtn);
+
+      boolean loggingIn = true;
    }
 
    @Override
@@ -74,11 +81,17 @@ public class LoginActivity extends AppCompatActivity {
     * Event handler when user tap the send button
     **/
    public void onNextBtnClicked(View view) {
-      String displayName = userInputBox.getText().toString();
-      RPSServer.setServerUrl(serverUrlBox.getText().toString());
+      if (!loggingIn) {
+         loggingIn = true;
 
-      // connect to the server
-      login(displayName);
+         letsPlayBtn.setAlpha(0.2f);
+
+         String displayName = userInputBox.getText().toString();
+         RPSServer.setServerUrl(serverUrlBox.getText().toString());
+
+         // connect to the server
+         login(displayName);
+      }
    }
 
    private void login(String displayName) {
@@ -101,6 +114,9 @@ public class LoginActivity extends AppCompatActivity {
             fragmentManager.beginTransaction()
                   .add(R.id.loginConfirmDialog, alertDialog)
                   .commit();
+
+            loggingIn = false;
+            letsPlayBtn.setAlpha(1.0f);
          }
 
          @Override

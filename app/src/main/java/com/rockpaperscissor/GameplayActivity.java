@@ -82,7 +82,7 @@ public class GameplayActivity extends AppCompatActivity {
    private final RPSResponseRunnable keepServerResponse = new RPSResponseRunnable() {
       @Override
       public void run() {
-         if (gameFinished) {
+         if (round <= 5) {
             SessionData session = RPSJson.fromJson(getResponse(), SessionData.class);
             int opponentChoice = session.getRound().get(round).get(opponentPlayer.getUid());
             Log.d("TAG", "opponentChoice = " + opponentChoice);
@@ -154,6 +154,9 @@ public class GameplayActivity extends AppCompatActivity {
    };
 
    private void networkErrorDialogShow(IOException e) {
+      gameplayHandler.removeCallbacks(keepServerRunnable);
+      gameplayHandler.removeCallbacks(afterResultFragmentShowed);
+
       FragmentManager fragmentManager = getSupportFragmentManager();
       Fragment currentFragment = fragmentManager.findFragmentById(R.id.gamePlaySurrenderConfirmDialog);
 
