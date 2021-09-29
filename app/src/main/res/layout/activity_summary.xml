@@ -210,11 +210,14 @@
 
         <TextView
            android:id="@+id/sumClientStatus"
-           android:layout_width="wrap_content"
-           android:layout_height="31dp"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_marginStart="48dp"
+           android:layout_marginEnd="48dp"
            android:layout_marginBottom="48dp"
            android:fontFamily="@font/gomarice_rockin_record"
-           android:text="You win."
+           android:text="Opponent disconnected."
+           android:textAlignment="center"
            android:textColor="@color/teal_200"
            android:textSize="28sp"
            app:layout_constraintBottom_toTopOf="@+id/sumBackBtn"

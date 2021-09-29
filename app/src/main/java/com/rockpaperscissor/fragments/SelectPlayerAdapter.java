@@ -37,9 +37,9 @@ public class SelectPlayerAdapter extends RecyclerView.Adapter<SelectPlayerAdapte
    @Override
    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
       holder.getPlayerNameLabel().setText(players.get(position).getDisplayName());
-      holder.getPlayerStatLabel().setText(String.format("%d played\n%d won",
-            players.get(position).getTotalGamePlayed(),
-            players.get(position).getTotalGameWon()));
+      holder.getPlayerStatLabel().setText(String.format("%d won\n%d played",
+            players.get(position).getTotalGameWon(),
+            players.get(position).getTotalGamePlayed()));
    }
 
    @Override

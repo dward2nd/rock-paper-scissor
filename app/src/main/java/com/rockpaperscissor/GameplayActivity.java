@@ -64,6 +64,7 @@ public class GameplayActivity extends AppCompatActivity {
                .commit();
 
       Intent intent = new Intent(GameplayActivity.this, SummaryActivity.class);
+      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
       intent.putExtra(INTENT_RPSCLIENT, clientPlayer);
       intent.putExtra(INTENT_RPSOPPONENT, opponentPlayer);
       intent.putExtra(INTENT_SCORE_CLIENT, clientScore);
@@ -71,8 +72,15 @@ public class GameplayActivity extends AppCompatActivity {
       intent.putExtra(INTENT_SURRENDER, surrendered);
       intent.putExtra(INTENT_OPPONENT_OUT, opponentOut);
       startActivity(intent);
+      finishAndRemoveTask();
    };
-   private boolean gameFinished = false;
+   private final Runnable keepServerRunnable = () -> {
+      FormBody formBody = new FormBody.Builder()
+            .add("sessionid", sessionId)
+            .build();
+      RPSServer.post(formBody, "/sessionstatus", keepServerResponse);
+   };
+   private TextView gamePlayChoose;
    private final Runnable afterResultFragmentShowed = () -> {
       getSupportFragmentManager().beginTransaction()
             .remove(resultFragment)
@@ -81,16 +89,12 @@ public class GameplayActivity extends AppCompatActivity {
       if (round > 5)
          onFinishedEvent();
       else
-         gameplayHandler.postDelayed(keepServerRunnable, 5000);
+         gameplayHandler.postDelayed(keepServerRunnable, 3000L);
 
       runOnUiThread(this::setButtonClickable);
+      runOnUiThread(this::setButtonVisible);
    };
-   private final Runnable keepServerRunnable = () -> {
-      FormBody formBody = new FormBody.Builder()
-            .add("sessionid", sessionId)
-            .build();
-      RPSServer.post(formBody, "/sessionstatus", keepServerResponse);
-   };
+   private boolean gameFinished = false;
    private final RPSResponseRunnable keepServerResponse = new RPSResponseRunnable() {
       @Override
       public void run() {
@@ -99,6 +103,9 @@ public class GameplayActivity extends AppCompatActivity {
          Log.d("TAG", "opponentChoice = " + opponentChoice);
          if (clientChoice != 4) {
             if (opponentChoice == 4) {
+               gameplayHandler.removeCallbacks(afterResultFragmentShowed);
+               gameplayHandler.removeCallbacks(keepServerRunnable);
+
                // cut the connection to the server.
                opponentOut = true;
                FragmentManager fragmentManager = getSupportFragmentManager();
@@ -109,34 +116,20 @@ public class GameplayActivity extends AppCompatActivity {
                         .commit();
 
                onFinishedEvent();
+               return;
             } else if (opponentChoice != 0 && clientChoice != 0) {
                // both have chosen.
                runOnUiThread(() -> evalScore(opponentChoice));
             } // else, just wait
          }
 
-         gameplayHandler.postDelayed(keepServerRunnable, 5000L);
+         gameplayHandler.postDelayed(keepServerRunnable, 3000L);
       }
-
       @Override
       public void error(IOException e) {
          networkErrorDialogShow(e);
       }
    };
-
-   //private void hideChoices() {
-   //   gamePlayChoose.setVisibility(TextView.INVISIBLE);
-   //   gamePlayRock.setVisibility(TextView.INVISIBLE);
-   //   gamePlayPaper.setVisibility(TextView.INVISIBLE);
-   //   gamePlayScissor.setVisibility(TextView.INVISIBLE);
-   //}
-
-   //private void showChoice() {
-   //   gamePlayChoose.setVisibility(TextView.VISIBLE);
-   //   gamePlayRock.setVisibility(TextView.VISIBLE);
-   //   gamePlayPaper.setVisibility(TextView.VISIBLE);
-   //   gamePlayScissor.setVisibility(TextView.VISIBLE);
-   //}
 
    private final RPSResponseRunnable sendChooseRunnable = new RPSResponseRunnable() {
       @Override
@@ -153,7 +146,7 @@ public class GameplayActivity extends AppCompatActivity {
 
    private void networkErrorDialogShow(IOException e) {
       FragmentManager fragmentManager = getSupportFragmentManager();
-      Fragment currentFragment = fragmentManager.findFragmentById(R.id.playerMenuFragment);
+      Fragment currentFragment = fragmentManager.findFragmentById(R.id.gamePlaySurrenderConfirmDialog);
 
       AlertDialog notfoundDialog = new AlertDialog();
       notfoundDialog.setOnCancel((View view) -> {
@@ -223,6 +216,8 @@ public class GameplayActivity extends AppCompatActivity {
                .commit();
       });
 
+      this.gamePlayChoose = findViewById(R.id.gamePlayChoose);
+
       this.gamePlayRock.setOnClickListener((View view) -> userChoose(1));
       this.gamePlayPaper.setOnClickListener((View view) -> userChoose(2));
       this.gamePlayScissor.setOnClickListener((View view) -> userChoose(3));
@@ -231,7 +226,7 @@ public class GameplayActivity extends AppCompatActivity {
       resultFragment.setOpponentPlayerName(opponentPlayer.getDisplayName());
 
       // keep connection to the server
-      gameplayHandler.postDelayed(keepServerRunnable, 5000);
+      gameplayHandler.postDelayed(keepServerRunnable, 3000L);
    }
 
    private void onFinishedEvent() {
@@ -251,35 +246,67 @@ public class GameplayActivity extends AppCompatActivity {
             opponentPlayer.countWon();
       }
 
-      finalResultFragment.setResult(doesWin, isDraw);
+      finalResultFragment.setResult(doesWin, isDraw, surrendered, opponentOut);
       getSupportFragmentManager().beginTransaction()
             .add(R.id.gamePlayShowResult, finalResultFragment)
             .commit();
 
-      gameplayHandler.postDelayed(goToSummarizeActivity, 5000L);
+      gameplayHandler.postDelayed(goToSummarizeActivity, 3000L);
    }
 
    private void setButtonUnclickable() {
-      if (clientChoice != 1)
-         gamePlayRock.setAlpha(0.2f);
-      if (clientChoice != 2)
-         gamePlayPaper.setAlpha(0.2f);
-      if (clientChoice != 3)
-         gamePlayScissor.setAlpha(0.2f);
-
       gamePlayRock.setClickable(false);
       gamePlayPaper.setClickable(false);
       gamePlayScissor.setClickable(false);
+
+      gamePlayChoose.setAlpha(0.2f);
+      if (clientChoice != 1) {
+         gamePlayRock.setAlpha(0.2f);
+         gamePlayRock.setScaleX(0.8f);
+         gamePlayRock.setScaleY(0.8f);
+      }
+      if (clientChoice != 2) {
+         gamePlayPaper.setAlpha(0.2f);
+         gamePlayPaper.setScaleX(0.8f);
+         gamePlayPaper.setScaleY(0.8f);
+      }
+      if (clientChoice != 3) {
+         gamePlayScissor.setAlpha(0.2f);
+         gamePlayScissor.setScaleX(0.8f);
+         gamePlayScissor.setScaleY(0.8f);
+      }
    }
 
    private void setButtonClickable() {
+      gamePlayRock.setClickable(true);
+      gamePlayPaper.setClickable(true);
+      gamePlayScissor.setClickable(true);
+
+      gamePlayChoose.setAlpha(1.0f);
       gamePlayRock.setAlpha(1.0f);
       gamePlayPaper.setAlpha(1.0f);
       gamePlayScissor.setAlpha(1.0f);
 
-      gamePlayRock.setClickable(true);
-      gamePlayPaper.setClickable(true);
-      gamePlayScissor.setClickable(true);
+      gamePlayRock.setScaleX(1.0f);
+      gamePlayRock.setScaleY(1.0f);
+      gamePlayPaper.setScaleX(1.0f);
+      gamePlayPaper.setScaleY(1.0f);
+      gamePlayScissor.setScaleX(1.0f);
+      gamePlayScissor.setScaleY(1.0f);
+   }
+
+   private void setButtonInvisible() {
+      gamePlayChoose.setVisibility(TextView.INVISIBLE);
+      gamePlayRock.setVisibility(ImageButton.INVISIBLE);
+      gamePlayPaper.setVisibility(ImageButton.INVISIBLE);
+      gamePlayScissor.setVisibility(ImageButton.INVISIBLE);
+   }
+
+   private void setButtonVisible() {
+      gamePlayChoose.setVisibility(TextView.VISIBLE);
+      gamePlayRock.setVisibility(ImageButton.VISIBLE);
+      gamePlayPaper.setVisibility(ImageButton.VISIBLE);
+      gamePlayScissor.setVisibility(ImageButton.VISIBLE);
    }
 
    private void userChoose(int choice) {
@@ -293,7 +320,7 @@ public class GameplayActivity extends AppCompatActivity {
       String path = "/choose";
       RPSServer.post(formBody, path, sendChooseRunnable);
 
-      runOnUiThread(this::setButtonUnclickable);
+      this.setButtonUnclickable();
 
       if (choice == 4) {
          gamePlayStatus.setText("You have just surrendered.");
@@ -333,17 +360,19 @@ public class GameplayActivity extends AppCompatActivity {
       rewriteScore();
       Log.d("TAG", String.format("%d %d", clientChoice, opponentChoice));
       gamePlayStatus.setText(String.format("Round %d: %s!\n%s %s %s.",
-            ++round, isDraw ? "Draw" : doesWin ? "You win" : "You lose",
+            round++, isDraw ? "Draw" : doesWin ? "You win" : "You lose",
             shapeNameCapitalized[clientChoice - 1],
             isDraw ? "equals" : doesWin ? "wins" : "loses to",
             shapeName[opponentChoice - 1]));
 
-      runOnUiThread(this::setButtonUnclickable);
+      this.setButtonUnclickable();
+      this.setButtonInvisible();
       resultFragment.setClientChoice(clientChoice);
       resultFragment.setOpponentChoice(opponentChoice);
       getSupportFragmentManager().beginTransaction()
             .add(R.id.gamePlayShowResult, resultFragment)
             .commit();
+
 
       gameplayHandler.postDelayed(afterResultFragmentShowed, 3000L);
       // set back for the next round.
@@ -372,7 +401,7 @@ public class GameplayActivity extends AppCompatActivity {
                Fragment currentResultFragment = fragmentManager.findFragmentById(R.id.gamePlayShowResult);
                if (currentResultFragment != null)
                   fragmentManager.beginTransaction()
-                        .remove(currentFragment)
+                        .remove(currentResultFragment)
                         .commit();
 
                surrendered = true;

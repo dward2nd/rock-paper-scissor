@@ -28,8 +28,8 @@ public class GameplayFinalResultFragment extends Fragment {
          resultLabel.setText("lose");
    }
 
-   public void setResult(boolean doesClientWin, boolean isDraw) {
-      this.doesClientWin = doesClientWin;
+   public void setResult(boolean doesClientWin, boolean isDraw, boolean surrendered, boolean opponentOut) {
+      this.doesClientWin = doesClientWin && !isDraw && !surrendered || opponentOut;
       this.isDraw = isDraw;
    }
 }

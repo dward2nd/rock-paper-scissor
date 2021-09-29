@@ -13,7 +13,6 @@ import java.util.Objects;
 
 public class SummaryActivity extends AppCompatActivity {
    public static final String INTENT_CLIENT = "com.rockpaperscissor.SUMMARIZE_CLIENT";
-   public static final String INTENT_OPPONENT = "com.rockpaperscissor.SUMMARIZE_OPPONENT";
    private static final int[] SHAPE_ICON = {
          R.drawable.rock_small,
          R.drawable.paper_small,
@@ -26,8 +25,8 @@ public class SummaryActivity extends AppCompatActivity {
    public void onBackPressed() {
       Intent intent = new Intent(SummaryActivity.this, SelectPlayerActivity.class);
       intent.putExtra(INTENT_CLIENT, clientPlayer);
-      intent.putExtra(INTENT_OPPONENT, opponentPlayer);
       startActivity(intent);
+      finish();
    }
 
    @Override
@@ -73,7 +72,7 @@ public class SummaryActivity extends AppCompatActivity {
       opponentScoreLabel.setText(surrendered ? "-" : Integer.toString(opponentScore));
 
       clientStatus.setText(surrendered ? "You surrendered." :
-            opponentOut ? "The opponent unexpectedly disconnected." :
+            opponentOut ? "Opponent Disconnected." :
                   clientScore > opponentScore ? "You won." :
                         clientScore == opponentScore ? "Draw." : "You lost.");
    }

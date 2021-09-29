@@ -26,8 +26,6 @@ import com.rockpaperscissor.json.jsontemplate.PlayerTemplate;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Objects;
 
 import okhttp3.FormBody;
@@ -277,7 +275,8 @@ public class SelectPlayerActivity extends AppCompatActivity {
             scoreboardPlayers = RPSPlayer.getRPSPlayerArrayList(
                   RPSJson.fromJson(getResponse(), PlayerTemplate[].class));
 
-            scoreboardPlayers.sort(Comparator.comparingInt(RPSPlayer::getTotalGameWon));
+            scoreboardPlayers.sort((rpsPlayer, t1) ->
+                  -rpsPlayer.getTotalGameWon() + t1.getTotalGameWon());
 
             scoreboardFragment = new ScoreboardFragment();
             scoreboardFragment.setPlayers(scoreboardPlayers);
