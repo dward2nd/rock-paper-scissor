@@ -127,7 +127,7 @@ public class SelectPlayerActivity extends AppCompatActivity {
             .build();
 
       RPSServer.post(formBody, commonPath, checkChallengeHelper);
-      selectPlayerHandler.postDelayed(checkChallengeRunnable, 2000);
+      selectPlayerHandler.postDelayed(checkChallengeRunnable, 5000);
    }
 
    @Override
@@ -172,7 +172,7 @@ public class SelectPlayerActivity extends AppCompatActivity {
    @Override
    public void onResume() {
       super.onResume();
-      selectPlayerHandler.postDelayed(checkChallengeRunnable, 2000);
+      selectPlayerHandler.postDelayed(checkChallengeRunnable, 5000);
    }
 
    @Override

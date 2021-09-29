@@ -73,6 +73,24 @@ public class GameplayActivity extends AppCompatActivity {
       startActivity(intent);
    };
    private boolean gameFinished = false;
+   private final Runnable afterResultFragmentShowed = () -> {
+      getSupportFragmentManager().beginTransaction()
+            .remove(resultFragment)
+            .commit();
+
+      if (round > 5)
+         onFinishedEvent();
+      else
+         gameplayHandler.postDelayed(keepServerRunnable, 5000);
+
+      runOnUiThread(this::setButtonClickable);
+   };
+   private final Runnable keepServerRunnable = () -> {
+      FormBody formBody = new FormBody.Builder()
+            .add("sessionid", sessionId)
+            .build();
+      RPSServer.post(formBody, "/sessionstatus", keepServerResponse);
+   };
    private final RPSResponseRunnable keepServerResponse = new RPSResponseRunnable() {
       @Override
       public void run() {
@@ -97,31 +115,13 @@ public class GameplayActivity extends AppCompatActivity {
             } // else, just wait
          }
 
-         gameplayHandler.postDelayed(keepServerRunnable, 2000);
+         gameplayHandler.postDelayed(keepServerRunnable, 5000L);
       }
 
       @Override
       public void error(IOException e) {
          networkErrorDialogShow(e);
       }
-   };
-   private final Runnable keepServerRunnable = () -> {
-      FormBody formBody = new FormBody.Builder()
-            .add("sessionid", sessionId)
-            .build();
-      RPSServer.post(formBody, "/sessionstatus", keepServerResponse);
-   };
-   private final Runnable afterResultFragmentShowed = () -> {
-      getSupportFragmentManager().beginTransaction()
-            .remove(resultFragment)
-            .commit();
-
-      if (round > 5)
-         onFinishedEvent();
-      else
-         gameplayHandler.postDelayed(keepServerRunnable, 2000);
-
-      runOnUiThread(this::setButtonClickable);
    };
 
    //private void hideChoices() {
@@ -231,7 +231,7 @@ public class GameplayActivity extends AppCompatActivity {
       resultFragment.setOpponentPlayerName(opponentPlayer.getDisplayName());
 
       // keep connection to the server
-      gameplayHandler.postDelayed(keepServerRunnable, 2000);
+      gameplayHandler.postDelayed(keepServerRunnable, 5000);
    }
 
    private void onFinishedEvent() {
@@ -256,7 +256,7 @@ public class GameplayActivity extends AppCompatActivity {
             .add(R.id.gamePlayShowResult, finalResultFragment)
             .commit();
 
-      gameplayHandler.postDelayed(goToSummarizeActivity, 2000L);
+      gameplayHandler.postDelayed(goToSummarizeActivity, 5000L);
    }
 
    private void setButtonUnclickable() {
@@ -345,7 +345,7 @@ public class GameplayActivity extends AppCompatActivity {
             .add(R.id.gamePlayShowResult, resultFragment)
             .commit();
 
-      gameplayHandler.postDelayed(afterResultFragmentShowed, 2000L);
+      gameplayHandler.postDelayed(afterResultFragmentShowed, 3000L);
       // set back for the next round.
       this.clientChoice = 0;
    }

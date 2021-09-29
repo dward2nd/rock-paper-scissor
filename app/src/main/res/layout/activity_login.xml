@@ -95,7 +95,7 @@
            android:layout_height="wrap_content"
            android:layout_marginTop="20dp"
            android:fontFamily="@font/gomarice_rockin_record"
-           android:text="Server URL"
+           android:text="Server URL:"
            android:textColor="#70C041"
            android:textSize="28sp"
            app:layout_constraintEnd_toEndOf="@+id/imageView8"
