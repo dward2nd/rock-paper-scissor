@@ -35,9 +35,7 @@ public class GameplayActivity extends AppCompatActivity {
    public static final String INTENT_SURRENDER = "com.rockpaperscissor.GAMEPLAY_SURRENDER";
    public static final String INTENT_OPPONENT_OUT = "com.rockpaperscissor.GAMEPLAY_OPPONENT_OUT";
 
-   private RPSPlayer clientPlayer;
-   private RPSPlayer opponentPlayer;
-   private final Handler gameplayHandler = new Handler();
+   // ui
    private static final String[] shapeName = {"rock", "paper", "scissors"};
    private static final String[] shapeNameCapitalized = {"Rock", "Paper", "Scissors"};
    private final GameplayResultFragment resultFragment = new GameplayResultFragment();
@@ -46,16 +44,22 @@ public class GameplayActivity extends AppCompatActivity {
    private ImageButton gamePlayRock;
    private ImageButton gamePlayPaper;
    private ImageButton gamePlayScissor;
+   private final Handler gameplayHandler = new Handler();
    private TextView gamePlayClientPlayerScore;
    private TextView gamePlayOpponentPlayerScore;
    private TextView gamePlayStatus;
+   private TextView gamePlayChoose;
    // game variables
+   private RPSPlayer clientPlayer;
+   private RPSPlayer opponentPlayer;
    private int round = 1;
    private int clientChoice = 0;
    private int clientScore = 0;
    private int opponentScore = 0;
+   private boolean gameFinished = false;
    private boolean surrendered = false;
    private boolean opponentOut = false;
+
    private final Runnable goToSummarizeActivity = () -> {
       Fragment currentFragemnt = getSupportFragmentManager().findFragmentById(R.id.gamePlayShowResult);
       if (currentFragemnt != null)
@@ -74,13 +78,54 @@ public class GameplayActivity extends AppCompatActivity {
       startActivity(intent);
       finishAndRemoveTask();
    };
+
+   private final RPSResponseRunnable keepServerResponse = new RPSResponseRunnable() {
+      @Override
+      public void run() {
+         if (gameFinished) {
+            SessionData session = RPSJson.fromJson(getResponse(), SessionData.class);
+            int opponentChoice = session.getRound().get(round).get(opponentPlayer.getUid());
+            Log.d("TAG", "opponentChoice = " + opponentChoice);
+            if (clientChoice != 4) {
+               if (opponentChoice == 4) {
+                  gameplayHandler.removeCallbacks(afterResultFragmentShowed);
+                  gameplayHandler.removeCallbacks(keepServerRunnable);
+
+                  // cut the connection to the server.
+                  opponentOut = true;
+                  FragmentManager fragmentManager = getSupportFragmentManager();
+                  Fragment currentResultFragment = fragmentManager.findFragmentById(
+                        R.id.gamePlayShowResult);
+                  if (currentResultFragment != null)
+                     fragmentManager.beginTransaction()
+                           .remove(resultFragment)
+                           .commit();
+
+                  onFinishedEvent();
+                  return;
+               } else if (opponentChoice != 0 && clientChoice != 0) {
+                  // both have chosen.
+                  runOnUiThread(() -> evalScore(opponentChoice));
+               } // else, just wait
+            }
+
+            gameplayHandler.postDelayed(keepServerRunnable, 3000L);
+         }
+      }
+
+      @Override
+      public void error(IOException e) {
+         networkErrorDialogShow(e);
+      }
+   };
+
    private final Runnable keepServerRunnable = () -> {
       FormBody formBody = new FormBody.Builder()
             .add("sessionid", sessionId)
             .build();
       RPSServer.post(formBody, "/sessionstatus", keepServerResponse);
    };
-   private TextView gamePlayChoose;
+
    private final Runnable afterResultFragmentShowed = () -> {
       getSupportFragmentManager().beginTransaction()
             .remove(resultFragment)
@@ -93,42 +138,6 @@ public class GameplayActivity extends AppCompatActivity {
 
       runOnUiThread(this::setButtonClickable);
       runOnUiThread(this::setButtonVisible);
-   };
-   private boolean gameFinished = false;
-   private final RPSResponseRunnable keepServerResponse = new RPSResponseRunnable() {
-      @Override
-      public void run() {
-         SessionData session = RPSJson.fromJson(getResponse(), SessionData.class);
-         int opponentChoice = session.getRound().get(round).get(opponentPlayer.getUid());
-         Log.d("TAG", "opponentChoice = " + opponentChoice);
-         if (clientChoice != 4) {
-            if (opponentChoice == 4) {
-               gameplayHandler.removeCallbacks(afterResultFragmentShowed);
-               gameplayHandler.removeCallbacks(keepServerRunnable);
-
-               // cut the connection to the server.
-               opponentOut = true;
-               FragmentManager fragmentManager = getSupportFragmentManager();
-               Fragment currentResultFragment = fragmentManager.findFragmentById(R.id.gamePlayShowResult);
-               if (currentResultFragment != null)
-                  fragmentManager.beginTransaction()
-                        .remove(resultFragment)
-                        .commit();
-
-               onFinishedEvent();
-               return;
-            } else if (opponentChoice != 0 && clientChoice != 0) {
-               // both have chosen.
-               runOnUiThread(() -> evalScore(opponentChoice));
-            } // else, just wait
-         }
-
-         gameplayHandler.postDelayed(keepServerRunnable, 3000L);
-      }
-      @Override
-      public void error(IOException e) {
-         networkErrorDialogShow(e);
-      }
    };
 
    private final RPSResponseRunnable sendChooseRunnable = new RPSResponseRunnable() {
