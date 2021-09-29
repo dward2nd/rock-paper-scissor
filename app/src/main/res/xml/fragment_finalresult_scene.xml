@@ -6,7 +6,7 @@
       motion:constraintSetEnd="@+id/finalStep2"
       motion:constraintSetStart="@id/finalStep1"
       motion:duration="500"
-      motion:motionInterpolator="cubic(0,0,1,0.31)">
+      motion:motionInterpolator="overshoot">
       <KeyFrameSet></KeyFrameSet>
    </Transition>
 
@@ -19,6 +19,7 @@
          motion:layout_constraintEnd_toEndOf="parent"
          motion:layout_constraintHorizontal_bias="0.5"
          motion:layout_constraintStart_toStartOf="parent"
+         android:scaleX="1.1"
          motion:layout_constraintTop_toTopOf="parent" />
       <Constraint
          android:id="@+id/selectPlayerAvatar"

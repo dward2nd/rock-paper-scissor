@@ -72,24 +72,6 @@ public class GameplayActivity extends AppCompatActivity {
       intent.putExtra(INTENT_OPPONENT_OUT, opponentOut);
       startActivity(intent);
    };
-   private final Runnable keepServerRunnable = () -> {
-      FormBody formBody = new FormBody.Builder()
-            .add("sessionid", sessionId)
-            .build();
-      RPSServer.post(formBody, "/sessionstatus", keepServerResponse);
-   };
-   private final Runnable afterResultFragmentShowed = () -> {
-      getSupportFragmentManager().beginTransaction()
-            .remove(resultFragment)
-            .commit();
-
-      if (round > 5)
-         onFinishedEvent();
-      else
-         gameplayHandler.postDelayed(keepServerRunnable, 2000);
-
-      runOnUiThread(this::setButtonClickable);
-   };
    private boolean gameFinished = false;
    private final RPSResponseRunnable keepServerResponse = new RPSResponseRunnable() {
       @Override
@@ -122,6 +104,24 @@ public class GameplayActivity extends AppCompatActivity {
       public void error(IOException e) {
          networkErrorDialogShow(e);
       }
+   };
+   private final Runnable keepServerRunnable = () -> {
+      FormBody formBody = new FormBody.Builder()
+            .add("sessionid", sessionId)
+            .build();
+      RPSServer.post(formBody, "/sessionstatus", keepServerResponse);
+   };
+   private final Runnable afterResultFragmentShowed = () -> {
+      getSupportFragmentManager().beginTransaction()
+            .remove(resultFragment)
+            .commit();
+
+      if (round > 5)
+         onFinishedEvent();
+      else
+         gameplayHandler.postDelayed(keepServerRunnable, 2000);
+
+      runOnUiThread(this::setButtonClickable);
    };
 
    //private void hideChoices() {

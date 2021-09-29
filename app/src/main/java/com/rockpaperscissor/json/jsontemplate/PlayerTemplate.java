@@ -6,7 +6,7 @@ public class PlayerTemplate {
    private String session;
    private int score;
    private int played;
-   private boolean challenge;
+   private boolean challenge = false;
 
    public int getPlayed() {
       return played;
@@ -20,8 +20,8 @@ public class PlayerTemplate {
       return challenge;
    }
 
-   public void setChallenge(boolean challenge) {
-      this.challenge = challenge;
+   public void setChallenge(boolean b) {
+      this.challenge = b;
    }
 
    public PlayerTemplate(String id, String username) {
@@ -76,13 +76,15 @@ public class PlayerTemplate {
       this.score = score;
    }
 
+
    @java.lang.Override
    public java.lang.String toString() {
-      return "PlayerTemplate {" +
+      return "userData{" +
             "id='" + id + '\'' +
             ", username='" + username + '\'' +
             ", session='" + session + '\'' +
             ", score=" + score +
             '}';
    }
+
 }

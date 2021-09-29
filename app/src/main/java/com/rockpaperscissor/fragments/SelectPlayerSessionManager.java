@@ -19,6 +19,7 @@ import com.rockpaperscissor.SelectPlayerActivity;
 import com.rockpaperscissor.dialogs.AlertDialog;
 import com.rockpaperscissor.json.RPSJson;
 import com.rockpaperscissor.json.jsontemplate.MiniData;
+import com.rockpaperscissor.json.jsontemplate.PlayerTemplate;
 import com.rockpaperscissor.server.RPSResponseRunnable;
 import com.rockpaperscissor.server.RPSServer;
 
@@ -92,7 +93,9 @@ public class SelectPlayerSessionManager extends Fragment {
             Fragment currentFragment = fragmentManager.findFragmentById(R.id.playerMenuFragment);
             AlertDialog notfoundDialog = new AlertDialog();
 
-            switch (getResponse()) {
+            MiniData response = RPSJson.fromJson(getResponse(), MiniData.class);
+
+            switch (response.getStatus()) {
                case "Room is not found":
                   if (currentFragment != null) {
                      fragmentManager.beginTransaction()
@@ -132,7 +135,6 @@ public class SelectPlayerSessionManager extends Fragment {
                   break;
                default:
                   Log.d("TAG", getResponse());
-                  MiniData response = RPSJson.fromJson(getResponse(), MiniData.class);
                   RPSPlayer opponent = new RPSPlayer(response.getId(), response.getUsername(), session);
 //                  selectPlayerHandler.removeCallbacks(checkChallengeRunnable);
 
