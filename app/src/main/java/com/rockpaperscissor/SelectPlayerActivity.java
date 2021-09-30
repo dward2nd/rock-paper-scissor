@@ -30,7 +30,7 @@ import java.util.Objects;
 
 import okhttp3.FormBody;
 
-public class SelectPlayerActivity extends AppCompatActivity {
+public class SelectPlayerActivity extends RPSActivity {
    // activity global constant
    public static final String INTENT_CLIENT = "com.rockpaperscissor.CLIENT_PLAYER";
    public static final String INTENT_OPPONENT = "com.rockpaperscissor.OPPONENT_PLAYER";
@@ -94,30 +94,10 @@ public class SelectPlayerActivity extends AppCompatActivity {
    };
    private final Runnable checkChallengeRunnable = this::checkChallenge;
 
-   private void networkErrorDialogShow(IOException e) {
+   @Override
+   public void networkErrorDialogShow(IOException e) {
       selectPlayerHandler.removeCallbacks(checkChallengeRunnable);
-
-      FragmentManager fragmentManager = getSupportFragmentManager();
-      Fragment currentFragment = fragmentManager.findFragmentById(R.id.playerMenuFragment);
-
-      AlertDialog notfoundDialog = new AlertDialog();
-      notfoundDialog.setOnCancel((View view) -> {
-         Intent intent = new Intent(SelectPlayerActivity.this, LoginActivity.class);
-         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-         startActivity(intent);
-         finishAndRemoveTask();
-      });
-      notfoundDialog.setDialogTitle("Network Error");
-      notfoundDialog.setDialogDescription(e.getMessage());
-
-      if (currentFragment != null)
-         fragmentManager.beginTransaction()
-               .remove(currentFragment)
-               .commit();
-
-      fragmentManager.beginTransaction()
-            .add(R.id.playerMenuFragment, notfoundDialog)
-            .commit();
+      super.networkErrorDialogShow(e);
    }
 
    private void checkChallenge() {
@@ -134,7 +114,8 @@ public class SelectPlayerActivity extends AppCompatActivity {
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_selectplayer);
-      Objects.requireNonNull(getSupportActionBar()).hide();
+
+      setDialogFragmentId(R.id.playerMenuFragment);
 
       // receive a message from LoginActivity and display here.
       Bundle intentExtras = getIntent().getExtras();
@@ -186,7 +167,6 @@ public class SelectPlayerActivity extends AppCompatActivity {
          sessionBtn.setBackgroundColor(0xFFFFFFFF);
          scoreboardBtn.setBackgroundColor(0xFFFFCE70);
 
-         FragmentManager fragmentManager = getSupportFragmentManager();
          Fragment currentFragment = fragmentManager.findFragmentById(R.id.selectPlayerMainFragment);
 
          if (currentFragment != null)
@@ -207,7 +187,6 @@ public class SelectPlayerActivity extends AppCompatActivity {
          sessionBtn.setBackgroundColor(0xFFFFCE70);
          scoreboardBtn.setBackgroundColor(0xFFFFFFFF);
 
-         FragmentManager fragmentManager = getSupportFragmentManager();
          Fragment currentFragment = fragmentManager.findFragmentById(R.id.selectPlayerMainFragment);
 
          if (currentFragment != null)
@@ -225,12 +204,19 @@ public class SelectPlayerActivity extends AppCompatActivity {
 
    @Override
    public void onBackPressed() {
-      FragmentManager fragmentManager = getSupportFragmentManager();
       Fragment currentFragment = fragmentManager.findFragmentById(R.id.playerMenuFragment);
 
       ConfirmDialog logoutDialog = new ConfirmDialog();
 
       if (currentFragment == null) {
+         showConfirmDialog("Log Out",
+               "You are about to logout and lose all the stat. Proceed?", (View view) -> {
+                  Intent intent = new Intent(SelectPlayerActivity.this, LoginActivity.class);
+                  intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                  startActivity(intent);
+                  finishAndRemoveTask();
+               });
+
          logoutDialog.setDialogTitle("Log Out");
          logoutDialog.setDialogDescription("You are about to logout and lose all the stat. Proceed?");
          logoutDialog.setOnCancel((View view) -> fragmentManager.beginTransaction()
@@ -254,12 +240,7 @@ public class SelectPlayerActivity extends AppCompatActivity {
    }
 
    public void onSettingClicked(View view) {
-      FragmentManager fragmentManager = getSupportFragmentManager();
-      SettingDialog settingDialog = new SettingDialog();
-
-      fragmentManager.beginTransaction()
-            .add(R.id.playerMenuFragment, settingDialog)
-            .commit();
+      showSettingDialog();
    }
 
    private void getScoreboardFromServer() {

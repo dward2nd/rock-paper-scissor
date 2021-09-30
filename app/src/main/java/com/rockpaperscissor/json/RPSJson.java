@@ -13,10 +13,4 @@ public class RPSJson {
    public static <T> T fromJson(String json, Type typeOfT) {
       return GSON.fromJson(json, typeOfT);
    }
-
-   /*
-   public static String toJson(Object obj) {
-      return GSON.toJson(obj);
-   }
-    */
 }

@@ -40,9 +40,6 @@ public class RPSServerCallback implements Callback {
 
          assert responseBody != null;
          String responseBodyString = responseBody.string();
-         // For long-term development purpose, if you wish to remove the array part,
-         // do that in Runnable objects instead.
-         //responseBodyString = responseBodyString.substring(1, responseBodyString.length() - 1);
          runnable.setResponse(responseBodyString);
          runnable.run();
 

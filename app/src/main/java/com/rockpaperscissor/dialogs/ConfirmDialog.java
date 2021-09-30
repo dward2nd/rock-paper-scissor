@@ -10,13 +10,22 @@ import androidx.fragment.app.Fragment;
 
 import com.rockpaperscissor.R;
 
-public class ConfirmDialog extends Fragment {
-   // data
-   private String dialogTitle;
-   private String dialogDescription;
+public class ConfirmDialog extends AlertDialog {
    // event handler
    private View.OnClickListener onConfirm;
-   private View.OnClickListener onCancel;
+   protected final View.OnClickListener DEFAULT_ON_CONFIRM = (View view) -> {
+      requireActivity().getSupportFragmentManager().beginTransaction()
+            .setReorderingAllowed(true)
+            .remove(this)
+            .commit();
+
+      if (onConfirm != null) {
+         onConfirm.onClick(getView());
+
+         // this is to make sure if ConfirmDialog instance will always be reused.
+         onConfirm = null;
+      }
+   };
 
    public ConfirmDialog() {
       super(R.layout.dialog_confirm);
@@ -28,32 +37,19 @@ public class ConfirmDialog extends Fragment {
       TextView confirmDialogTitle = view.findViewById(R.id.confirmDialogTitle);
       TextView confirmDialogDescription = view.findViewById(R.id.confirmDialogDescription);
 
-      confirmDialogTitle.setText(dialogTitle);
-      confirmDialogDescription.setText(dialogDescription);
+      confirmDialogTitle.setText(getDialogTitle());
+      confirmDialogDescription.setText(getDialogDescription());
 
       ImageButton confirmBtn = view.findViewById(R.id.confirmBtn);
-      ImageButton cancelBtn = view.findViewById(R.id.cancelBtn);
+      confirmBtn.setOnClickListener(DEFAULT_ON_CONFIRM);
 
-      confirmBtn.setOnClickListener(onConfirm);
-      cancelBtn.setOnClickListener(onCancel);
+      ImageButton cancelBtn = view.findViewById(R.id.cancelBtn);
+      cancelBtn.setOnClickListener(DEFAULT_ON_CANCEL);
 
       view.setClickable(true);
-   }
-
-   public void setDialogTitle(String dialogTitle) {
-      this.dialogTitle = dialogTitle;
-   }
-
-   public void setDialogDescription(String dialogDescription) {
-      this.dialogDescription = dialogDescription;
    }
 
    public void setOnConfirm(View.OnClickListener onConfirm) {
       this.onConfirm = onConfirm;
    }
-
-   public void setOnCancel(View.OnClickListener onCancel) {
-      this.onCancel = onCancel;
-   }
-
 }

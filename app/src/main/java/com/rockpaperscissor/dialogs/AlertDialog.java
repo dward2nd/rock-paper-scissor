@@ -16,7 +16,7 @@ public class AlertDialog extends Fragment {
    private String dialogDescription;
    // event handler
    private View.OnClickListener onCancel;
-   private final View.OnClickListener DEFAULT_ON_CANCEL = (View view) -> {
+   protected final View.OnClickListener DEFAULT_ON_CANCEL = (View view) -> {
       requireActivity().getSupportFragmentManager().beginTransaction()
             .setReorderingAllowed(true)
             .remove(this)
@@ -29,19 +29,22 @@ public class AlertDialog extends Fragment {
       }
    };
 
-
    public AlertDialog() {
       super(R.layout.dialog_alert);
+   }
+
+   public AlertDialog(int dialogLayout) {
+      super(dialogLayout);
    }
 
    @Override
    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
       // ui components
-      TextView confirmDialogTitle = view.findViewById(R.id.alertDialogTitle);
-      TextView confirmDialogDescription = view.findViewById(R.id.alertDialogDescription);
+      TextView alertDialogTitle = view.findViewById(R.id.alertDialogTitle);
+      TextView alertDialogDescription = view.findViewById(R.id.alertDialogDescription);
 
-      confirmDialogTitle.setText(dialogTitle);
-      confirmDialogDescription.setText(dialogDescription);
+      alertDialogTitle.setText(dialogTitle);
+      alertDialogDescription.setText(dialogDescription);
 
       ImageButton cancelBtn = view.findViewById(R.id.alertDismissBtn);
       cancelBtn.setOnClickListener(DEFAULT_ON_CANCEL);
@@ -55,6 +58,14 @@ public class AlertDialog extends Fragment {
 
    public void setDialogDescription(String dialogDescription) {
       this.dialogDescription = dialogDescription;
+   }
+
+   public String getDialogTitle() {
+      return dialogTitle;
+   }
+
+   public String getDialogDescription() {
+      return dialogDescription;
    }
 
    public void setOnCancel(View.OnClickListener onCancel) {

@@ -11,7 +11,6 @@ import com.rockpaperscissor.R;
 
 public class SettingDialog extends Fragment {
    private ImageButton bgmCheckBox;
-   private ImageButton backBtn;
    private boolean bgmChecked = false;
 
    public SettingDialog() {
@@ -21,7 +20,7 @@ public class SettingDialog extends Fragment {
    @Override
    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
       bgmCheckBox = view.findViewById(R.id.settingBgmCheckBox);
-      backBtn = view.findViewById(R.id.settingBackBtn);
+      ImageButton backBtn = view.findViewById(R.id.settingBackBtn);
 
       bgmCheckBox.setOnClickListener((View listenerView) -> {
          bgmChecked = !bgmChecked;
@@ -30,6 +29,7 @@ public class SettingDialog extends Fragment {
          else
             bgmCheckBox.setImageResource(R.drawable.checkbox);
       });
+
       backBtn.setOnClickListener((View listenerView) -> requireActivity().getSupportFragmentManager()
             .beginTransaction().remove(this).commit());
    }

@@ -17,6 +17,7 @@
         <entry key="app/src/main/res/layout/alert_dialog.xml" value="0.2351851851851852" />
         <entry key="app/src/main/res/layout/component_playerlist.xml" value="0.25040285759760944" />
         <entry key="app/src/main/res/layout/confirm_dialog.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/dialog_confirm.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_finalresult.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_playerchoices.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_sessionmanager.xml" value="0.1" />
