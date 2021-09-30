@@ -20,10 +20,10 @@ public class GameplayFinalResultFragment extends Fragment {
    @Override
    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
       TextView resultLabel = view.findViewById(R.id.finalGameplayVictoryResultLabel);
-      if (isDraw)
-         resultLabel.setText("draw");
-      else if (doesClientWin)
+      if (doesClientWin)
          resultLabel.setText("win");
+      else if (isDraw)
+         resultLabel.setText("draw");
       else
          resultLabel.setText("lose");
    }
