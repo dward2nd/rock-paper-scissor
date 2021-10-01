@@ -7,17 +7,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.rockpaperscissor.server.RPSResponseRunnable;
 import com.rockpaperscissor.server.RPSServer;
 
 import java.io.IOException;
-import java.util.Objects;
 
 import okhttp3.FormBody;
 
-public class SummaryActivity extends AppCompatActivity {
+public class SummaryActivity extends RPSActivity {
    public static final String INTENT_CLIENT = "com.rockpaperscissor.SUMMARIZE_CLIENT";
    private static final int[] SHAPE_ICON = {
          R.drawable.rock_small,
@@ -25,7 +22,6 @@ public class SummaryActivity extends AppCompatActivity {
          R.drawable.scissor_small
    };
    private RPSPlayer clientPlayer;
-   private RPSPlayer opponentPlayer;
 
    @Override
    public void onBackPressed() {
@@ -39,11 +35,10 @@ public class SummaryActivity extends AppCompatActivity {
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_summary);
-      Objects.requireNonNull(getSupportActionBar()).hide();
 
       Bundle intentExtras = getIntent().getExtras();
       this.clientPlayer = intentExtras.getParcelable(GameplayActivity.INTENT_RPSCLIENT);
-      this.opponentPlayer = intentExtras.getParcelable(GameplayActivity.INTENT_RPSOPPONENT);
+      RPSPlayer opponentPlayer = intentExtras.getParcelable(GameplayActivity.INTENT_RPSOPPONENT);
       int clientScore = intentExtras.getInt(GameplayActivity.INTENT_SCORE_CLIENT);
       int opponentScore = intentExtras.getInt(GameplayActivity.INTENT_SCORE_OPPONENT);
       boolean surrendered = intentExtras.getBoolean(GameplayActivity.INTENT_SURRENDER);
@@ -91,12 +86,11 @@ public class SummaryActivity extends AppCompatActivity {
       RPSServer.post(formBody, "/winner", new RPSResponseRunnable() {
          @Override
          public void run() {
-
          }
 
          @Override
          public void error(IOException e) {
-
+            networkErrorDialogShow(e);
          }
       });
    }

@@ -1,5 +1,7 @@
 package com.rockpaperscissor.json.jsontemplate;
 
+import androidx.annotation.NonNull;
+
 public class PlayerTemplate {
    private String id;
    private String username;
@@ -77,6 +79,7 @@ public class PlayerTemplate {
    }
 
 
+   @NonNull
    @java.lang.Override
    public java.lang.String toString() {
       return "userData{" +

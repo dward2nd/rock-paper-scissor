@@ -2,7 +2,6 @@ package com.rockpaperscissor.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +18,6 @@ import com.rockpaperscissor.SelectPlayerActivity;
 import com.rockpaperscissor.dialogs.AlertDialog;
 import com.rockpaperscissor.json.RPSJson;
 import com.rockpaperscissor.json.jsontemplate.MiniData;
-import com.rockpaperscissor.json.jsontemplate.PlayerTemplate;
 import com.rockpaperscissor.server.RPSResponseRunnable;
 import com.rockpaperscissor.server.RPSServer;
 
@@ -31,9 +29,6 @@ public class SelectPlayerSessionManager extends Fragment {
    private EditText opponentSessionIdLabel;
 
    private RPSPlayer clientPlayer;
-
-//   private Runnable checkChallengeRunnable;
-//   private Handler selectPlayerHandler;
 
    public SelectPlayerSessionManager() {
       super(R.layout.fragment_sessionmanager);
@@ -54,11 +49,6 @@ public class SelectPlayerSessionManager extends Fragment {
    public void setClientPlayer(RPSPlayer clientPlayer) {
       this.clientPlayer = clientPlayer;
    }
-
-   //public void setKeepServerRunnable(Runnable checkChallengeRunnable, Handler selectPlayerHandler) {
-   //   this.checkChallengeRunnable = checkChallengeRunnable;
-   //   this.selectPlayerHandler = selectPlayerHandler;
-   //}
 
    private void startGame(String session) {
       String path = "/join";

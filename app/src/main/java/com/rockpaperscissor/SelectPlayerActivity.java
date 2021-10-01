@@ -1,8 +1,6 @@
 package com.rockpaperscissor;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,18 +13,14 @@ import android.widget.TextView;
 
 import com.rockpaperscissor.server.RPSResponseRunnable;
 import com.rockpaperscissor.server.RPSServer;
-import com.rockpaperscissor.dialogs.AlertDialog;
-import com.rockpaperscissor.dialogs.ConfirmDialog;
 import com.rockpaperscissor.fragments.ScoreboardFragment;
 import com.rockpaperscissor.fragments.SelectPlayerSessionManager;
-import com.rockpaperscissor.dialogs.SettingDialog;
 import com.rockpaperscissor.json.RPSJson;
 import com.rockpaperscissor.json.jsontemplate.MiniData;
 import com.rockpaperscissor.json.jsontemplate.PlayerTemplate;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import okhttp3.FormBody;
 
@@ -204,10 +198,7 @@ public class SelectPlayerActivity extends RPSActivity {
 
    @Override
    public void onBackPressed() {
-      Fragment currentFragment = fragmentManager.findFragmentById(R.id.playerMenuFragment);
-
-      ConfirmDialog logoutDialog = new ConfirmDialog();
-
+      Fragment currentFragment = getCurrentDialog();
       if (currentFragment == null) {
          showConfirmDialog("Log Out",
                "You are about to logout and lose all the stat. Proceed?", (View view) -> {
@@ -216,26 +207,8 @@ public class SelectPlayerActivity extends RPSActivity {
                   startActivity(intent);
                   finishAndRemoveTask();
                });
-
-         logoutDialog.setDialogTitle("Log Out");
-         logoutDialog.setDialogDescription("You are about to logout and lose all the stat. Proceed?");
-         logoutDialog.setOnCancel((View view) -> fragmentManager.beginTransaction()
-               .remove(logoutDialog)
-               .commit());
-         logoutDialog.setOnConfirm((View view) -> {
-            Intent intent = new Intent(SelectPlayerActivity.this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finishAndRemoveTask();
-         });
-
-         fragmentManager.beginTransaction()
-               .add(R.id.playerMenuFragment, logoutDialog)
-               .commit();
       } else {
-         fragmentManager.beginTransaction()
-               .remove(currentFragment)
-               .commit();
+         removeExistingDialog();
       }
    }
 

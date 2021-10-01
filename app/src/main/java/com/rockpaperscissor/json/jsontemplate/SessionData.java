@@ -1,5 +1,7 @@
 package com.rockpaperscissor.json.jsontemplate;
 
+import androidx.annotation.NonNull;
+
 import java.util.HashMap;
 
 public class SessionData {
@@ -86,6 +88,7 @@ public class SessionData {
       this.session = session;
    }
 
+   @NonNull
    @java.lang.Override
    public java.lang.String toString() {
       return "SessionData{" +

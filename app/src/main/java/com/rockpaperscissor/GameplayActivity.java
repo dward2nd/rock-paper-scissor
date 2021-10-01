@@ -8,14 +8,11 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.rockpaperscissor.server.RPSResponseRunnable;
 import com.rockpaperscissor.server.RPSServer;
-import com.rockpaperscissor.dialogs.AlertDialog;
-import com.rockpaperscissor.dialogs.ConfirmDialog;
 import com.rockpaperscissor.fragments.GameplayFinalResultFragment;
 import com.rockpaperscissor.fragments.GameplayResultFragment;
 import com.rockpaperscissor.dialogs.SettingDialog;
@@ -23,11 +20,10 @@ import com.rockpaperscissor.json.RPSJson;
 import com.rockpaperscissor.json.jsontemplate.SessionData;
 
 import java.io.IOException;
-import java.util.Objects;
 
 import okhttp3.FormBody;
 
-public class GameplayActivity extends AppCompatActivity {
+public class GameplayActivity extends RPSActivity {
    public static final String INTENT_RPSCLIENT = "com.rockpaperscissor.GAMEPLAY_RPSCLIENT";
    public static final String INTENT_RPSOPPONENT = "com.rockpaperscissor.GAMEPLAY_RPSOPPONENT";
    public static final String INTENT_SCORE_CLIENT = "com.rockpaperscissor.GAMEPLAY_SCORE_CLIENT";
@@ -153,32 +149,10 @@ public class GameplayActivity extends AppCompatActivity {
       }
    };
 
-   private void networkErrorDialogShow(IOException e) {
-      gameplayHandler.removeCallbacks(keepServerRunnable);
-      gameplayHandler.removeCallbacks(afterResultFragmentShowed);
-
-      FragmentManager fragmentManager = getSupportFragmentManager();
-      Fragment currentFragment = fragmentManager.findFragmentById(R.id.gamePlaySurrenderConfirmDialog);
-
-      AlertDialog notfoundDialog = new AlertDialog();
-      notfoundDialog.setOnCancel((View view) -> {
-         Intent intent = new Intent(GameplayActivity.this, LoginActivity.class);
-         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-         startActivity(intent);
-         finishAndRemoveTask();
-      });
-      notfoundDialog.setDialogTitle("Network Error");
-      notfoundDialog.setDialogDescription(e.getMessage());
-
-      if (currentFragment != null)
-         fragmentManager.beginTransaction()
-               .remove(currentFragment)
-               .commit();
-
-      fragmentManager.beginTransaction()
-            .add(R.id.gamePlaySurrenderConfirmDialog, notfoundDialog)
-            .commit();
-   }
+   private final View.OnClickListener onConfirmSurrender = (View view) -> {
+      surrendered = true;
+      userChoose(4);
+   };
 
    private void rewriteScore() {
       gamePlayClientPlayerScore.setText(Integer.toString(clientScore));
@@ -186,59 +160,10 @@ public class GameplayActivity extends AppCompatActivity {
    }
 
    @Override
-   protected void onCreate(Bundle savedInstanceState) {
-      super.onCreate(savedInstanceState);
-      setContentView(R.layout.activity_gameplay);
-      Objects.requireNonNull(getSupportActionBar()).hide();
-
-      Intent gameplayIntent = getIntent();
-      this.clientPlayer = gameplayIntent.getParcelableExtra(SelectPlayerActivity.INTENT_CLIENT);
-      this.opponentPlayer = gameplayIntent.getParcelableExtra(SelectPlayerActivity.INTENT_OPPONENT);
-      this.sessionId = gameplayIntent.getStringExtra(SelectPlayerActivity.INTENT_SESSION);
-
-      this.gamePlayClientPlayerScore = findViewById(R.id.gamePlayClientPlayerScore);
-      this.gamePlayOpponentPlayerScore = findViewById(R.id.gamePlayOpponentPlayerScore);
-
-      rewriteScore();
-
-      TextView gamePlayClientPlayerName = findViewById(R.id.gamePlayClientDisplayName);
-      TextView gamePlayOpponentPlayerName = findViewById(R.id.gamePlayOpponentDisplayName);
-
-      gamePlayClientPlayerName.setText(clientPlayer.getDisplayName());
-      gamePlayOpponentPlayerName.setText(opponentPlayer.getDisplayName());
-
-      this.gamePlayStatus = findViewById(R.id.gamePlayStatus);
-      this.gamePlayStatus.setText("Game started!");
-
-      // ui components
-      ImageButton gamePlayBackBtn = findViewById(R.id.gamePlayBackBtn);
-      ImageButton gamePlaySettingBtn = findViewById(R.id.gamePlaySettingBtn);
-      this.gamePlayRock = findViewById(R.id.gamePlayRock);
-      this.gamePlayPaper = findViewById(R.id.gamePlayPaper);
-      this.gamePlayScissor = findViewById(R.id.gamePlayScissor);
-
-      gamePlayBackBtn.setOnClickListener((View view) -> onBackPressed());
-
-      gamePlaySettingBtn.setOnClickListener((View view) -> {
-         FragmentManager fragmentManager = getSupportFragmentManager();
-         SettingDialog settingDialog = new SettingDialog();
-
-         fragmentManager.beginTransaction()
-               .add(R.id.gamePlaySurrenderConfirmDialog, settingDialog)
-               .commit();
-      });
-
-      this.gamePlayChoose = findViewById(R.id.gamePlayChoose);
-
-      this.gamePlayRock.setOnClickListener((View view) -> userChoose(1));
-      this.gamePlayPaper.setOnClickListener((View view) -> userChoose(2));
-      this.gamePlayScissor.setOnClickListener((View view) -> userChoose(3));
-
-      resultFragment.setClientPlayerName(clientPlayer.getDisplayName());
-      resultFragment.setOpponentPlayerName(opponentPlayer.getDisplayName());
-
-      // keep connection to the server
-      gameplayHandler.postDelayed(keepServerRunnable, 3000L);
+   public void networkErrorDialogShow(IOException e) {
+      gameplayHandler.removeCallbacks(keepServerRunnable);
+      gameplayHandler.removeCallbacks(afterResultFragmentShowed);
+      super.networkErrorDialogShow(e);
    }
 
    private void onFinishedEvent() {
@@ -392,41 +317,71 @@ public class GameplayActivity extends AppCompatActivity {
    }
 
    @Override
+   protected void onCreate(Bundle savedInstanceState) {
+      super.onCreate(savedInstanceState);
+      setContentView(R.layout.activity_gameplay);
+
+      setDialogFragmentId(R.id.gamePlaySurrenderConfirmDialog);
+
+      Intent gameplayIntent = getIntent();
+      this.clientPlayer = gameplayIntent.getParcelableExtra(SelectPlayerActivity.INTENT_CLIENT);
+      this.opponentPlayer = gameplayIntent.getParcelableExtra(SelectPlayerActivity.INTENT_OPPONENT);
+      this.sessionId = gameplayIntent.getStringExtra(SelectPlayerActivity.INTENT_SESSION);
+
+      this.gamePlayClientPlayerScore = findViewById(R.id.gamePlayClientPlayerScore);
+      this.gamePlayOpponentPlayerScore = findViewById(R.id.gamePlayOpponentPlayerScore);
+
+      rewriteScore();
+
+      TextView gamePlayClientPlayerName = findViewById(R.id.gamePlayClientDisplayName);
+      TextView gamePlayOpponentPlayerName = findViewById(R.id.gamePlayOpponentDisplayName);
+
+      gamePlayClientPlayerName.setText(clientPlayer.getDisplayName());
+      gamePlayOpponentPlayerName.setText(opponentPlayer.getDisplayName());
+
+      this.gamePlayStatus = findViewById(R.id.gamePlayStatus);
+      this.gamePlayStatus.setText("Game started!");
+
+      // ui components
+      ImageButton gamePlayBackBtn = findViewById(R.id.gamePlayBackBtn);
+      ImageButton gamePlaySettingBtn = findViewById(R.id.gamePlaySettingBtn);
+      this.gamePlayRock = findViewById(R.id.gamePlayRock);
+      this.gamePlayPaper = findViewById(R.id.gamePlayPaper);
+      this.gamePlayScissor = findViewById(R.id.gamePlayScissor);
+
+      gamePlayBackBtn.setOnClickListener((View view) -> onBackPressed());
+
+      gamePlaySettingBtn.setOnClickListener((View view) -> {
+         FragmentManager fragmentManager = getSupportFragmentManager();
+         SettingDialog settingDialog = new SettingDialog();
+
+         fragmentManager.beginTransaction()
+               .add(R.id.gamePlaySurrenderConfirmDialog, settingDialog)
+               .commit();
+      });
+
+      this.gamePlayChoose = findViewById(R.id.gamePlayChoose);
+
+      this.gamePlayRock.setOnClickListener((View view) -> userChoose(1));
+      this.gamePlayPaper.setOnClickListener((View view) -> userChoose(2));
+      this.gamePlayScissor.setOnClickListener((View view) -> userChoose(3));
+
+      resultFragment.setClientPlayerName(clientPlayer.getDisplayName());
+      resultFragment.setOpponentPlayerName(opponentPlayer.getDisplayName());
+
+      // keep connection to the server
+      gameplayHandler.postDelayed(keepServerRunnable, 3000L);
+   }
+
+   @Override
    public void onBackPressed() {
       if (!gameFinished) {
-         FragmentManager fragmentManager = getSupportFragmentManager();
-         Fragment currentFragment = fragmentManager.findFragmentById(R.id.gamePlaySurrenderConfirmDialog);
-
-         ConfirmDialog surrenderConfirmDialog = new ConfirmDialog();
-
-         if (currentFragment == null) {
-            surrenderConfirmDialog.setDialogTitle("Surrender");
-            surrenderConfirmDialog.setDialogDescription("If you quit now, you will lose immediately.\nProceed?");
-            surrenderConfirmDialog.setOnCancel((View view) -> fragmentManager.beginTransaction()
-                  .remove(surrenderConfirmDialog)
-                  .commit());
-            surrenderConfirmDialog.setOnConfirm((View view) -> {
-               fragmentManager.beginTransaction()
-                     .remove(surrenderConfirmDialog)
-                     .commit();
-
-               Fragment currentResultFragment = fragmentManager.findFragmentById(R.id.gamePlayShowResult);
-               if (currentResultFragment != null)
-                  fragmentManager.beginTransaction()
-                        .remove(currentResultFragment)
-                        .commit();
-
-               surrendered = true;
-               userChoose(4);
-            });
-
-            fragmentManager.beginTransaction()
-                  .add(R.id.gamePlaySurrenderConfirmDialog, surrenderConfirmDialog)
-                  .commit();
-         } else
-            fragmentManager.beginTransaction()
-                  .remove(currentFragment)
-                  .commit();
+         Fragment currentFragment = getCurrentDialog();
+         if (currentFragment == null)
+            showConfirmDialog("Surrender",
+                  "If you quit now, you will lose immediately. Proceed?", onConfirmSurrender);
+         else
+            removeExistingDialog();
       }
    }
 }

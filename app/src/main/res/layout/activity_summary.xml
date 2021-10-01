@@ -211,11 +211,12 @@
         <TextView
            android:id="@+id/sumClientStatus"
            android:layout_width="0dp"
-           android:layout_height="wrap_content"
+           android:layout_height="59dp"
            android:layout_marginStart="48dp"
            android:layout_marginEnd="48dp"
            android:layout_marginBottom="48dp"
            android:fontFamily="@font/gomarice_rockin_record"
+           android:singleLine="false"
            android:text="Opponent disconnected."
            android:textAlignment="center"
            android:textColor="@color/teal_200"
