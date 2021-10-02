@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import java.util.HashMap;
 
 public class SessionData {
+   protected boolean status;
    protected String winner;
    protected HashMap<String, String> Player1;
    protected HashMap<String, String> Player2;
@@ -87,7 +88,9 @@ public class SessionData {
    public void setSession(String session) {
       this.session = session;
    }
-
+   public boolean isStatus() {
+      return this.status;
+   }
    @NonNull
    @java.lang.Override
    public java.lang.String toString() {

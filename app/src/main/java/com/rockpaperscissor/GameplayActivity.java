@@ -80,9 +80,10 @@ public class GameplayActivity extends RPSActivity {
          if (round <= 5) {
             SessionData session = RPSJson.fromJson(getResponse(), SessionData.class);
             int opponentChoice = session.getRound().get(round).get(opponentPlayer.getUid());
+            boolean status = session.isStatus();
             Log.d("TAG", "opponentChoice = " + opponentChoice);
-            if (clientChoice != 4) {
-               if (opponentChoice == 4) {
+            if (clientChoice != 4) { // client surrender
+               if (opponentChoice == 4 || !status) {
                   gameplayHandler.removeCallbacks(afterResultFragmentShowed);
                   gameplayHandler.removeCallbacks(keepServerRunnable);
 
