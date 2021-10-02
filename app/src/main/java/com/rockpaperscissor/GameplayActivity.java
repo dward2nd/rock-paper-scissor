@@ -15,7 +15,6 @@ import com.rockpaperscissor.server.RPSResponseRunnable;
 import com.rockpaperscissor.server.RPSServer;
 import com.rockpaperscissor.fragments.GameplayFinalResultFragment;
 import com.rockpaperscissor.fragments.GameplayResultFragment;
-import com.rockpaperscissor.dialogs.SettingDialog;
 import com.rockpaperscissor.json.RPSJson;
 import com.rockpaperscissor.json.jsontemplate.SessionData;
 
@@ -351,14 +350,7 @@ public class GameplayActivity extends RPSActivity {
 
       gamePlayBackBtn.setOnClickListener((View view) -> onBackPressed());
 
-      gamePlaySettingBtn.setOnClickListener((View view) -> {
-         FragmentManager fragmentManager = getSupportFragmentManager();
-         SettingDialog settingDialog = new SettingDialog();
-
-         fragmentManager.beginTransaction()
-               .add(R.id.gamePlaySurrenderConfirmDialog, settingDialog)
-               .commit();
-      });
+      gamePlaySettingBtn.setOnClickListener((View view) -> showSettingDialog());
 
       this.gamePlayChoose = findViewById(R.id.gamePlayChoose);
 
