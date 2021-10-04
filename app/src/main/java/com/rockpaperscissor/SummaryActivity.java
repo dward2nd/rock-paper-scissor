@@ -7,6 +7,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.rockpaperscissor.json.RPSJson;
+import com.rockpaperscissor.json.jsontemplate.PlayerTemplate;
 import com.rockpaperscissor.server.RPSResponseRunnable;
 import com.rockpaperscissor.server.RPSServer;
 
@@ -23,12 +25,17 @@ public class SummaryActivity extends RPSActivity {
    };
    private RPSPlayer clientPlayer;
 
+   private RPSPlayer newClientPlayer;
+   private boolean newPlayerAdded = false;
+
    @Override
    public void onBackPressed() {
-      Intent intent = new Intent(SummaryActivity.this, SelectPlayerActivity.class);
-      intent.putExtra(INTENT_CLIENT, clientPlayer);
-      startActivity(intent);
-      finish();
+      if (newPlayerAdded) {
+         Intent intent = new Intent(SummaryActivity.this, SelectPlayerActivity.class);
+         intent.putExtra(INTENT_CLIENT, newPlayerAdded);
+         startActivity(intent);
+         finish();
+      }
    }
 
    @Override
@@ -93,6 +100,25 @@ public class SummaryActivity extends RPSActivity {
             networkErrorDialogShow(e);
          }
       });
+
+      formBody = new FormBody.Builder()
+            .add("Id", clientPlayer.getUid())
+            .build();
+
+      RPSServer.post(formBody, "/playerstatus", new RPSResponseRunnable() {
+         @Override
+         public void run() {
+            newPlayerAdded = true;
+            newClientPlayer = new RPSPlayer((PlayerTemplate) RPSJson.fromJson(getResponse(),
+                  PlayerTemplate.class));
+         }
+
+         @Override
+         public void error(IOException e) {
+            networkErrorDialogShow(e);
+         }
+      });
+
    }
 
 }
