@@ -32,7 +32,7 @@ public class SummaryActivity extends RPSActivity {
    public void onBackPressed() {
       if (newPlayerAdded) {
          Intent intent = new Intent(SummaryActivity.this, SelectPlayerActivity.class);
-         intent.putExtra(INTENT_CLIENT, newPlayerAdded);
+         intent.putExtra(INTENT_CLIENT, newClientPlayer);
          startActivity(intent);
          finish();
       }
@@ -108,9 +108,9 @@ public class SummaryActivity extends RPSActivity {
       RPSServer.post(formBody, "/playerstatus", new RPSResponseRunnable() {
          @Override
          public void run() {
-            newPlayerAdded = true;
             newClientPlayer = new RPSPlayer((PlayerTemplate) RPSJson.fromJson(getResponse(),
                   PlayerTemplate.class));
+            newPlayerAdded = true;
          }
 
          @Override
