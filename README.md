@@ -9,6 +9,7 @@ from [this repo](https://github.com/Touutae-lab/OOPapi).
 2. After the installation is finished, navigate `File > New > Project from Version Control`, or if you start from the welcome window, click `Get from VCS` on the top-right corner.
 3. Put `https://github.com/dward2nd/rock-paper-scissor.git` onto the URL field, then click done.
 
+This Application work together with [API](https://github.com/Touutae-lab/Springboot-restfullapi-for-rock-paper-scrissor)
 # Project Contributors.
 
 Developer Team: GIVE THAT GUY AN A
