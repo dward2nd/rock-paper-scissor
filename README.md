@@ -14,7 +14,7 @@ from [this repo](https://github.com/Touutae-lab/OOPapi).
 Developer Team: GIVE THAT GUY AN A
 
 - Saksinkarn Petchkuljinda [@dward2nd](https://github.com/dward2nd) (repo owner)
-- Pantakan Kanprawet [@Touutae-lab](https://github.com/Touutae-lab)
+- Pantakan Kanprawet [@Touutae-lab](https://github.com/Touutae-lab) (API creator, [FOR THIS APP API](https://github.com/Touutae-lab/Springboot-restfullapi-for-rock-paper-scrissor))
 - Ponlakrit Parnsa-nguard [@NickP-real](https://github.com/NickP-real) (UX/UI Designer)
 - Phornphithak Rotkhian [@ph0pz](https://github.com/ph0pz) (UX/UI Designer)
 
